@@ -8,6 +8,7 @@ and open the template in the editor.
         <title></title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script src="js/jquery.js"></script>
+        <link href="css/style.css" rel="stylesheet" type="text/css">
         <?php
         $exec = exec("hostname"); //the "hostname" is a valid command in both windows and linux
         $hostname = trim($exec); //remove any spaces before and after
@@ -31,6 +32,10 @@ and open the template in the editor.
                 //e is het bericht dat binnenkomt
                 $("#display").append("<br/>" + e.data.toString());
                 $('#tekst').val("");
+                if (e.data.toString() == "start")
+                {
+                    startTimer(10);
+                }
                 //Meer dingen ......
             };
 
@@ -39,10 +44,6 @@ and open the template in the editor.
             {
                 websocket.send(message);
             }
-
-
-
-
 
             //verstuur test bericht uit textveld
             function sendTestMessage()
@@ -57,28 +58,51 @@ and open the template in the editor.
 
             var time;
             var timerFunction;
+            var timerStart = false;
+
 
             function startTimer(length) {
-                time = 0;
-                timerFunction = setInterval(function() {
-                    updateTimer(length);
-                }, 1000);
+                if (timerStart == false)
+                {
+                    timerStart = true;
+                    time = length + 1;
+                    timerFunction = setInterval(function() {
+                        updateTimer();
+                    }, 1000);
+                }
             }
 
-            function updateTimer(length) {
-                if (time < length) {
-                    time++;
+            function updateTimer() {
+                if (time > 0) {
+                    time--;
                     $('#display').text(time);
                 }
                 else
                 {
                     clearInterval(timerFunction);
                     timerFunction = null;
+                    alert('BOEM!!!');
+                    timerStart = false;
                 }
             }
         </script>
     </head>
     <body>
+        <table style="text-align: center;">
+            <tr> 
+                <td><h6>action</h6></td>
+                <td><h6>command</h6></td>
+            </tr>
+            <tr> 
+                <td><h6>start timer with 30 sec</h6></td>
+                <td><h6>start_timer</h6></td>
+            </tr>
+            <tr> 
+                <td><h6>start timer with 30 sec</h6></td>
+                <td><h6>start_timer</h6></td>
+            </tr>
+        </table>
+
         <input type="text" id="tekst" ></input>
         <button onclick="sendTestMessage();">send test message</button>
         <span id="display"></span><br/><br/>
