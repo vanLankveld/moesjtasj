@@ -1,0 +1,1 @@
+php C:\wamp\bin\php\php5.4.16\composer.phar install
