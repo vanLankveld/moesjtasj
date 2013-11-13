@@ -29,8 +29,8 @@ and open the template in the editor.
             //In deze functie staat de code die uitgevoerd wordt wanneer er een bericht vanuit de websocket ontvangen wordt
             websocket.onmessage = function(e) {
                 //e is het bericht dat binnenkomt
-                var d = new Date();
-                $("#display").html(d.getTime() + " /// " + e.data.toString());
+                $("#display").append("<br/>" + e.data.toString());
+                $('#tekst').val("");
                 //Meer dingen ......
             };
 
@@ -39,6 +39,19 @@ and open the template in the editor.
             {
                 websocket.send(message);
             }
+
+
+
+
+
+            //verstuur test bericht uit textveld
+            function sendTestMessage()
+            {
+
+                websocket.send($("#tekst").val());
+            }
+
+
 
             //========================================= Einde Websockets code ===========================================
 
@@ -66,8 +79,9 @@ and open the template in the editor.
         </script>
     </head>
     <body>
-        <div><button onclick="sendMessage('start_timer');">Start</button></div>
-        <div><button onclick="sendMessage('test');">test message</button></div>
-        <div><span id="display"></span></div>
+        <input type="text" id="tekst" ></input>
+        <button onclick="sendTestMessage();">send test message</button>
+        <span id="display"></span><br/><br/>
+
     </body>
 </html>
