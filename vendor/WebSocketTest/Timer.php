@@ -26,9 +26,6 @@ class Timer implements MessageComponentInterface {
                 , $from->resourceId, $msg, $numRecv, $numRecv == 1 ? '' : 's');
 
         switch ($msg) {
-            case "start_timer":
-                $this->startTimer('10');
-                break;
             default:
                 foreach ($this->clients as $client) {
                     $client->send($msg);

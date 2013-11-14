@@ -24,7 +24,7 @@ and open the template in the editor.
 
             //In deze functie staat code die uitgevoerd wordt wanneer er een verbinding is met de websocket
             websocket.onopen = function(e) {
-                $('#display').text("Connection established");
+                console.log("Connection established");
             };
 
             //In deze functie staat de code die uitgevoerd wordt wanneer er een bericht vanuit de websocket ontvangen wordt
@@ -39,16 +39,11 @@ and open the template in the editor.
                 //Meer dingen ......
             };
 
-            //Verstuur een bericht naar de websocket
-            function sendMessage(message)
-            {
-                websocket.send(message);
-            }
 
             //verstuur test bericht uit textveld
-            function sendTestMessage()
+            function sendMessage()
             {
-
+                
                 websocket.send($("#tekst").val());
             }
 
@@ -85,27 +80,24 @@ and open the template in the editor.
                     timerStart = false;
                 }
             }
+            
+            function start(){
+                if($("#tekst").val() == "")
+                    {
+                        alert('Naam is niet ingevuld');
+                    }else{
+                        websocket.send("start_"+$("#tekst").val());
+                        console.log("start_"+$("#tekst").val());
+                        $( "#tekst" ).hide();
+                        $( "#button1" ).hide();
+                    }
+            }
+            
+            
         </script>
     </head>
     <body>
-        <table style="text-align: center;">
-            <tr> 
-                <td><h6>action</h6></td>
-                <td><h6>command</h6></td>
-            </tr>
-            <tr> 
-                <td><h6>start timer with 30 sec</h6></td>
-                <td><h6>start_timer</h6></td>
-            </tr>
-            <tr> 
-                <td><h6>start timer with 30 sec</h6></td>
-                <td><h6>start_timer</h6></td>
-            </tr>
-        </table>
-
-        <input type="text" id="tekst" ></input>
-        <button onclick="sendTestMessage();">send test message</button>
-        <span id="display"></span><br/><br/>
-
+        <input type="text" id="tekst">
+        <button onclick="start();" id="button1">start</button>
     </body>
 </html>
