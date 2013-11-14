@@ -30,11 +30,12 @@ and open the template in the editor.
             //In deze functie staat de code die uitgevoerd wordt wanneer er een bericht vanuit de websocket ontvangen wordt
             websocket.onmessage = function(e) {
                 //e is het bericht dat binnenkomt
-                $("#display").append("<br/>" + e.data.toString());
-                $('#tekst').val("");
-                if (e.data.toString() == "start")
+                
+                var commandArr = e.data.toString().split("_");
+                console.log(commandArr[0]);
+                if (commandArr[0] == "startTimer")
                 {
-                    startTimer(10);
+                    startTimer(parseInt(commandArr[1]));
                 }
                 //Meer dingen ......
             };
@@ -43,7 +44,6 @@ and open the template in the editor.
             //verstuur test bericht uit textveld
             function sendMessage()
             {
-                
                 websocket.send($("#tekst").val());
             }
 
@@ -70,34 +70,45 @@ and open the template in the editor.
             function updateTimer() {
                 if (time > 0) {
                     time--;
-                    $('#display').text(time);
+                    $('#timer').text(time);
                 }
-                else
+                else if (timerStart)
                 {
                     clearInterval(timerFunction);
                     timerFunction = null;
                     alert('BOEM!!!');
                     timerStart = false;
+                    
+                    
+                    stelVraag("Hoeveel is 2 + 3 ?");
                 }
             }
-            
-            function start(){
-                if($("#tekst").val() == "")
-                    {
-                        alert('Naam is niet ingevuld');
-                    }else{
-                        websocket.send("start_"+$("#tekst").val());
-                        console.log("start_"+$("#tekst").val());
-                        $( "#tekst" ).hide();
-                        $( "#button1" ).hide();
-                    }
+
+            function start() {
+                if ($("#tekst").val() == "")
+                {
+                    alert('Naam is niet ingevuld');
+                } else {
+                    websocket.send("start_" + $("#tekst").val());
+                    $("#tekst").hide();
+                    $("#button1").hide();
+                }
             }
-            
-            
+
+
+
+            function stelVraag(vraag)
+            {
+                $('#vraag').text(vraag);
+            }
+
+
         </script>
     </head>
     <body>
         <input type="text" id="tekst">
         <button onclick="start();" id="button1">start</button>
+        <div id="timer"></div>
+        <div id="vraag"></div>
     </body>
 </html>
