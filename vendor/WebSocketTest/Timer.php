@@ -49,11 +49,14 @@ class Timer implements MessageComponentInterface
                     break;
                 case "answer":
                     $this->clientAnswers[$from->resourceId] = $msgParts[1];
-                    $this->tryReview();
+                    echo $from->resourceId." answered: '".$msgParts[1]."'.\n";
+                    $responseMsg = $this->tryReview();
                     break;
             }
         }
 
+        echo "Response message: $responseMsg";
+        
         if ($responseMsg != "")
         {
             $this->sendToAllClients($responseMsg);
@@ -73,7 +76,7 @@ class Timer implements MessageComponentInterface
         foreach ($this->clients as $client)
         {
             $message = "startTimer_$length";
-            echo "sending '$message' to client " . $client->resourceId;
+            echo "sending '$message' to client " . $client->resourceId . "\n";
             $client->send($message);
         }
     }
@@ -109,12 +112,13 @@ class Timer implements MessageComponentInterface
     {
         foreach ($this->clientAnswers as $answer)
         {
-            if ($answer !== "")
+            if ($answer === "")
             {
                 return "";
             }
         }
-        return reviewAnswers();
+        echo "All answers received\n";
+        return $this->reviewAnswers();
     }
 
     private function reviewAnswers()
@@ -126,7 +130,7 @@ class Timer implements MessageComponentInterface
         {
             if ($answer !== $correct)
             {
-                return "answer_false;";
+                return "answer_false";
             }
         }
         return "answer_true";

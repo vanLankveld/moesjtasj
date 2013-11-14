@@ -31,14 +31,11 @@ and open the template in the editor.
             websocket.onmessage = function(e) {
                 //e is het bericht dat binnenkomt
                 var commandArr = e.data.toString().split("_");
-                if (commandArr[0] == "startTimer")
-                {
+                if (commandArr[0] == "startTimer") {
                     startTimer(parseInt(commandArr[1]));
-                } else if (commandArr[0] == "answer")
-                {
+                } else if (commandArr[0] == "answer") {
                     checkAnswer(commandArr[1]);
-                } else if (commandArr[0] == "start")
-                {
+                } else if (commandArr[0] == "start") {
                     playerJoined(commandArr[1]);
                 }
                 //Meer dingen ......
@@ -57,6 +54,7 @@ and open the template in the editor.
             var timerFunction;
             var timerStart = false;
             var vraagGesteld = false;
+            var timeForQ = 5;
 
 
             function startTimer(length) {
@@ -89,7 +87,13 @@ and open the template in the editor.
                     } else if (vraagGesteld == true)
                     {
                         $("#antwoord").attr('disabled', 'disabled');
-                        websocket.send("answer_" + $("#antwoord").val());
+                        var antwoord;
+                        if ($("#antwoord").val() == "") {
+                            antwoord = "$$$$@@@@$$$$";
+                        } else {
+                            antwoord = $("#antwoord").val();
+                        }
+                        websocket.send("answer_" + antwoord);
                     }
                 }
             }
@@ -113,27 +117,25 @@ and open the template in the editor.
                 }
             }
 
-
-
-
-
-
             function stelVraag(vraag)
             {
                 vraagGesteld = true;
                 $('#vraag').text(vraag);
-                startTimer(30);
+                startTimer(timeForQ);
             }
 
 
             //kijken of het antwoord goed of fout is
             function checkAnswer(trueOrFalse)
             {
+                trueOrFalse = $.trim(trueOrFalse.toString());
+                console.log(trueOrFalse);
                 if (trueOrFalse == "true")
                 {
                     $("body").css('background', '#00ff00');
-                } else if (trueOrFalse == "false")
+                } else if (trueOrFalse === "false")
                 {
+                    console.log('FALSEEEEE');
                     $("body").css('background', '#ff0000');
                 }
             }

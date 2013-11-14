@@ -1,1 +1,2 @@
 php run.php
+pause
