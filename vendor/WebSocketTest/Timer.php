@@ -93,7 +93,7 @@ class Timer implements MessageComponentInterface
                 return;
             }
         }
-        $this->startTimer(30);
+        $this->startTimer(3);
     }
 
 }
