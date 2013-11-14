@@ -10,8 +10,8 @@ class Timer implements MessageComponentInterface
 
     protected $clients;
     protected $started = false;
-    
     protected $startedClients = array();
+    protected $clientAnswers = array();
 
     public function __construct()
     {
@@ -22,15 +22,15 @@ class Timer implements MessageComponentInterface
     {
         // Store the new connection to send messages to later
         $this->clients->attach($conn);
-        
+
         $this->startedClients[$conn->resourceId] = false;
+        $this->clientAnswers[$conn->resourceId] = "";
 
         echo "New connection! ({$conn->resourceId})\n";
     }
 
     public function onMessage(ConnectionInterface $from, $msg)
     {
-        $numRecv = count($this->clients) - 1;
         echo sprintf('Connection %d sends message "%s" to server' . "\n"
                 , $from->resourceId, $msg);
 
@@ -42,20 +42,29 @@ class Timer implements MessageComponentInterface
             switch ($msgParts[0])
             {
                 case "start":
-                    $responseMsg = $msgParts[1]. " start.";
+                    $responseMsg = "start_".$msgParts[1];
                     $this->startedClients[$from->resourceId] = true;
-                    echo "client ".$from->resourceId." started=".$this->startedClients[$from->resourceId]."\n";
+                    echo "client " . $from->resourceId . " started=" . $this->startedClients[$from->resourceId] . "\n";
                     $this->tryStart();
+                    break;
+                case "answer":
+                    $this->clientAnswers[$from->resourceId] = $msgParts[1];
+                    $this->tryReview();
                     break;
             }
         }
 
         if ($responseMsg != "")
         {
-            foreach ($this->clients as $client)
-            {
-                $client->send($responseMsg);
-            }
+            sendToAllClients($responseMsg);
+        }
+    }
+
+    private function sendToAllClients($msg)
+    {
+        foreach ($this->clients as $client)
+        {
+            $client->send($responseMsg);
         }
     }
 
@@ -64,7 +73,7 @@ class Timer implements MessageComponentInterface
         foreach ($this->clients as $client)
         {
             $message = "startTimer_$length";
-            echo "sending '$message' to client ".$client->resourceId;
+            echo "sending '$message' to client " . $client->resourceId;
             $client->send($message);
         }
     }
@@ -83,7 +92,7 @@ class Timer implements MessageComponentInterface
 
         $conn->close();
     }
-    
+
     private function tryStart()
     {
         foreach ($this->startedClients as $startedClient)
@@ -94,6 +103,41 @@ class Timer implements MessageComponentInterface
             }
         }
         $this->startTimer(3);
+    }
+
+    private function tryReview()
+    {
+        foreach ($this->clientAnswers as $answer)
+        {
+            if ($answer !== "")
+            {
+                return "";
+            }
+        }
+        return reviewAnswers();
+    }
+
+    private function reviewAnswers()
+    {
+        //TODO correct antwoord uit database halen
+        $correct = "5";
+
+        foreach ($this->clientAnswers as $answer)
+        {
+            if ($answer !== $correct)
+            {
+                return "answer_false;";
+            }
+        }
+        return "answer_true";
+    }
+
+    private function resetAnswers()
+    {
+        foreach ($this->clientAnswers as $client => $answer)
+        {
+            $this->clientAnswers[$client] = "";
+        }
     }
 
 }
