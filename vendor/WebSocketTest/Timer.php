@@ -31,8 +31,8 @@ class Timer implements MessageComponentInterface
     public function onMessage(ConnectionInterface $from, $msg)
     {
         $numRecv = count($this->clients) - 1;
-        echo sprintf('Connection %d sending message "%s" to %d other connection%s' . "\n"
-                , $from->resourceId, $msg, $numRecv, $numRecv == 1 ? '' : 's');
+        echo sprintf('Connection %d sends message "%s" to server' . "\n"
+                , $from->resourceId, $msg);
 
         $responseMsg = "";
 
@@ -44,6 +44,7 @@ class Timer implements MessageComponentInterface
                 case "start":
                     $responseMsg = $msgParts[1]. " start.";
                     $this->startedClients[$from->resourceId] = true;
+                    echo "client ".$from->resourceId." started=".$this->startedClients[$from->resourceId]."\n";
                     $this->tryStart();
                     break;
             }
@@ -63,6 +64,7 @@ class Timer implements MessageComponentInterface
         foreach ($this->clients as $client)
         {
             $message = "startTimer_$length";
+            echo "sending '$message' to client ".$client->resourceId;
             $client->send($message);
         }
     }
