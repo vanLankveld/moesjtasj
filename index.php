@@ -30,15 +30,16 @@ and open the template in the editor.
             //In deze functie staat de code die uitgevoerd wordt wanneer er een bericht vanuit de websocket ontvangen wordt
             websocket.onmessage = function(e) {
                 //e is het bericht dat binnenkomt
-
                 var commandArr = e.data.toString().split("_");
-                console.log(commandArr[0]);
                 if (commandArr[0] == "startTimer")
                 {
                     startTimer(parseInt(commandArr[1]));
                 } else if (commandArr[0] == "answer")
                 {
                     checkAnswer(commandArr[1]);
+                } else if (commandArr[0] == "start")
+                {
+                    playerJoined(commandArr[1]);
                 }
                 //Meer dingen ......
             };
@@ -50,27 +51,13 @@ and open the template in the editor.
                 websocket.send($("#tekst").val());
             }
 
-
-            //kijken of het antwoord goed of fout is
-            function checkAnswer(trueOrFalse)
-            {
-                if (trueOrFalse == "true")
-                {
-                    $("body").css('background','#00ff00'); 
-                } else if (trueOrFalse == "false")
-                {
-                    $("body").css('background','#ff0000');
-                }
-            }
-
-
             //========================================= Einde Websockets code ===========================================
 
             var time;
             var timerFunction;
             var timerStart = false;
             var vraagGesteld = false;
-            
+
 
             function startTimer(length) {
                 if (timerStart == false)
@@ -92,19 +79,28 @@ and open the template in the editor.
                 {
                     clearInterval(timerFunction);
                     timerFunction = null;
-                    alert('BOEM!!!');
                     timerStart = false;
 
                     if (vraagGesteld == false)
                     {
                         stelVraag("Hoeveel is 2 + 3 ?");
+                        $("#players").hide();
                         $("#antwoord").show();
                     } else if (vraagGesteld == true)
                     {
-                        $("#antwoord").prop('disabled', true);
+                        $("#antwoord").attr('disabled', 'disabled');
+                        websocket.send("answer_" + $("#antwoord").val());
                     }
                 }
             }
+
+
+
+            function playerJoined(player) {
+                console.log(player + " joined");
+                $("#players").append("<br/>" + player + " joined");
+            }
+
 
             function start() {
                 if ($("#tekst").val() == "")
@@ -119,12 +115,30 @@ and open the template in the editor.
 
 
 
+
+
+
             function stelVraag(vraag)
             {
                 vraagGesteld = true;
                 $('#vraag').text(vraag);
-                startTimer(60);
+                startTimer(30);
             }
+
+
+            //kijken of het antwoord goed of fout is
+            function checkAnswer(trueOrFalse)
+            {
+                if (trueOrFalse == "true")
+                {
+                    $("body").css('background', '#00ff00');
+                } else if (trueOrFalse == "false")
+                {
+                    $("body").css('background', '#ff0000');
+                }
+            }
+
+
 
 
         </script>
@@ -133,7 +147,8 @@ and open the template in the editor.
         <input type="text" id="tekst">
         <button onclick="start();" id="button1">start</button>
         <div id="timer"></div>
+        <div id="players"></div>
         <div id="vraag"></div>
-        <div id="antwoord" style="display:none;"><input type="text" name="antwoord"</div>
+        <div><input type="text" id="antwoord" style="display:none; width: 20px;" name="antwoord"</div>
     </body>
 </html>
