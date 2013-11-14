@@ -56,7 +56,7 @@ class Timer implements MessageComponentInterface
 
         if ($responseMsg != "")
         {
-            sendToAllClients($responseMsg);
+            $this->sendToAllClients($responseMsg);
         }
     }
 
@@ -64,7 +64,7 @@ class Timer implements MessageComponentInterface
     {
         foreach ($this->clients as $client)
         {
-            $client->send($responseMsg);
+            $client->send($msg);
         }
     }
 
