@@ -16,6 +16,8 @@ class Timer implements MessageComponentInterface
     public function __construct()
     {
         $this->clients = new \SplObjectStorage;
+        $newColor = array('H' => 30000, 'S' => 255, 'B' => 255);
+        $this->setHueLamp("192.168.1.111", "guus", "1", $newColor, true);
     }
 
     public function onOpen(ConnectionInterface $conn)
@@ -42,21 +44,21 @@ class Timer implements MessageComponentInterface
             switch ($msgParts[0])
             {
                 case "start":
-                    $responseMsg = "start_".$msgParts[1];
+                    $responseMsg = "start_" . $msgParts[1];
                     $this->startedClients[$from->resourceId] = true;
                     echo "client " . $from->resourceId . " started=" . $this->startedClients[$from->resourceId] . "\n";
                     $this->tryStart();
                     break;
                 case "answer":
                     $this->clientAnswers[$from->resourceId] = $msgParts[1];
-                    echo $from->resourceId." answered: '".$msgParts[1]."'.\n";
+                    echo $from->resourceId . " answered: '" . $msgParts[1] . "'.\n";
                     $responseMsg = $this->tryReview();
                     break;
             }
         }
 
         echo "Response message: $responseMsg";
-        
+
         if ($responseMsg != "")
         {
             $this->sendToAllClients($responseMsg);
@@ -142,6 +144,40 @@ class Timer implements MessageComponentInterface
         {
             $this->clientAnswers[$client] = "";
         }
+    }
+
+    /**
+     * Sets the state of a specified Hue lamp
+     * @param type $bridgeUrl Url of the Hue bridge
+     * @param type $username Username
+     * @param type $lampNr Lamp number
+     * @param type $newColor The new color in an array with 'H' 'S' 'B' keys
+     * @param type $turnOn true: lamp is turned on, false: lamp is turned off
+     */
+    private function setHueLamp($bridgeUrl, $username, $lampNr, $newColor, $turnOn) //$newColor is een array met een 'H' 'S' en 'B' waarde
+    {
+        $url = "$bridgeUrl/api/$username/lights/$lampNr/state";
+
+        echo "Hue bridge Url: $url\n";
+
+        $h = $newColor['H'];
+        $s = $newColor['S'];
+        $b = $newColor['B'];
+
+        $turnOnString = $turnOn ? 'true' : 'false';
+
+        $data = "{\"on\":$turnOnString, \"sat\":$s, \"bri\":$b,\"hue\":$h}";
+
+        echo "Hue Data JSON: $data\n";
+
+        $headers = array('Content-Type: application/json');
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        
+        echo curl_exec($ch);
     }
 
 }
