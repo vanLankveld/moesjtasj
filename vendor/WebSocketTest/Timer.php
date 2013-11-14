@@ -128,7 +128,7 @@ class Timer implements MessageComponentInterface
 
         foreach ($this->clientAnswers as $answer)
         {
-            if ($answer !== $correct)
+            if ($answer != $correct)
             {
                 return "answer_false";
             }

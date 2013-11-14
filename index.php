@@ -129,13 +129,11 @@ and open the template in the editor.
             function checkAnswer(trueOrFalse)
             {
                 trueOrFalse = $.trim(trueOrFalse.toString());
-                console.log(trueOrFalse);
                 if (trueOrFalse == "true")
                 {
                     $("body").css('background', '#00ff00');
                 } else if (trueOrFalse === "false")
                 {
-                    console.log('FALSEEEEE');
                     $("body").css('background', '#ff0000');
                 }
             }
