@@ -8,7 +8,23 @@ and open the template in the editor.
         <title></title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script src="js/jquery.js"></script>
-        <link href="css/style.css" rel="stylesheet" type="text/css">
+        <link href="css/style.css" rel="stylesheet" type="text/css" />
+        <!-- non-retina iPhone pre iOS 7 -->
+        <link rel="apple-touch-icon" href="images/apple-touch-icon-57x57.png" sizes="57x57">
+        <!-- non-retina iPhone iOS 7 -->
+        <link rel="apple-touch-icon" href="images/apple-touch-icon-60x60.png" sizes="60x60">
+        <!-- non-retina iPad pre iOS 7 -->
+        <link rel="apple-touch-icon" href="images/apple-touch-icon-72x72.png" sizes="72x72">
+        <!-- non-retina iPad iOS 7 -->
+        <link rel="apple-touch-icon" href="images/apple-touch-icon-72x72.png" sizes="76x76">
+        <!-- retina iPhone pre iOS 7 -->
+        <link rel="apple-touch-icon" href="images/apple-touch-icon-114x114.png" sizes="114x114">
+        <!-- retina iPhone iOS 7 -->
+        <link rel="apple-touch-icon" href="images/apple-touch-icon-120x120.png" sizes="120x120">
+        <!-- retina iPad pre iOS 7 -->
+        <link rel="apple-touch-icon" href="images/apple-touch-icon-144x144.png" sizes="144x144">
+        <!-- retina iPad iOS 7 -->
+        <link rel="apple-touch-icon" href="images/apple-touch-icon-152x152.png" sizes="152x152">
         <?php
         $exec = exec("hostname"); //the "hostname" is a valid command in both windows and linux
         $hostname = trim($exec); //remove any spaces before and after
@@ -81,6 +97,8 @@ and open the template in the editor.
 
                     if (vraagGesteld == false)
                     {
+                        $(".container").attr('display', 'block');
+                        $(".container").show();
                         stelVraag("Hoeveel is 2 + 3 ?");
                         $("#players").hide();
                         $("#antwoord").show();
@@ -146,9 +164,53 @@ and open the template in the editor.
     <body>
         <input type="text" id="tekst">
         <button onclick="start();" id="button1">start</button>
-        <div id="timer"></div>
         <div id="players"></div>
-        <div id="vraag"></div>
-        <div><input type="text" id="antwoord" style="display:none; width: 20px;" name="antwoord"</div>
+        <div id="timer"></div>
+        <div class="container"  style="display:none;">
+            <div class="tweederde">
+                <p class="vraag" id="vraag"> </p>
+                <img id="img" alt=""/>
+            </div>
+            <div class="eenderde">
+                <input type="text" name="antwoord" class="antwoord" id="antwoord" />
+                <div class="statusbalk">
+                    <ul>
+                        <li>
+                            <span class="active">1</span>
+                        </li>
+                        <li>
+                            <span>2</span>
+                        </li>
+                        <li>
+                            <span>3</span>
+                        </li>
+                        <li>
+                            <span>4</span>
+                        </li>
+                        <li>
+                            <span>5</span>
+                        </li>
+                        <li>
+                            <span>6</span>
+                        </li>
+                        <li>
+                            <span>7</span>
+                        </li>
+                        <li>
+                            <span>8</span>
+                        </li>
+                        <li>
+                            <span>9</span>
+                        </li>
+                        <li>
+                            <span>10</span>
+                        </li>
+                    </ul>
+                    <div class="potlood">
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

@@ -118,7 +118,9 @@ class Timer implements MessageComponentInterface {
                 return "answer_false";
             }
         }
-        $this->hueLamp->setHueRGB(0, 186, 62);
+        
+        //0 , 186 , 62
+        $this->hueLamp->setHueRGB(0, 255, 0);
         $this->hueLamp->setOnOff(true);
         return "answer_true";
     }
