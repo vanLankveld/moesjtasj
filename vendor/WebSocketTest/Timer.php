@@ -5,9 +5,10 @@ namespace WebSocketTest;
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
 
+include('RgbToHsb.php');
+
 class Timer implements MessageComponentInterface
 {
-
     protected $clients;
     protected $started = false;
     protected $startedClients = array();
@@ -16,8 +17,6 @@ class Timer implements MessageComponentInterface
     public function __construct()
     {
         $this->clients = new \SplObjectStorage;
-        $newColor = array('H' => 30000, 'S' => 255, 'B' => 255);
-        $this->setHueLamp("192.168.1.111", "guus", "1", $newColor, true);
     }
 
     public function onOpen(ConnectionInterface $conn)

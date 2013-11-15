@@ -41,7 +41,7 @@ function rgb_to_hsb($R, $G, $B)
     $var_Max = max($var_R, $var_G, $var_B);
     $del_Max = $var_Max - $var_Min;
 
-    $V = $var_Max;
+    $B = $var_Max;
 
     if ($del_Max == 0)
     {
@@ -69,16 +69,20 @@ function rgb_to_hsb($R, $G, $B)
         }
 
         if ($H < 0)
+        {
             $H++;
+        }
         if ($H > 1)
+        {
             $H--;
+        }
     }
     
     
 
     $HSL['H'] = round($H * 65536);
-    $HSL['S'] = round(255 - ($S * 255));
-    $HSL['V'] = round($V * 255);
+    $HSL['S'] = round($S * 255);
+    $HSL['B'] = round($B * 255);
 
     return $HSL;
 }
