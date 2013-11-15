@@ -131,10 +131,10 @@ and open the template in the editor.
                 trueOrFalse = $.trim(trueOrFalse.toString());
                 if (trueOrFalse == "true")
                 {
-                    $("body").css('background', '#00ff00');
+                    console.log('goed');
                 } else if (trueOrFalse === "false")
                 {
-                    $("body").css('background', '#ff0000');
+                    console.log('fout');
                 }
             }
 
