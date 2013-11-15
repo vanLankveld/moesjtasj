@@ -4,8 +4,7 @@ namespace WebSocketTest;
 
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
-
-include('RgbToHsb.php');
+use WebSocketTest\HueLamp;
 
 class Timer implements MessageComponentInterface
 {
@@ -13,10 +12,14 @@ class Timer implements MessageComponentInterface
     protected $started = false;
     protected $startedClients = array();
     protected $clientAnswers = array();
+    
+    protected $hueLamp;
 
     public function __construct()
     {
         $this->clients = new \SplObjectStorage;
+        
+        $this->hueLamp = new HueLamp("http://192.168.1.102", "newdeveloper", "1");
     }
 
     public function onOpen(ConnectionInterface $conn)
@@ -131,9 +134,11 @@ class Timer implements MessageComponentInterface
         {
             if ($answer != $correct)
             {
+                $this->hueLamp->setHueRGB(255, 0, 0);
                 return "answer_false";
             }
         }
+        $this->hueLamp->setHueRGB(0, 255, 0);
         return "answer_true";
     }
 
@@ -143,40 +148,6 @@ class Timer implements MessageComponentInterface
         {
             $this->clientAnswers[$client] = "";
         }
-    }
-
-    /**
-     * Sets the state of a specified Hue lamp
-     * @param type $bridgeUrl Url of the Hue bridge
-     * @param type $username Username
-     * @param type $lampNr Lamp number
-     * @param type $newColor The new color in an array with 'H' 'S' 'B' keys
-     * @param type $turnOn true: lamp is turned on, false: lamp is turned off
-     */
-    private function setHueLamp($bridgeUrl, $username, $lampNr, $newColor, $turnOn) //$newColor is een array met een 'H' 'S' en 'B' waarde
-    {
-        $url = "$bridgeUrl/api/$username/lights/$lampNr/state";
-
-        echo "Hue bridge Url: $url\n";
-
-        $h = $newColor['H'];
-        $s = $newColor['S'];
-        $b = $newColor['B'];
-
-        $turnOnString = $turnOn ? 'true' : 'false';
-
-        $data = "{\"on\":$turnOnString, \"sat\":$s, \"bri\":$b,\"hue\":$h}";
-
-        echo "Hue Data JSON: $data\n";
-
-        $headers = array('Content-Type: application/json');
-
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        
-        echo curl_exec($ch);
     }
 
 }
