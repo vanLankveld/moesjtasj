@@ -114,7 +114,7 @@ class Timer implements MessageComponentInterface {
 
     private function reviewAnswers() {
         //TODO correct antwoord uit database halen
-        $correct = "5";
+        $correct = $this->currentQuestion->getCorrectAnswer();
 
         foreach ($this->clientAnswers as $answer) {
             if ($answer != $correct) {
