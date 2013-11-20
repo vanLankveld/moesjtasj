@@ -3,6 +3,7 @@
 namespace WebSocketTest;
 
 include 'bestanden/config.php';
+include 'Utility.php';
 
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
@@ -22,7 +23,7 @@ class Timer implements MessageComponentInterface {
     public function __construct() {
         $this->clients = new \SplObjectStorage;
 
-        $this->hueLamp = new HueLamp("http://192.168.1.102", "newdeveloper", "1");
+        $this->hueLamp = new HueLamp("http://192.168.1.102", "newdeveloper", getQuoraId());
     }
 
     public function onOpen(ConnectionInterface $conn) {
@@ -113,11 +114,9 @@ class Timer implements MessageComponentInterface {
     }
 
     private function reviewAnswers() {
-        //TODO correct antwoord uit database halen
-        $correct = $this->currentQuestion->getCorrectAnswer();
 
         foreach ($this->clientAnswers as $answer) {
-            if ($answer != $correct) {
+            if (!$this->currentQuestion->checkAnswer($answer)) {
                 $this->hueLamp->setHueRGB(255, 0, 0);
                 $this->hueLamp->setOnOff(true);
                 return "answer_false";
@@ -180,7 +179,7 @@ class Timer implements MessageComponentInterface {
             $this->currentQuestion = new Question($id, $questionText, $image, $subject, $type, $multipleChoiceAnswers, $correctAnswer);
         }
         
-        echo "json code = ".json_encode($this->currentQuestion)."\n";
+        echo "question_".json_encode($this->currentQuestion)."\n";
         $this->sendToAllClients(json_encode($this->currentQuestion));
     }
 
