@@ -54,7 +54,10 @@ and open the template in the editor.
                     checkAnswer(commandArr[1]);
                 } else if (commandArr[0] == "start") {
                     playerJoined(commandArr[1]);
+                } else if (commandArr[0] == "question") {
+                    
                 }
+
                 //Meer dingen ......
             };
             //verstuur test bericht uit textveld
