@@ -57,8 +57,6 @@ and open the template in the editor.
                 }
                 //Meer dingen ......
             };
-
-
             //verstuur test bericht uit textveld
             function sendMessage()
             {
