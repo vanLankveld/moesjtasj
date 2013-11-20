@@ -14,8 +14,6 @@
 
 namespace WebSocketTest;
 
-include('Utility.php');
-
 class HueLamp
 {
     private $url;

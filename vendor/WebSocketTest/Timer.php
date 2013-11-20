@@ -2,8 +2,8 @@
 
 namespace WebSocketTest;
 
-include 'bestanden/config.php';
-include 'Utility.php';
+include_once 'bestanden/config.php';
+include_once 'Utility.php';
 
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
@@ -119,6 +119,7 @@ class Timer implements MessageComponentInterface {
             if (!$this->currentQuestion->checkAnswer($answer)) {
                 $this->hueLamp->setHueRGB(255, 0, 0);
                 $this->hueLamp->setOnOff(true);
+                echo "Anwere: ".$answer.", correct answer: ".$this->currentQuestion->correctAnswer.".\n";
                 return "answer_false";
             }
         }

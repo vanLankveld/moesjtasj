@@ -38,7 +38,7 @@ class Question
 
     public function checkAnswer($answer)
     {
-        if ($answer != $this->correctAnswer)
+        if ($answer != $this->multipleChoiceAnswers[$this->correctAnswer])
         {
             return false;
         }

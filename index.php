@@ -106,15 +106,15 @@ and open the template in the editor.
                         stelVraag(vraag);
                         $("#players").hide();
                         if (type == 'multiple') {
-                         //   $("#multiple").show();
-                        } else if (type == 'single') {
+                            $("#multiple").show();
+                        } else if (type == 'enkel') {
                             $("#antwoord").show();
                         }
                     } else if (vraagGesteld == true)
                     {
                         $("#antwoord").attr('disabled', 'disabled');
                         var antwoord;
-                        if ($("#antwoord").val() == "") {
+                        if ($("#antwoord").val() === "") {
                             antwoord = "$$$$@@@@$$$$";
                         } else {
                             antwoord = $("#antwoord").val();
@@ -145,11 +145,6 @@ and open the template in the editor.
 
             function stelVraag(vraag)
             {
-                if (type == 'multiple') {
-
-                } else if (type == 'single') {
-
-                }
                 vraagGesteld = true;
                 $('#vraag').text(vraag);
                 startTimer(timeForQ);
@@ -190,10 +185,10 @@ and open the template in the editor.
             <div class="eenderde">
                 <input type="text" name="antwoord" class="antwoord" id="antwoord"  style="display:none;" />
                 <div id="multiple"  style="display:none;">
-                    <input type="radio" name="group1" value=""><br/>
-                    <input type="radio" name="group1" value=""><br/>
-                    <input type="radio" name="group1" value=""><br/>
-                    <input type="radio" name="group1" value=""><br/>
+                    <input type="radio" name="antwoord" value=""><br/>
+                    <input type="radio" name="antwoord" value=""><br/>
+                    <input type="radio" name="antwoord" value=""><br/>
+                    <input type="radio" name="antwoord" value=""><br/>
                 </div>
 
                 <div class="statusbalk">
