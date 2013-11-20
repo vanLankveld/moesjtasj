@@ -159,7 +159,7 @@ class Timer implements MessageComponentInterface {
         while ($waardes = mysql_fetch_array($result)) {
 
             $id = $waardes['id'];
-            $questionText = $waardes['vraag'];
+            $questionText = utf8_encode($waardes['vraag']);
             $image = $waardes['imgUrl'];
             $subject = $waardes['soort'];
             $type = $waardes['type'];
@@ -178,9 +178,10 @@ class Timer implements MessageComponentInterface {
             array_push($this->selectedQuestions, $id);
             $this->currentQuestion = new Question($id, $questionText, $image, $subject, $type, $multipleChoiceAnswers, $correctAnswer);
         }
-        
-        echo "question_".json_encode($this->currentQuestion)."\n";
-        $this->sendToAllClients(json_encode($this->currentQuestion));
+
+        $questionJson = "question_" . json_encode($this->currentQuestion);
+        echo $questionJson . "\n";
+        $this->sendToAllClients($questionJson);
     }
 
 }

@@ -55,7 +55,7 @@ and open the template in the editor.
                 } else if (commandArr[0] == "start") {
                     playerJoined(commandArr[1]);
                 } else if (commandArr[0] == "question") {
-                    
+                    setQuestion(commandArr[1]);
                 }
 
                 //Meer dingen ......
@@ -73,7 +73,9 @@ and open the template in the editor.
             var timerStart = false;
             var vraagGesteld = false;
             var timeForQ = 20;
-
+            var vraag;
+            var vak;
+            var type;
 
             function startTimer(length) {
                 if (timerStart == false)
@@ -101,7 +103,7 @@ and open the template in the editor.
                     {
                         $(".container").attr('display', 'block');
                         $(".container").show();
-                        stelVraag("Hoeveel is 2 + 3 ?");
+                        stelVraag(vraag);
                         $("#players").hide();
                         $("#antwoord").show();
                     } else if (vraagGesteld == true)
@@ -144,7 +146,6 @@ and open the template in the editor.
                 startTimer(timeForQ);
             }
 
-
             //kijken of het antwoord goed of fout is
             function checkAnswer(trueOrFalse)
             {
@@ -157,6 +158,14 @@ and open the template in the editor.
                     console.log('fout');
                 }
             }
+
+            function setQuestion(json) {
+                var obj = JSON.parse(json);
+                vak = obj['subject'];
+                type = obj['type'];
+                vraag = obj['questionText'];
+            }
+
         </script>
     </head>
     <body>
