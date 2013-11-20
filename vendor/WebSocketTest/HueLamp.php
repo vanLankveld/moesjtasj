@@ -14,7 +14,7 @@
 
 namespace WebSocketTest;
 
-include('RgbToHsb.php');
+include('Utility.php');
 
 class HueLamp
 {
