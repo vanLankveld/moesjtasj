@@ -45,6 +45,7 @@ and open the template in the editor.
 
             //In deze functie staat de code die uitgevoerd wordt wanneer er een bericht vanuit de websocket ontvangen wordt
             websocket.onmessage = function(e) {
+                console.log(e.data.toString());
                 //e is het bericht dat binnenkomt
                 var commandArr = e.data.toString().split("_");
                 if (commandArr[0] == "startTimer") {
@@ -70,7 +71,7 @@ and open the template in the editor.
             var timerFunction;
             var timerStart = false;
             var vraagGesteld = false;
-            var timeForQ = 5;
+            var timeForQ = 20;
 
 
             function startTimer(length) {
@@ -155,10 +156,6 @@ and open the template in the editor.
                     console.log('fout');
                 }
             }
-
-
-
-
         </script>
     </head>
     <body>

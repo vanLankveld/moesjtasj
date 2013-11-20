@@ -17,48 +17,13 @@ namespace WebSocketTest;
 class Question
 {
 
-    private $id;
-    private $questionText;
-    private $image;
-    private $subject;
-    private $type;
-    private $multipleChoiceAnswers = array();
-    private $correctAnswer;
-
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function getQuestionText()
-    {
-        return $this->questionText;
-    }
-
-    public function getImage()
-    {
-        return $this->image;
-    }
-
-    public function getSubject()
-    {
-        return $this->subject;
-    }
-    
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    public function getMultipleChoiceAnswers()
-    {
-        return $this->multipleChoiceAnswers;
-    }
-
-    public function getCorrectAnswer()
-    {
-        return $this->correctAnswer;
-    }
+    public $id;
+    public $questionText;
+    public $image;
+    public $subject;
+    public $type;
+    public $multipleChoiceAnswers = array();
+    public $correctAnswer;
 
     function __construct($id, $questionText, $image, $subject, $type, $multipleChoiceAnswers, $correctAnswer)
     {
