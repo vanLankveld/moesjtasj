@@ -105,7 +105,11 @@ and open the template in the editor.
                         $(".container").show();
                         stelVraag(vraag);
                         $("#players").hide();
-                        $("#antwoord").show();
+                        if (type == 'multiple') {
+                         //   $("#multiple").show();
+                        } else if (type == 'single') {
+                            $("#antwoord").show();
+                        }
                     } else if (vraagGesteld == true)
                     {
                         $("#antwoord").attr('disabled', 'disabled');
@@ -141,6 +145,11 @@ and open the template in the editor.
 
             function stelVraag(vraag)
             {
+                if (type == 'multiple') {
+
+                } else if (type == 'single') {
+
+                }
                 vraagGesteld = true;
                 $('#vraag').text(vraag);
                 startTimer(timeForQ);
@@ -179,7 +188,14 @@ and open the template in the editor.
                 <img id="img" alt=""/>
             </div>
             <div class="eenderde">
-                <input type="text" name="antwoord" class="antwoord" id="antwoord" />
+                <input type="text" name="antwoord" class="antwoord" id="antwoord"  style="display:none;" />
+                <div id="multiple"  style="display:none;">
+                    <input type="radio" name="group1" value=""><br/>
+                    <input type="radio" name="group1" value=""><br/>
+                    <input type="radio" name="group1" value=""><br/>
+                    <input type="radio" name="group1" value=""><br/>
+                </div>
+
                 <div class="statusbalk">
                     <ul>
                         <li>
