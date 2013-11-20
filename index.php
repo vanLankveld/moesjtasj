@@ -60,11 +60,6 @@ and open the template in the editor.
 
                 //Meer dingen ......
             };
-            //verstuur test bericht uit textveld
-            function sendMessage()
-            {
-                websocket.send($("#tekst").val());
-            }
 
             //========================================= Einde Websockets code ===========================================
 
@@ -72,10 +67,14 @@ and open the template in the editor.
             var timerFunction;
             var timerStart = false;
             var vraagGesteld = false;
-            var timeForQ = 20;
+            var timeForQ = 6;
             var vraag;
             var vak;
             var type;
+            var antwoord1;
+            var antwoord2;
+            var antwoord3;
+            var antwoord4;
 
             function startTimer(length) {
                 if (timerStart == false)
@@ -105,20 +104,26 @@ and open the template in the editor.
                         $(".container").show();
                         stelVraag(vraag);
                         $("#players").hide();
-                        if (type == 'multiple') {
+                        if (type === 'multiple') {
                             $("#multiple").show();
-                        } else if (type == 'enkel') {
+                            $("#antwoord1").append(antwoord1);
+                            $("#antwoord2").append(antwoord1);
+                            $("#antwoord3").append(antwoord1);
+                            $("#antwoord4").append(antwoord1);
+
+                            $("#anwoord1").val(antwoord1);
+                        } else if (type === 'enkel') {
                             $("#antwoord").show();
                         }
                     } else if (vraagGesteld == true)
                     {
-                        $("#antwoord").attr('disabled', 'disabled');
                         var antwoord;
                         if ($("#antwoord").val() === "") {
                             antwoord = "$$$$@@@@$$$$";
                         } else {
                             antwoord = $("#antwoord").val();
                         }
+                        $("#antwoord").attr('disabled', 'disabled');
                         websocket.send("answer_" + antwoord);
                     }
                 }
@@ -168,6 +173,13 @@ and open the template in the editor.
                 vak = obj['subject'];
                 type = obj['type'];
                 vraag = obj['questionText'];
+                if (type == 'multiple') {
+                    var antwoorden = obj['multipleChoiceAnswers'];
+                    antwoord1 = antwoorden['A'];
+                    antwoord2 = antwoorden['B'];
+                    antwoord3 = antwoorden['C'];
+                    antwoord4 = antwoorden['D'];
+                }
             }
 
         </script>
@@ -185,10 +197,10 @@ and open the template in the editor.
             <div class="eenderde">
                 <input type="text" name="antwoord" class="antwoord" id="antwoord"  style="display:none;" />
                 <div id="multiple"  style="display:none;">
-                    <input type="radio" name="antwoord" value=""><br/>
-                    <input type="radio" name="antwoord" value=""><br/>
-                    <input type="radio" name="antwoord" value=""><br/>
-                    <input type="radio" name="antwoord" value=""><br/>
+                    <input type="radio" name="antwoord" value="" id="antwoord1"><br/>
+                    <input type="radio" name="antwoord" value="" id="antwoord2"><br/>
+                    <input type="radio" name="antwoord" value="" id="antwoord3"><br/>
+                    <input type="radio" name="antwoord" value="" id="antwoord4"><br/>
                 </div>
 
                 <div class="statusbalk">
