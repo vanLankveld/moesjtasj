@@ -38,6 +38,7 @@ class Question
 
     public function checkAnswer($answer)
     {
+        echo "Correct answer: ".$this->multipleChoiceAnswers[$this->correctAnswer]."\n";
         if ($answer != $this->multipleChoiceAnswers[$this->correctAnswer])
         {
             return false;
