@@ -175,10 +175,10 @@ and open the template in the editor.
                 vraag = obj['questionText'];
                 if (type == 'multiple') {
                     var antwoorden = obj['multipleChoiceAnswers'];
-                    antwoord1 = antwoorden['A'];
-                    antwoord2 = antwoorden['B'];
-                    antwoord3 = antwoorden['C'];
-                    antwoord4 = antwoorden['D'];
+                    antwoord1 = antwoorden[0];
+                    antwoord2 = antwoorden[1];
+                    antwoord3 = antwoorden[2];
+                    antwoord4 = antwoorden[3];
                 }
             }
 
