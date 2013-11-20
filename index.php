@@ -106,10 +106,10 @@ and open the template in the editor.
                         $("#players").hide();
                         if (type === 'multiple') {
                             $("#multiple").show();
-                            $("#antwoord1").append(antwoord1);
-                            $("#antwoord2").append(antwoord1);
-                            $("#antwoord3").append(antwoord1);
-                            $("#antwoord4").append(antwoord1);
+                            $("#labelAnwoord1").append(antwoord1);
+                            $("#labelAnwoord2").append(antwoord2);
+                            $("#labelAnwoord3").append(antwoord3);
+                            $("#labelAnwoord4").append(antwoord4);
 
                             $("#anwoord1").val(antwoord1);
                         } else if (type === 'enkel') {
@@ -118,12 +118,16 @@ and open the template in the editor.
                     } else if (vraagGesteld == true)
                     {
                         var antwoord;
-                        if ($("#antwoord").val() === "") {
-                            antwoord = "$$$$@@@@$$$$";
-                        } else {
-                            antwoord = $("#antwoord").val();
+                        if (type === "enkel") {
+                            if ($("#antwoord").val() === "") {
+                                antwoord = "$$$$@@@@$$$$";
+                            } else {
+                                antwoord = $("#antwoord").val();
+                            }
+                            $("#antwoord").attr('disabled', 'disabled');
+                        }else if (type === "multiple"){
+                            
                         }
-                        $("#antwoord").attr('disabled', 'disabled');
                         websocket.send("answer_" + antwoord);
                     }
                 }
@@ -197,12 +201,11 @@ and open the template in the editor.
             <div class="eenderde">
                 <input type="text" name="antwoord" class="antwoord" id="antwoord"  style="display:none;" />
                 <div id="multiple"  style="display:none;">
-                    <input type="radio" name="antwoord" value="" id="antwoord1"><br/>
-                    <input type="radio" name="antwoord" value="" id="antwoord2"><br/>
-                    <input type="radio" name="antwoord" value="" id="antwoord3"><br/>
-                    <input type="radio" name="antwoord" value="" id="antwoord4"><br/>
+                    A <input type="radio" name="antwoord" value="" id="antwoord1"><label id="labelAnwoord1" for="antwoord1"></label><br/>
+                    B <input type="radio" name="antwoord" value="" id="antwoord2"><label id="labelAnwoord2" for="antwoord2"></label><br/>
+                    C <input type="radio" name="antwoord" value="" id="antwoord3"><label id="labelAnwoord3" for="antwoord3"></label><br/>
+                    D <input type="radio" name="antwoord" value="" id="antwoord4"><label id="labelAnwoord4" for="antwoord4"></label><br/>
                 </div>
-
                 <div class="statusbalk">
                     <ul>
                         <li>
