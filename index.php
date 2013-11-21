@@ -75,6 +75,7 @@ and open the template in the editor.
             var antwoord2;
             var antwoord3;
             var antwoord4;
+            var radioAnswer;
 
             function startTimer(length) {
                 if (timerStart == false)
@@ -98,6 +99,7 @@ and open the template in the editor.
                     timerFunction = null;
                     timerStart = false;
 
+                    //vraag stellen (op het scherm zetten)
                     if (vraagGesteld == false)
                     {
                         $(".container").attr('display', 'block');
@@ -111,25 +113,31 @@ and open the template in the editor.
                             $("#labelAnwoord3").append(antwoord3);
                             $("#labelAnwoord4").append(antwoord4);
 
-                            $("#anwoord1").val(antwoord1);
+
                         } else if (type === 'enkel') {
                             $("#antwoord").show();
                         }
-                    } else if (vraagGesteld == true)
+                    } else
+                    //Vraag opsturen
+                    if (vraagGesteld == true)
                     {
                         var antwoord;
                         if (type === "enkel") {
-                            if ($("#antwoord").val() === "") {
-                                antwoord = "$$$$@@@@$$$$";
-                            } else {
-                                antwoord = $("#antwoord").val();
-                            }
-                            $("#antwoord").attr('disabled', 'disabled');
-                        }else if (type === "multiple"){
-                            
+                            antwoord = $("#antwoord").val();
                         }
-                        websocket.send("answer_" + antwoord);
+                        $("#antwoord").attr('disabled', 'disabled');
+                    } else if (type === "multiple") {
+                        antwoord = radioAnswer;
+                        console.log("ïs checked == " + $('#antwoord3').is(':checked'));
+                        if (($('#antwoord3').is(':checked')) === true) {
+                            console.log("testtest = " + $('#<% QTY.labelAnwoord3 %>').text());
+                        }
+
                     }
+                    if (antwoord === "") {
+                        antwoord = "$$$$@@@@$$$$";
+                    }
+                    websocket.send("answer_" + antwoord);
                 }
             }
 
@@ -186,6 +194,7 @@ and open the template in the editor.
                 }
             }
 
+
         </script>
     </head>
     <body>
@@ -200,12 +209,14 @@ and open the template in the editor.
             </div>
             <div class="eenderde">
                 <input type="text" name="antwoord" class="antwoord" id="antwoord"  style="display:none;" />
-                <div id="multiple"  style="display:none;">
-                    A <input type="radio" name="antwoord" value="" id="antwoord1"><label id="labelAnwoord1" for="antwoord1"></label><br/>
-                    B <input type="radio" name="antwoord" value="" id="antwoord2"><label id="labelAnwoord2" for="antwoord2"></label><br/>
-                    C <input type="radio" name="antwoord" value="" id="antwoord3"><label id="labelAnwoord3" for="antwoord3"></label><br/>
-                    D <input type="radio" name="antwoord" value="" id="antwoord4"><label id="labelAnwoord4" for="antwoord4"></label><br/>
-                </div>
+                <form id="multipleForm">
+                    <div id="multiple"  style="display:none;">
+                        A <input type="radio" name="antwoord" value="" id="antwoord1"><label id="labelAnwoord1" for="antwoord1"></label><br/>
+                        B <input type="radio" name="antwoord" value="" id="antwoord2"><label id="labelAnwoord2" for="antwoord2"></label><br/>
+                        C <input type="radio" name="antwoord" value="" id="antwoord3" checked><label id="labelAnwoord3" for="antwoord3"></label><br/>
+                        D <input type="radio" name="antwoord" value="" id="antwoord4"><label id="labelAnwoord4" for="antwoord4"></label><br/>
+                    </div>
+                </form>
                 <div class="statusbalk">
                     <ul>
                         <li>
