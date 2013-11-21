@@ -206,14 +206,16 @@ and open the template in the editor.
             </div>
             <div class="eenderde">
                 <input type="text" name="antwoord" class="antwoord" id="antwoord"  style="display:none;" />
-                <form id="multipleForm">
-                    <div id="multiple"  style="display:none;">
-                        A <input type="radio" name="antwoordMult" value="0" id="antwoord1"><label id="labelAnwoord0" for="antwoord0"></label><br/>
-                        B <input type="radio" name="antwoordMult" value="1" id="antwoord2"><label id="labelAnwoord1" for="antwoord1"></label><br/>
-                        C <input type="radio" name="antwoordMult" value="2" id="antwoord3" checked><label id="labelAnwoord2" for="antwoord2"></label><br/>
-                        D <input type="radio" name="antwoordMult" value="3" id="antwoord4"><label id="labelAnwoord3" for="antwoord3"></label><br/>
-                    </div>
-                </form>
+
+                <div id="multiple"  style="display:none;">
+                    <form id="multipleForm">
+                        A <input type="radio" class="radio" name="antwoordMult" value="0" id="antwoord1"><label id="labelAnwoord0" for="antwoord0"></label><br/>
+                        B <input type="radio" class="radio" name="antwoordMult" value="1" id="antwoord2"><label id="labelAnwoord1" for="antwoord1"></label><br/>
+                        C <input type="radio" class="radio" name="antwoordMult" value="2" id="antwoord3" checked><label id="labelAnwoord2" for="antwoord2"></label><br/>
+                        D <input type="radio" class="radio" name="antwoordMult" value="3" id="antwoord4"><label id="labelAnwoord3" for="antwoord3"></label><br/>
+                    </form>
+                </div>
+
                 <div class="statusbalk">
                     <ul>
                         <li>
