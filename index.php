@@ -67,7 +67,7 @@ and open the template in the editor.
             var timerFunction;
             var timerStart = false;
             var vraagGesteld = false;
-            var timeForQ = 6;
+            var timeForQ = 30;
             var vraag;
             var vak;
             var type;
