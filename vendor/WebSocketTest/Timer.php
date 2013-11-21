@@ -67,6 +67,9 @@ class Timer implements MessageComponentInterface
                     echo $from->resourceId . " answered: '" . $msgParts[1] . "'.\n";
                     $responseMsg = $this->tryReview();
                     break;
+                case "setBrightness_":
+                    $this->setHueTimerBrightness($msgParts[1]);
+                    break;
             }
         }
 
