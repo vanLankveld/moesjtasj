@@ -85,13 +85,14 @@ class HueLamp
         
     private function setHue()
     {
-        echo "Hue bridge Url: $this->url\n";
+        //echo "Hue bridge Url: $this->url\n";
+        echo "Set Hue data...\n";
 
         $turnOnString = $this->turnedOn ? 'true' : 'false';
 
         $data = "{\"on\":$turnOnString, \"sat\":$this->S, \"bri\":$this->B,\"hue\":$this->H}";
 
-        echo "Hue Data JSON: $data\n";
+        //echo "Hue Data JSON: $data\n";
 
         $headers = array('Content-Type: application/json');
 
@@ -100,7 +101,7 @@ class HueLamp
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         
-        echo curl_exec($ch)."\n";
+        curl_exec($ch);
     }
     
 }
