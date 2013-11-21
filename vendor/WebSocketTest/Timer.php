@@ -22,8 +22,8 @@ class Timer implements MessageComponentInterface
     private $currentQuestion;
     private $messageGoodAnswer = "answer_true";
     private $messageWrongAnswer = "answer_false";
-    
     private $questionTimerLength = 30;
+    private $secondChance;
 
     public function __construct()
     {
@@ -41,7 +41,7 @@ class Timer implements MessageComponentInterface
         $this->clientAnswers[$conn->resourceId] = "";
 
         echo "New connection! ({$conn->resourceId})\n";
-        echo "Number of connections: ".$this->clients->count()."\n";
+        echo "Number of connections: " . $this->clients->count() . "\n";
     }
 
     public function onMessage(ConnectionInterface $from, $msg)
@@ -79,14 +79,19 @@ class Timer implements MessageComponentInterface
 
         sleep(5);
 
-        switch ($responseMsg)
+        if ($responseMsg == $this->messageGoodAnswer)
         {
-            case $this->messageGoodAnswer:
-                //Volgende vraag
-                break;
-            case $this->messageWrongAnswer:
+            $this->getNewQuestion();
+        } 
+        else if ($responseMsg == $this->messageWrongAnswer)
+        {
+            if (!$this->secondChance)
+            {
+                $this->secondChance = true;
                 $this->sendCurrentQuestionToClients();
-                break;
+                return;
+            }
+            $this->getNewQuestion();
         }
     }
 
@@ -114,7 +119,7 @@ class Timer implements MessageComponentInterface
         $this->clients->detach($conn);
 
         echo "Connection {$conn->resourceId} has disconnected\n";
-        echo "Number of connections: ".$this->clients->count()."\n";
+        echo "Number of connections: " . $this->clients->count() . "\n";
     }
 
     public function onError(ConnectionInterface $conn, \Exception $e)
@@ -221,6 +226,7 @@ class Timer implements MessageComponentInterface
             $this->currentQuestion = new Question($id, $questionText, $image, $subject, $type, $multipleChoiceAnswers, $correctAnswer);
         }
         $this->sendCurrentQuestionToClients();
+        $this->secondChance = false;
     }
 
     private function sendCurrentQuestionToClients()
@@ -230,6 +236,14 @@ class Timer implements MessageComponentInterface
         $this->sendToAllClients($questionJson);
     }
 
+    private function setHueTimerBrightness($timeLeft)
+    {
+        $percentBrightness = floatval($timeLeft) / floatval($this->questionTimerLength);
+        
+        $brightness = intval($percentBrightness * 255);
+        
+        $this->hueLamp->setBrightness($brightness);
+    }   
 }
 
 ?>

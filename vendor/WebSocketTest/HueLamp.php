@@ -75,6 +75,13 @@ class HueLamp
         
         $this->setHue();
     }
+    
+    public function setBrightness($B)
+    {        
+        $this->B = $B;
+        
+        $this->setHue();
+    }
         
     private function setHue()
     {
