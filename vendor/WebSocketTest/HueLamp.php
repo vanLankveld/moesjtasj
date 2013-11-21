@@ -19,6 +19,7 @@ class HueLamp
     private $url;
     
     private $turnedOn;
+    private $alert;   
     
     private $H;
     private $S;
@@ -35,6 +36,7 @@ class HueLamp
         $this->S = $color['S'];
         $this->B = $color['B'];
         
+        $this->alert = false;
         $this->setHue();
     }
     
@@ -82,14 +84,23 @@ class HueLamp
         
         $this->setHue();
     }
+    
+    public function alert($on)
+    {
+        $this->alert = $on;
+        
+        $this->setHue();
+    }
         
     private function setHue()
     {
-        echo "Hue bridge Url: $this->url\n";
+        //echo "Hue bridge Url: $this->url\n";
+        echo "Set Hue data...\n";
 
         $turnOnString = $this->turnedOn ? 'true' : 'false';
+        $alertOnString = $this->alert ? 'lselect' : 'none';
 
-        $data = "{\"on\":$turnOnString, \"sat\":$this->S, \"bri\":$this->B,\"hue\":$this->H}";
+        $data = "{\"on\":$turnOnString, \"sat\":$this->S, \"bri\":$this->B,\"hue\":$this->H, \"alert\":\"$alertOnString\"}";
 
         echo "Hue Data JSON: $data\n";
 
@@ -100,7 +111,7 @@ class HueLamp
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         
-        echo curl_exec($ch)."\n";
+        curl_exec($ch);
     }
     
 }
