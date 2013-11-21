@@ -19,6 +19,7 @@ class HueLamp
     private $url;
     
     private $turnedOn;
+    private $alert;   
     
     private $H;
     private $S;
@@ -35,6 +36,7 @@ class HueLamp
         $this->S = $color['S'];
         $this->B = $color['B'];
         
+        $this->alert = false;
         $this->setHue();
     }
     
@@ -82,6 +84,13 @@ class HueLamp
         
         $this->setHue();
     }
+    
+    public function alert($on)
+    {
+        $this->alert = $on;
+        
+        $this->setHue();
+    }
         
     private function setHue()
     {
@@ -89,10 +98,11 @@ class HueLamp
         echo "Set Hue data...\n";
 
         $turnOnString = $this->turnedOn ? 'true' : 'false';
+        $alertOnString = $this->alert ? 'lselect' : 'none';
 
-        $data = "{\"on\":$turnOnString, \"sat\":$this->S, \"bri\":$this->B,\"hue\":$this->H}";
+        $data = "{\"on\":$turnOnString, \"sat\":$this->S, \"bri\":$this->B,\"hue\":$this->H, \"alert\":\"$alertOnString\"}";
 
-        //echo "Hue Data JSON: $data\n";
+        echo "Hue Data JSON: $data\n";
 
         $headers = array('Content-Type: application/json');
 

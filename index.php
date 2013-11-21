@@ -88,7 +88,7 @@ and open the template in the editor.
             }
 
             function updateTimer() {
-                if (time % 5 === 0) {
+                if (time === 10) {
                     websocket.send("setBrightness_" + time);
                 }
                 if (time > 0) {

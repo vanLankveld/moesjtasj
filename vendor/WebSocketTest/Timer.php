@@ -17,7 +17,7 @@ class Timer implements MessageComponentInterface
     protected $started = false;
     protected $startedClients = array();
     protected $clientAnswers = array();
-    protected $clientCalledBrightness = array();
+    protected $clientCalled10Seconds = array();
     protected $hueLamp;
     private $selectedQuestions = array();
     private $currentQuestion;
@@ -41,7 +41,7 @@ class Timer implements MessageComponentInterface
 
         $this->startedClients[$conn->resourceId] = false;
         $this->clientAnswers[$conn->resourceId] = "";
-        $this->clientCalledBrightness[$conn->resourceId] = false;
+        $this->clientCalled10Seconds[$conn->resourceId] = false;
 
         echo "New connection! ({$conn->resourceId})\n";
         echo "Number of connections: " . $this->clients->count() . "\n";
@@ -71,7 +71,7 @@ class Timer implements MessageComponentInterface
                     $responseMsg = $this->tryReview();
                     break;
                 case "setBrightness":
-                    $this->trySetTimerBrightness($from->resourceId, $msgParts[1]);
+                    $this->trySetTimerBrightness($from->resourceId);
                     break;
                 case "tryAgain":
                     $this->secondChance = true;
@@ -101,7 +101,7 @@ class Timer implements MessageComponentInterface
 
     private function startTimer($length)
     {
-        $this->hueLamp->setHueHex("#3300FF");
+        $this->hueLamp->setHueRGB(50, 0, 255);
         $this->hueLamp->setOnOff(true);
         foreach ($this->clients as $client)
         {
@@ -118,7 +118,7 @@ class Timer implements MessageComponentInterface
         
         unset($this->startedClients[$conn->resourceId]);
         unset($this->clientAnswers[$conn->resourceId]);
-        unset($this->clientCalledBrightness[$conn->resourceId]);
+        unset($this->clientCalled10Seconds[$conn->resourceId]);
 
         echo "Connection {$conn->resourceId} has disconnected\n";
         echo "Number of connections: " . $this->clients->count() . "\n";
@@ -161,6 +161,7 @@ class Timer implements MessageComponentInterface
 
     private function reviewAnswers()
     {
+        $this->hueLamp->alert(false);
         foreach ($this->clientAnswers as $answer)
         {
             if (!$this->currentQuestion->checkAnswer($answer))
@@ -239,21 +240,21 @@ class Timer implements MessageComponentInterface
         $this->sendToAllClients($questionJson);
     }
     
-    private function trySetTimerBrightness($clientId, $timeLeft)
+    private function trySetTimerBrightness($clientId)
     {
-        $this->clientCalledBrightness[$clientId] = true;
-        foreach ($this->clientCalledBrightness as $set)
+        $this->clientCalled10Seconds[$clientId] = true;
+        foreach ($this->clientCalled10Seconds as $set)
         {
             if (!$set)
             {
                 return;
             }
         }
-        $this->clientCalledBrightness = array_fill_keys(array_keys($this->clientCalledBrightness), false);
-        $this->setHueTimerBrightness($timeLeft);
+        $this->clientCalled10Seconds = array_fill_keys(array_keys($this->clientCalled10Seconds), false);
+        $this->setHueTimerAlert();
     }
 
-    private function setHueTimerBrightness($timeLeft)
+    private function setHueTimerAlert()
     {
         $totalTime = floatval($this->questionTimerLength);
         if ($this->secondChance)
@@ -261,13 +262,9 @@ class Timer implements MessageComponentInterface
             $totalTime = floatval($this->secondChanceTimerLength);
         }
         
-        echo "Time left: $timeLeft - Total time: $totalTime\n";
+        echo "10 seconds left...";
         
-        $percentBrightness = floatval($timeLeft) / $totalTime;
-        
-        $brightness = intval($percentBrightness * 255);
-        
-        $this->hueLamp->setBrightness($brightness);
+        $this->hueLamp->alert(true);
     }   
 }
 
