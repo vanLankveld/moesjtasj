@@ -140,6 +140,7 @@ class Timer implements MessageComponentInterface
                 return;
             }
         }
+        $this->hueLamp->alert(false);
         $this->getNewQuestion();
         $this->startTimer(3);
     }
