@@ -20,6 +20,10 @@ class Timer implements MessageComponentInterface
     protected $hueLamp;
     private $selectedQuestions = array();
     private $currentQuestion;
+    private $messageGoodAnswer = "answer_true";
+    private $messageWrongAnswer = "answer_false";
+    
+    private $questionTimerLength = 30;
 
     public function __construct()
     {
@@ -37,6 +41,7 @@ class Timer implements MessageComponentInterface
         $this->clientAnswers[$conn->resourceId] = "";
 
         echo "New connection! ({$conn->resourceId})\n";
+        echo "Number of connections: ".$this->clients->count()."\n";
     }
 
     public function onMessage(ConnectionInterface $from, $msg)
@@ -71,6 +76,18 @@ class Timer implements MessageComponentInterface
         {
             $this->sendToAllClients($responseMsg);
         }
+
+        sleep(5);
+
+        switch ($responseMsg)
+        {
+            case $this->messageGoodAnswer:
+                //Volgende vraag
+                break;
+            case $this->messageWrongAnswer:
+                $this->sendCurrentQuestionToClients();
+                break;
+        }
     }
 
     private function sendToAllClients($msg)
@@ -97,6 +114,7 @@ class Timer implements MessageComponentInterface
         $this->clients->detach($conn);
 
         echo "Connection {$conn->resourceId} has disconnected\n";
+        echo "Number of connections: ".$this->clients->count()."\n";
     }
 
     public function onError(ConnectionInterface $conn, \Exception $e)
@@ -115,7 +133,7 @@ class Timer implements MessageComponentInterface
                 return;
             }
         }
-        $this->getQuestion();
+        $this->getNewQuestion();
         $this->startTimer(3);
     }
 
@@ -142,14 +160,14 @@ class Timer implements MessageComponentInterface
                 $this->hueLamp->setHueRGB(255, 0, 0);
                 $this->hueLamp->setOnOff(true);
                 echo "Answered: $answer\n";
-                return "answer_false";
+                return $this->messageWrongAnswer;
             }
         }
 
         //0 , 186 , 62
         $this->hueLamp->setHueRGB(0, 255, 0);
         $this->hueLamp->setOnOff(true);
-        return "answer_true";
+        return $this->messageGoodAnswer;
     }
 
     private function resetAnswers()
@@ -160,7 +178,7 @@ class Timer implements MessageComponentInterface
         }
     }
 
-    private function getQuestion()
+    private function getNewQuestion()
     {
         //$this->questions[0];
         $questionsAsked = "";
@@ -202,7 +220,11 @@ class Timer implements MessageComponentInterface
             array_push($this->selectedQuestions, $id);
             $this->currentQuestion = new Question($id, $questionText, $image, $subject, $type, $multipleChoiceAnswers, $correctAnswer);
         }
+        $this->sendCurrentQuestionToClients();
+    }
 
+    private function sendCurrentQuestionToClients()
+    {
         $questionJson = "question_" . json_encode($this->currentQuestion);
         echo $questionJson . "\n";
         $this->sendToAllClients($questionJson);
