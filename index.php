@@ -63,6 +63,10 @@ and open the template in the editor.
 
             //========================================= Einde Websockets code ===========================================
 
+
+
+            //====================radio buttons stylen========================
+
             var time;
             var timerFunction;
             var timerStart = false;
@@ -212,10 +216,37 @@ and open the template in the editor.
 
                 <div id="multiple"  style="display:none;">
                     <form id="multipleForm">
-                        A <input type="radio" class="radio" name="antwoordMult" value="0" id="antwoord1"><label id="labelAnwoord0" for="antwoord0"></label><br/>
-                        B <input type="radio" class="radio" name="antwoordMult" value="1" id="antwoord2"><label id="labelAnwoord1" for="antwoord1"></label><br/>
-                        C <input type="radio" class="radio" name="antwoordMult" value="2" id="antwoord3" checked><label id="labelAnwoord2" for="antwoord2"></label><br/>
-                        D <input type="radio" class="radio" name="antwoordMult" value="3" id="antwoord4"><label id="labelAnwoord3" for="antwoord3"></label><br/>
+                        A<label id="labelAnwoord0">
+                            <input type="radio" class="radio" name="antwoordMult" value="0" id="antwoord1">
+                            <span class="radio"></span>
+                        </label><br/>
+                        <!-- B -->
+                        B<label id="labelAnwoord1">
+                            <input type="radio" class="radio" name="antwoordMult" value="1" id="antwoord2">
+                            <span class="radio"></span>
+                        </label><br/>
+                        <!-- C -->
+                        C<label id="labelAnwoord2">
+                            <input type="radio" class="radio" name="antwoordMult" value="2" id="antwoord3">
+                            <span class="radio"></span>
+                        </label><br/>
+                        <!-- D -->
+                        D<label id="labelAnwoord3">
+                            <input type="radio" class="radio" name="antwoordMult" value="3" id="antwoord4">
+                            <span class="radio"></span>
+                        </label>
+
+
+
+
+                        <!--
+                        
+                                                A <input type="radio" class="radio" name="antwoordMult" value="0" id="antwoord1"><label id="labelAnwoord0" for="antwoord0"></label><br/>
+                                                B <input type="radio" class="radio" name="antwoordMult" value="1" id="antwoord2"><label id="labelAnwoord1" for="antwoord1"></label><br/>
+                                                C <input type="radio" class="radio" name="antwoordMult" value="2" id="antwoord3"><label id="labelAnwoord2" for="antwoord2"></label><br/>
+                                                D <input type="radio" class="radio" name="antwoordMult" value="3" id="antwoord4"><label id="labelAnwoord3" for="antwoord3"></label><br/>
+                        
+                        -->
                     </form>
                 </div>
 

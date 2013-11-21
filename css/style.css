@@ -98,7 +98,21 @@ li span.active{
     font-size: 3em;
 }
 
-.radio{
-    width: 2em;
-    height: 2em;
+input[type=radio] {
+    display: none;
+}
+input[type=radio] + span {
+    display: inline-block;
+    border: 1px solid #000;
+    border-radius: 50%;
+    margin: 0 0.5em;
+}
+input[type=radio]:checked + span {
+    background-color: black;
+    background-image: url('images/check.png');
+    background-size: 20em;
+}
+.radio {
+    width: 1em;
+    height: 1em;
 }
