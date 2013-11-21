@@ -97,7 +97,7 @@ and open the template in the editor.
                     clearInterval(timerFunction);
                     timerFunction = null;
                     timerStart = false;
-
+                    //vraag stellen (op het scherm zetten)
                     if (vraagGesteld == false)
                     {
                         $(".container").attr('display', 'block');
@@ -106,27 +106,32 @@ and open the template in the editor.
                         $("#players").hide();
                         if (type === 'multiple') {
                             $("#multiple").show();
-                            $("#labelAnwoord1").append(antwoord1);
-                            $("#labelAnwoord2").append(antwoord2);
-                            $("#labelAnwoord3").append(antwoord3);
-                            $("#labelAnwoord4").append(antwoord4);
-
-                            $("#anwoord1").val(antwoord1);
+                            $("#labelAnwoord0").append(antwoord1);
+                            $("#labelAnwoord1").append(antwoord2);
+                            $("#labelAnwoord2").append(antwoord3);
+                            $("#labelAnwoord3").append(antwoord4);
                         } else if (type === 'enkel') {
                             $("#antwoord").show();
                         }
-                    } else if (vraagGesteld == true)
+                    } else
+                    //antwoord checken op multipelchoice of enkelen vraag
+                    if (vraagGesteld == true)
                     {
                         var antwoord;
+                        //wanneer het een enkele vraag is
                         if (type === "enkel") {
-                            if ($("#antwoord").val() === "") {
-                                antwoord = "$$$$@@@@$$$$";
-                            } else {
-                                antwoord = $("#antwoord").val();
-                            }
+                            antwoord = $("#antwoord").val();
                             $("#antwoord").attr('disabled', 'disabled');
-                        }else if (type === "multiple"){
-                            
+                        }
+                        //wanneer het een multiple choice vraag is 
+                        else if (type === "multiple") {
+                            var labelNmmr = ($('input[name=antwoordMult]:checked', '#multipleForm').val());
+                            antwoord = ($("#labelAnwoord" + (labelNmmr)).text());
+                        }
+                        console.log('antwoord dat opgestuurd wordt = ' + antwoord)
+                        //antwoord opsturen
+                        if (antwoord === "") {
+                            antwoord = "$$$$@@@@$$$$";
                         }
                         websocket.send("answer_" + antwoord);
                     }
@@ -186,6 +191,7 @@ and open the template in the editor.
                 }
             }
 
+
         </script>
     </head>
     <body>
@@ -200,12 +206,14 @@ and open the template in the editor.
             </div>
             <div class="eenderde">
                 <input type="text" name="antwoord" class="antwoord" id="antwoord"  style="display:none;" />
-                <div id="multiple"  style="display:none;">
-                    A <input type="radio" name="antwoord" value="" id="antwoord1"><label id="labelAnwoord1" for="antwoord1"></label><br/>
-                    B <input type="radio" name="antwoord" value="" id="antwoord2"><label id="labelAnwoord2" for="antwoord2"></label><br/>
-                    C <input type="radio" name="antwoord" value="" id="antwoord3"><label id="labelAnwoord3" for="antwoord3"></label><br/>
-                    D <input type="radio" name="antwoord" value="" id="antwoord4"><label id="labelAnwoord4" for="antwoord4"></label><br/>
-                </div>
+                <form id="multipleForm">
+                    <div id="multiple"  style="display:none;">
+                        A <input type="radio" name="antwoordMult" value="0" id="antwoord1"><label id="labelAnwoord0" for="antwoord0"></label><br/>
+                        B <input type="radio" name="antwoordMult" value="1" id="antwoord2"><label id="labelAnwoord1" for="antwoord1"></label><br/>
+                        C <input type="radio" name="antwoordMult" value="2" id="antwoord3" checked><label id="labelAnwoord2" for="antwoord2"></label><br/>
+                        D <input type="radio" name="antwoordMult" value="3" id="antwoord4"><label id="labelAnwoord3" for="antwoord3"></label><br/>
+                    </div>
+                </form>
                 <div class="statusbalk">
                     <ul>
                         <li>
