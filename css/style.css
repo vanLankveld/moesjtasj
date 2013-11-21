@@ -89,7 +89,6 @@ li span.active{
 
 #multiple{
     text-align: center;
-    background-color: red;
     width: 500px;
     height: 300px;
     margin-top: -350px;
@@ -106,11 +105,12 @@ input[type=radio] + span {
     border: 1px solid #000;
     border-radius: 50%;
     margin: 0 0.5em;
+    margin-bottom: -10px;
 }
 input[type=radio]:checked + span {
     background-color: black;
-    background-image: url('images/check.png');
-    background-size: 20em;
+    background-image: url('../images/check.png');
+    background-size: 1em;
 }
 .radio {
     width: 1em;
