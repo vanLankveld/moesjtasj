@@ -110,6 +110,7 @@ input[type=radio] + span {
 input[type=radio]:checked + span {
     background-color: black;
     background-image: url('../images/check.png');
+    background-repeat:no-repeat ;
     background-size: 1em;
 }
 .radio {
