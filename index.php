@@ -97,7 +97,8 @@ and open the template in the editor.
                 }
                 if (time > 0) {
                     time--;
-                    $('#timer').text(time);
+                    //$('#timer').text(time);
+                    console.log(time);
                 }
                 else if (timerStart)
                 {
@@ -134,12 +135,17 @@ and open the template in the editor.
                         else if (type === "multiple") {
                             var labelNmmr = ($('input[name=antwoordMult]:checked', '#multipleForm').val());
                             antwoord = ($("#labelAnwoord" + (labelNmmr)).text());
+                            $("#antwoord1").attr('disabled', 'disabled');
+                            $("#antwoord2").attr('disabled', 'disabled');
+                            $("#antwoord3").attr('disabled', 'disabled');
+                            $("#antwoord4").attr('disabled', 'disabled');
                         }
-                        console.log('antwoord dat opgestuurd wordt = ' + antwoord)
                         //antwoord opsturen
                         if (antwoord === "") {
                             antwoord = "$$$$@@@@$$$$";
                         }
+                        antwoord = $.trim(antwoord);
+                        console.log('antwoord dat opgestuurd wordt = ' + antwoord)
                         websocket.send("answer_" + antwoord);
                     }
                 }
