@@ -33,6 +33,25 @@ and open the template in the editor.
 
         <script type="text/javascript">
 
+            //VARS =====================
+
+
+            var time;
+            var timerFunction;
+            var timerStart = false;
+            var vraagGesteld = false;
+            var timeForQ;
+            var vraag;
+            var vak;
+            var type;
+            var antwoord1;
+            var antwoord2;
+            var antwoord3;
+            var antwoord4;
+
+
+
+
             //============================================= Websockets code =============================================
 
             //Openen van de websocket, het adres van de websocket is in dit geval ws://localhost:8080 
@@ -49,7 +68,8 @@ and open the template in the editor.
                 //e is het bericht dat binnenkomt
                 var commandArr = e.data.toString().split("_");
                 if (commandArr[0] == "startTimer") {
-                    startTimer(parseInt(commandArr[1]));
+                    timeForQ = parseInt(commandArr[1]);
+                    startTimer(3);
                 } else if (commandArr[0] == "answer") {
                     checkAnswer(commandArr[1]);
                 } else if (commandArr[0] == "start") {
@@ -65,20 +85,7 @@ and open the template in the editor.
 
 
 
-            //====================radio buttons stylen========================
 
-            var time;
-            var timerFunction;
-            var timerStart = false;
-            var vraagGesteld = false;
-            var timeForQ = 30;
-            var vraag;
-            var vak;
-            var type;
-            var antwoord1;
-            var antwoord2;
-            var antwoord3;
-            var antwoord4;
 
             function startTimer(length) {
                 if (timerStart == false)
@@ -95,7 +102,7 @@ and open the template in the editor.
                 if (time === 10) {
                     websocket.send("setBrightness_" + time);
                 }
-                if (time > 0) {
+                if (time > 1) {
                     time--;
                     //$('#timer').text(time);
                     console.log(time);
@@ -145,7 +152,7 @@ and open the template in the editor.
                             antwoord = "$$$$@@@@$$$$";
                         }
                         antwoord = $.trim(antwoord);
-                        console.log('antwoord dat opgestuurd wordt = ' + antwoord)
+                        console.log('antwoord dat opgestuurd wordt = ' + antwoord);
                         websocket.send("answer_" + antwoord);
                     }
                 }
@@ -204,6 +211,9 @@ and open the template in the editor.
                 }
             }
 
+            function timerToZero() {
+                time = 0;
+            }
 
         </script>
     </head>
@@ -244,7 +254,6 @@ and open the template in the editor.
 
 
 
-
                         <!--
                         
                                                 A <input type="radio" class="radio" name="antwoordMult" value="0" id="antwoord1"><label id="labelAnwoord0" for="antwoord0"></label><br/>
@@ -254,6 +263,7 @@ and open the template in the editor.
                         
                         -->
                     </form>
+                    <button class="submitAnswer" onclick="timerToZero();">geef antwoord</button>
                 </div>
 
                 <div class="statusbalk">
