@@ -48,7 +48,7 @@ and open the template in the editor.
             var antwoord2;
             var antwoord3;
             var antwoord4;
-
+            var vraagOpnieuw = false;
 
 
 
@@ -112,22 +112,27 @@ and open the template in the editor.
                     clearInterval(timerFunction);
                     timerFunction = null;
                     timerStart = false;
-                    //vraag stellen (op het scherm zetten)
+                    //vraag stellen (op het scherm zetten) als er nog geen vraag gesteld is
                     if (vraagGesteld == false)
                     {
+                        //container op het scherm tonen en het spelers join hokje weghalen
                         $(".container").attr('display', 'block');
                         $(".container").show();
-                        stelVraag(vraag);
                         $("#players").hide();
+                        //vraag stellen
+                        stelVraag(vraag);
+                        //als het type multiple choice is de radio buttons laten zien
                         if (type === 'multiple') {
                             $("#multiple").show();
                             $("#labelAnwoord0").append(antwoord1);
                             $("#labelAnwoord1").append(antwoord2);
                             $("#labelAnwoord2").append(antwoord3);
                             $("#labelAnwoord3").append(antwoord4);
+                        //als het 
                         } else if (type === 'enkel') {
                             $("#antwoord").show();
                         }
+                    //als er al wel een vraag gesteld is
                     } else
                     //antwoord checken op multipelchoice of enkelen vraag
                     if (vraagGesteld == true)
@@ -193,6 +198,7 @@ and open the template in the editor.
                     console.log('goed');
                 } else if (trueOrFalse === "false")
                 {
+                    vraagOpnieuw = true;
                     console.log('fout');
                 }
             }
@@ -263,9 +269,8 @@ and open the template in the editor.
                         
                         -->
                     </form>
-                    <button class="submitAnswer" onclick="timerToZero();">geef antwoord</button>
                 </div>
-
+                <button class="submitAnswer" onclick="timerToZero();">geef antwoord</button>
                 <div class="statusbalk">
                     <ul>
                         <li>
