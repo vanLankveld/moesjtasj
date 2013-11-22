@@ -203,8 +203,6 @@ class Timer implements MessageComponentInterface
             $notInString = "NOT IN ($questionsAsked)";
         }
         $query = "SELECT * FROM vraag
-                RIGHT OUTER JOIN antwoord ON vraag.id=antwoord.id
-                WHERE vraag.id $notInString
                 ORDER BY RAND()
                 LIMIT 1";
 
