@@ -67,12 +67,15 @@ class Timer implements MessageComponentInterface {
                 case "setBrightness":
                     $this->trySetTimerBrightness($from->resourceId);
                     break;
-                case "tryAgain":
+                case "tryagain":
+                    echo $from->resourceId . " requests: '" . $msgParts[1] . "'.\n";
                     $this->secondChance = true;
-                    $this->sendCurrentQuestionToClients();
+                    $this->startedClients[$from->resourceId] = true;
+                    $this->tryStart();
                     break;
-                case "newQuestion":
-                    $this->getNewQuestion();
+                case "newquestion":
+                    $this->startedClients[$from->resourceId] = true;
+                    $this->tryStart();
                     break;
             }
         }
@@ -119,14 +122,20 @@ class Timer implements MessageComponentInterface {
     }
 
     private function tryStart() {
+        $length = $this->questionTimerLength;
         foreach ($this->startedClients as $startedClient) {
             if (!$startedClient) {
                 return;
             }
         }
         $this->hueLamp->alert(false);
+        if ($this->secondChance)
+        {
+            $length = $this->secondChanceTimerLength;
+            $this->sendCurrentQuestionToClients();
+        }
         $this->getNewQuestion();
-        $this->startTimer($this->questionTimerLength);
+        $this->startTimer($length);
     }
 
     private function tryReview() {
@@ -143,6 +152,7 @@ class Timer implements MessageComponentInterface {
 
     private function reviewAnswers() {
         $this->hueLamp->alert(false);
+        $this->startedClients = array_fill_keys(array_keys($this->startedClients), false);
         foreach ($this->clientAnswers as $answer) {
             if (!$this->currentQuestion->checkAnswer($answer)) {
                 $this->hueLamp->setHueRGB(255, 0, 0);
