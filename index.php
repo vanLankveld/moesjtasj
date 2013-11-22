@@ -49,6 +49,7 @@ and open the template in the editor.
             var antwoord3;
             var antwoord4;
             var vraagOpnieuw = false;
+            var antwoord;
 
 
 
@@ -77,14 +78,10 @@ and open the template in the editor.
                 } else if (commandArr[0] == "question") {
                     setQuestion(commandArr[1]);
                 }
-
                 //Meer dingen ......
             };
 
             //========================================= Einde Websockets code ===========================================
-
-
-
 
 
             function startTimer(length) {
@@ -97,6 +94,7 @@ and open the template in the editor.
                     }, 1000);
                 }
             }
+
 
             function updateTimer() {
                 if (time === 10) {
@@ -112,64 +110,112 @@ and open the template in the editor.
                     clearInterval(timerFunction);
                     timerFunction = null;
                     timerStart = false;
-                    //vraag stellen (op het scherm zetten) als er nog geen vraag gesteld is
-                    if (vraagGesteld == false)
-                    {
-                        //container op het scherm tonen en het spelers join hokje weghalen
-                        $(".container").attr('display', 'block');
-                        $(".container").show();
-                        $("#players").hide();
-                        //vraag stellen
-                        stelVraag(vraag);
-                        //als het type multiple choice is de radio buttons laten zien
-                        if (type === 'multiple') {
-                            $("#multiple").show();
-                            $("#labelAnwoord0").append(antwoord1);
-                            $("#labelAnwoord1").append(antwoord2);
-                            $("#labelAnwoord2").append(antwoord3);
-                            $("#labelAnwoord3").append(antwoord4);
-                        //als het 
-                        } else if (type === 'enkel') {
-                            $("#antwoord").show();
-                        }
-                    //als er al wel een vraag gesteld is
-                    } else
-                    //antwoord checken op multipelchoice of enkelen vraag
-                    if (vraagGesteld == true)
-                    {
-                        var antwoord;
-                        //wanneer het een enkele vraag is
+                    if (vraagGesteld) {
+                        //timer stoppen en antwoord opslaan/versuren
+                        vraagGesteld = false;
+                        saveAnswer();
+                        console.log('save answer');
+                    } else {
+                        //vraag weergeven en timer starten 
+                        hidePlayers();
+                        showContainer();
+                        showQuestion();
                         if (type === "enkel") {
-                            antwoord = $("#antwoord").val();
-                            $("#antwoord").attr('disabled', 'disabled');
+                            showEnkel();
                         }
-                        //wanneer het een multiple choice vraag is 
                         else if (type === "multiple") {
-                            var labelNmmr = ($('input[name=antwoordMult]:checked', '#multipleForm').val());
-                            antwoord = ($("#labelAnwoord" + (labelNmmr)).text());
-                            $("#antwoord1").attr('disabled', 'disabled');
-                            $("#antwoord2").attr('disabled', 'disabled');
-                            $("#antwoord3").attr('disabled', 'disabled');
-                            $("#antwoord4").attr('disabled', 'disabled');
+                            showMultiple();
                         }
-                        //antwoord opsturen
-                        if (antwoord === "") {
-                            antwoord = "$$$$@@@@$$$$";
-                        }
-                        antwoord = $.trim(antwoord);
-                        console.log('antwoord dat opgestuurd wordt = ' + antwoord);
-                        websocket.send("answer_" + antwoord);
+                        startTimer(timeForQ);
+                        vraagGesteld = true;
+                        websocket.send("questionStart_");
                     }
                 }
             }
 
 
+            //=================================== vraag laten zien
+            function showQuestion() {
+                $("#vraag").append(vraag);
+            }
+
+
+
+            //=================================== speler invoerveld functies
+            function showPlayers() {
+                $("#players").attr('display', 'block');
+                $("#players").show();
+            }
+
+            function hidePlayers() {
+                $("#players").attr('display', 'none');
+                $("#players").hide();
+            }
+
+            //=================================== container functies
+            function showContainer() {
+                $(".container").attr('display', 'block');
+                $(".container").show();
+            }
+
+            function hideContainer() {
+                $(".container").attr('display', 'none');
+                $(".container").hide();
+            }
+
+            //=================================== Multiple functies
+
+            function showMultiple() {
+                $("#multiple").attr('display', 'block');
+                $("#multiple").show();
+                $("#labelAnwoord0").append(antwoord1);
+                $("#labelAnwoord1").append(antwoord2);
+                $("#labelAnwoord2").append(antwoord3);
+                $("#labelAnwoord3").append(antwoord4);
+            }
+
+            function disableMultiple() {
+                $("#antwoord0").attr('disabled', 'disabled');
+                $("#antwoord1").attr('disabled', 'disabled');
+                $("#antwoord2").attr('disabled', 'disabled');
+                $("#antwoord3").attr('disabled', 'disabled');
+            }
+
+            function hideMultiple() {
+                $(".#antwoord0").attr('display', 'none');
+                $(".#antwoord1").attr('display', 'none');
+                $(".#antwoord2").attr('display', 'none');
+                $(".#antwoord3").attr('display', 'none');
+                $(".#antwoord0").hide();
+                $(".#antwoord1").hide();
+                $(".#antwoord2").hide();
+                $(".#antwoord3").hide();
+            }
+
+            //=================================== enkele vraag functies
+
+            function showEnkel() {
+                $("#antwoord").attr('display', 'block');
+                $("#antwoord").show();
+            }
+
+            function disableEnkel() {
+                $("#antwoord").attr('disabled', 'disabled');
+            }
+
+            function hideEnkel() {
+                $(".#antwoord").attr('display', 'none');
+                $(".#antwoord").hide();
+            }
+
+            //=================================== speler is joined de lobby
 
             function playerJoined(player) {
                 console.log(player + " joined");
                 $("#players").append("<br/>" + player + " joined");
             }
 
+            //=================================== je naam opsturen en naar de server sturen dat je wilt starten
 
             function start() {
                 if ($("#tekst").val() == "")
@@ -182,6 +228,8 @@ and open the template in the editor.
                 }
             }
 
+            //=================================== vraag laten zien op het scherm
+
             function stelVraag(vraag)
             {
                 vraagGesteld = true;
@@ -189,19 +237,23 @@ and open the template in the editor.
                 startTimer(timeForQ);
             }
 
-            //kijken of het antwoord goed of fout is
+            //=================================== kijken of alles goed is of dat er iets fout was
+
             function checkAnswer(trueOrFalse)
             {
                 trueOrFalse = $.trim(trueOrFalse.toString());
                 if (trueOrFalse == "true")
                 {
-                    console.log('goed');
+                    vraagOpnieuw = false;
+                    websocket.send("newquestion_");
                 } else if (trueOrFalse === "false")
                 {
                     vraagOpnieuw = true;
-                    console.log('fout');
+                    websocket.send("answer_" + antwoord);
                 }
             }
+
+            //==================================== vraag / antwoord / type etc opslaan
 
             function setQuestion(json) {
                 var obj = JSON.parse(json);
@@ -217,12 +269,47 @@ and open the template in the editor.
                 }
             }
 
+            //=================================== timer op 0 zetten om de vraag meteen op te sturen
+
             function timerToZero() {
                 time = 0;
             }
 
+            //=================================== antwoord opslaan
+
+            function saveAnswer() {
+                //wanneer het een enkele vraag is
+                if (type === "enkel") {
+                    antwoord = $("#antwoord").val();
+                }
+                //wanneer het een multiple choice vraag is 
+                else if (type === "multiple") {
+                    var labelNmmr = ($('input[name=antwoordMult]:checked', '#multipleForm').val());
+                    antwoord = ($("#labelAnwoord" + (labelNmmr)).text());
+                }
+                sendAnswer();
+            }
+
+            //=================================== antwoord versturen
+
+            function sendAnswer() {
+                //antwoord opsturen
+                if (antwoord === "") {
+                    antwoord = "$$$$@@@@$$$$";
+                }
+                antwoord = $.trim(antwoord);
+                console.log('antwoord dat opgestuurd wordt = ' + antwoord);
+                websocket.send("answer_" + antwoord);
+            }
+
+
         </script>
     </head>
+
+
+
+
+
     <body>
         <input type="text" id="tekst">
         <button onclick="start();" id="button1">start</button>
@@ -238,6 +325,7 @@ and open the template in the editor.
 
                 <div id="multiple"  style="display:none;">
                     <form id="multipleForm">
+                        <!-- A -->
                         A<label id="labelAnwoord0">
                             <input type="radio" class="radio" name="antwoordMult" value="0" id="antwoord1">
                             <span class="radio"></span>
@@ -257,17 +345,6 @@ and open the template in the editor.
                             <input type="radio" class="radio" name="antwoordMult" value="3" id="antwoord4">
                             <span class="radio"></span>
                         </label>
-
-
-
-                        <!--
-                        
-                                                A <input type="radio" class="radio" name="antwoordMult" value="0" id="antwoord1"><label id="labelAnwoord0" for="antwoord0"></label><br/>
-                                                B <input type="radio" class="radio" name="antwoordMult" value="1" id="antwoord2"><label id="labelAnwoord1" for="antwoord1"></label><br/>
-                                                C <input type="radio" class="radio" name="antwoordMult" value="2" id="antwoord3"><label id="labelAnwoord2" for="antwoord2"></label><br/>
-                                                D <input type="radio" class="radio" name="antwoordMult" value="3" id="antwoord4"><label id="labelAnwoord3" for="antwoord3"></label><br/>
-                        
-                        -->
                     </form>
                 </div>
                 <button class="submitAnswer" onclick="timerToZero();">geef antwoord</button>

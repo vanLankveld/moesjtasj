@@ -102,7 +102,7 @@ class HueLamp
 
         $data = "{\"on\":$turnOnString, \"sat\":$this->S, \"bri\":$this->B,\"hue\":$this->H, \"alert\":\"$alertOnString\"}";
 
-        echo "Hue Data JSON: $data\n";
+        //echo "Hue Data JSON: $data\n";
 
         $headers = array('Content-Type: application/json');
 

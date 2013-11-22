@@ -17,6 +17,7 @@ class Timer implements MessageComponentInterface {
     protected $startedClients = array();
     protected $clientAnswers = array();
     protected $clientCalled10Seconds = array();
+    protected $clientCalledQuestionstart = array();
     protected $hueLamp;
     private $selectedQuestions = array();
     private $currentQuestion;
@@ -39,6 +40,7 @@ class Timer implements MessageComponentInterface {
         $this->startedClients[$conn->resourceId] = false;
         $this->clientAnswers[$conn->resourceId] = "";
         $this->clientCalled10Seconds[$conn->resourceId] = false;
+        $this->clientCalledQuestionstart[$conn->resourceId] = false;
 
         echo "New connection! ({$conn->resourceId})\n";
         echo "Number of connections: " . $this->clients->count() . "\n";
@@ -77,6 +79,9 @@ class Timer implements MessageComponentInterface {
                     $this->startedClients[$from->resourceId] = true;
                     $this->tryStart();
                     break;
+                case "questionStart":
+                    $this->tryHueQuestionStart($from->resourceId);
+                    break;
             }
         }
 
@@ -94,8 +99,6 @@ class Timer implements MessageComponentInterface {
     }
 
     private function startTimer($length) {
-        $this->hueLamp->setHueRGB(50, 0, 255);
-        $this->hueLamp->setOnOff(true);
         foreach ($this->clients as $client) {
             $message = "startTimer_$length";
             echo "sending '$message' to client " . $client->resourceId . "\n";
@@ -110,6 +113,7 @@ class Timer implements MessageComponentInterface {
         unset($this->startedClients[$conn->resourceId]);
         unset($this->clientAnswers[$conn->resourceId]);
         unset($this->clientCalled10Seconds[$conn->resourceId]);
+        unset($this->clientCalledQuestionstart[$conn->resourceId]);
 
         echo "Connection {$conn->resourceId} has disconnected\n";
         echo "Number of connections: " . $this->clients->count() . "\n";
@@ -125,6 +129,7 @@ class Timer implements MessageComponentInterface {
         $length = $this->questionTimerLength;
         foreach ($this->startedClients as $startedClient) {
             if (!$startedClient) {
+                echo "false";
                 return;
             }
         }
@@ -166,12 +171,6 @@ class Timer implements MessageComponentInterface {
         $this->hueLamp->setHueRGB(0, 100, 35);
         $this->hueLamp->setOnOff(true);
         return $this->messageGoodAnswer;
-    }
-
-    private function resetAnswers() {
-        foreach ($this->clientAnswers as $client => $answer) {
-            $this->clientAnswers[$client] = "";
-        }
     }
 
     private function getNewQuestion() {
@@ -229,6 +228,18 @@ class Timer implements MessageComponentInterface {
         }
         $this->clientCalled10Seconds = array_fill_keys(array_keys($this->clientCalled10Seconds), false);
         $this->setHueTimerAlert();
+    }
+    
+    private function tryHueQuestionStart($clientId)
+    {
+       $this->clientCalledQuestionstart[$clientId] = true;
+        foreach ($this->clientCalledQuestionstart as $set) {
+            if (!$set) {
+                return;
+            }
+        } 
+        $this->hueLamp->setHueRGB(50, 0, 255);
+        $this->hueLamp->setOnOff(true);
     }
 
     private function setHueTimerAlert() {
