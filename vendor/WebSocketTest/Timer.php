@@ -82,6 +82,7 @@ class Timer implements MessageComponentInterface
                     $this->tryStart();
                     break;
                 case "newquestion":
+                    $this->secondChance = false;
                     $this->startedClients[$from->resourceId] = true;
                     $this->tryStart();
                     break;
