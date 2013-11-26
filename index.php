@@ -5,7 +5,6 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html>
     <head>
-        <link href="css/style.css" rel="stylesheet" type="text/css" />
         <meta name="viewport" content="user-scalable=1.0,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -156,6 +155,13 @@ and open the template in the editor.
             //=================================== vraag laten zien
             function showQuestion() {
                 $("#vraagPlaatje").attr("src", imgUrl);
+                tekstResize();
+                $("#sketch").hide();
+                if (type.toLowerCase() === "enkel") {
+                    $("#container").attr("class", "reken");
+                } else if (type.toLowerCase() === "multiple") {
+                    $("#container").attr("class", "multi");
+                }
                 $("#vraag").append(vraag);
             }
 
@@ -170,6 +176,7 @@ and open the template in the editor.
             function hidePlayers() {
                 $("#players").attr('display', 'none');
                 $("#players").hide();
+                $(".lobby").hide();
             }
 
             //=================================== container functies
@@ -280,14 +287,6 @@ and open the template in the editor.
                 var obj = JSON.parse(json);
                 vak = obj['subject'];
                 type = obj['type'];
-
-                if (type.toLowerCase() === "enkel") {
-                    $("#container").attr("class", "reken");
-                } else if (type.toLowerCase() === "multiple") {
-                    $("#container").attr("class", "multi");
-                }
-
-
                 vraag = obj['questionText'];
                 imgUrl = obj['image'].replace('\/', '/');
                 if (type == 'multiple') {
@@ -338,7 +337,6 @@ and open the template in the editor.
         </script>
     </head>
     <body>
-        <input type="text" id="tekst">
         <div id="sketch">
             <div id="sketchbar">
                 <div id="arrow_down">
@@ -350,10 +348,11 @@ and open the template in the editor.
             </div>
             <canvas id="sketchpad" width="1024" height="520"></canvas>
         </div>
-        <button onclick="start();" id="button1">start</button>
-        <div id="players"></div>
-        <div id="timer"></div>
-
+        <div class="lobby">
+            <input type="text" id="tekst">
+            <button onclick="start();" id="button1">start</button>
+            <div id="players"></div>
+        </div>
 
         <div class="reken" id="container" style="display:none;">
             <div class="top">

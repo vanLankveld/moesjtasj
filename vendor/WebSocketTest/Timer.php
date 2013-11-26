@@ -10,8 +10,7 @@ use Ratchet\ConnectionInterface;
 use WebSocketTest\HueLamp;
 use WebSocketTest\Question;
 
-class Timer implements MessageComponentInterface
-{
+class Timer implements MessageComponentInterface {
 
     protected $clients;
     protected $started = false;
@@ -28,15 +27,14 @@ class Timer implements MessageComponentInterface
     private $secondChanceTimerLength = 120;
     private $secondChance;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->clients = new \SplObjectStorage;
-
-        $this->hueLamp = new HueLamp("http://192.168.1.102", "newdeveloper", getQuoraId());
+        $ip = "http://192.168.1.39";
+        //$ip = "http://192.168.1.102";
+        $this->hueLamp = new HueLamp($ip, "newdeveloper", getQuoraId());
     }
 
-    public function onOpen(ConnectionInterface $conn)
-    {
+    public function onOpen(ConnectionInterface $conn) {
         // Store the new connection to send messages to later
         $this->clients->attach($conn);
 
@@ -49,18 +47,15 @@ class Timer implements MessageComponentInterface
         echo "Number of connections: " . $this->clients->count() . "\n";
     }
 
-    public function onMessage(ConnectionInterface $from, $msg)
-    {
+    public function onMessage(ConnectionInterface $from, $msg) {
         echo sprintf('Connection %d sends message "%s" to server' . "\n"
                 , $from->resourceId, $msg);
 
         $responseMsg = "";
 
-        if (strpos($msg, '_') !== false)
-        {
+        if (strpos($msg, '_') !== false) {
             $msgParts = explode('_', $msg);
-            switch ($msgParts[0])
-            {
+            switch ($msgParts[0]) {
                 case "start":
                     $responseMsg = "start_" . $msgParts[1];
                     $this->startedClients[$from->resourceId] = true;
@@ -94,32 +89,26 @@ class Timer implements MessageComponentInterface
 
         echo "Response message: $responseMsg\n";
 
-        if ($responseMsg != "")
-        {
+        if ($responseMsg != "") {
             $this->sendToAllClients($responseMsg);
         }
     }
 
-    private function sendToAllClients($msg)
-    {
-        foreach ($this->clients as $client)
-        {
+    private function sendToAllClients($msg) {
+        foreach ($this->clients as $client) {
             $client->send($msg);
         }
     }
 
-    private function startTimer($length)
-    {
-        foreach ($this->clients as $client)
-        {
+    private function startTimer($length) {
+        foreach ($this->clients as $client) {
             $message = "startTimer_$length";
             echo "sending '$message' to client " . $client->resourceId . "\n";
             $client->send($message);
         }
     }
 
-    public function onClose(ConnectionInterface $conn)
-    {
+    public function onClose(ConnectionInterface $conn) {
         // The connection is closed, remove it, as we can no longer send it messages
         $this->clients->detach($conn);
 
@@ -132,43 +121,33 @@ class Timer implements MessageComponentInterface
         echo "Number of connections: " . $this->clients->count() . "\n";
     }
 
-    public function onError(ConnectionInterface $conn, \Exception $e)
-    {
+    public function onError(ConnectionInterface $conn, \Exception $e) {
         echo "An error has occurred: {$e->getMessage()}\n";
 
         $conn->close();
     }
 
-    private function tryStart()
-    {
+    private function tryStart() {
         $length = $this->questionTimerLength;
-        foreach ($this->startedClients as $startedClient)
-        {
-            if (!$startedClient)
-            {
+        foreach ($this->startedClients as $startedClient) {
+            if (!$startedClient) {
                 echo "false";
                 return;
             }
         }
         $this->hueLamp->alert(false);
-        if ($this->secondChance)
-        {
+        if ($this->secondChance) {
             $length = $this->secondChanceTimerLength;
             $this->sendCurrentQuestionToClients();
-        } 
-        else
-        {
+        } else {
             $this->getNewQuestion();
         }
         $this->startTimer($length);
     }
 
-    private function tryReview()
-    {
-        foreach ($this->clientAnswers as $answer)
-        {
-            if ($answer === "")
-            {
+    private function tryReview() {
+        foreach ($this->clientAnswers as $answer) {
+            if ($answer === "") {
                 return "";
             }
         }
@@ -178,14 +157,11 @@ class Timer implements MessageComponentInterface
         return $returnMessage;
     }
 
-    private function reviewAnswers()
-    {
+    private function reviewAnswers() {
         $this->hueLamp->alert(false);
         $this->startedClients = array_fill_keys(array_keys($this->startedClients), false);
-        foreach ($this->clientAnswers as $answer)
-        {
-            if (!$this->currentQuestion->checkAnswer($answer))
-            {
+        foreach ($this->clientAnswers as $answer) {
+            if (!$this->currentQuestion->checkAnswer($answer)) {
                 $this->hueLamp->setHueRGB(255, 0, 0);
                 $this->hueLamp->setOnOff(true);
                 echo "Answered: $answer\n";
@@ -199,15 +175,12 @@ class Timer implements MessageComponentInterface
         return $this->messageGoodAnswer;
     }
 
-    private function getNewQuestion()
-    {
+    private function getNewQuestion() {
         //$this->questions[0];
         $questionsAsked = "";
         $notInString = "";
-        if (count($this->selectedQuestions) > 0)
-        {
-            foreach ($this->selectedQuestions as $question)
-            {
+        if (count($this->selectedQuestions) > 0) {
+            foreach ($this->selectedQuestions as $question) {
                 $questionsAsked .= "$question,";
             }
             $questionsAsked = rtrim($questionsAsked, ', ');
@@ -222,16 +195,14 @@ class Timer implements MessageComponentInterface
 
         $result = mysql_query($query) or die(mysql_error());
 
-        while ($waardes = mysql_fetch_array($result))
-        {
+        while ($waardes = mysql_fetch_array($result)) {
             $id = $waardes['id'];
             $questionText = utf8_encode($waardes['vraag']);
             $image = $waardes['imgUrl'];
             $subject = $waardes['soort'];
             $type = $waardes['type'];
             $multipleChoiceAnswers = array($waardes['antwoord1']);
-            if ($type == 'multiple')
-            {
+            if ($type == 'multiple') {
                 array_push($multipleChoiceAnswers, $waardes['antwoord2']);
                 array_push($multipleChoiceAnswers, $waardes['antwoord3']);
                 array_push($multipleChoiceAnswers, $waardes['antwoord4']);
@@ -244,20 +215,16 @@ class Timer implements MessageComponentInterface
         $this->secondChance = false;
     }
 
-    private function sendCurrentQuestionToClients()
-    {
+    private function sendCurrentQuestionToClients() {
         $questionJson = "question_" . json_encode($this->currentQuestion);
         echo $questionJson . "\n";
         $this->sendToAllClients($questionJson);
     }
 
-    private function trySetTimerBrightness($clientId)
-    {
+    private function trySetTimerBrightness($clientId) {
         $this->clientCalled10Seconds[$clientId] = true;
-        foreach ($this->clientCalled10Seconds as $set)
-        {
-            if (!$set)
-            {
+        foreach ($this->clientCalled10Seconds as $set) {
+            if (!$set) {
                 return;
             }
         }
@@ -265,13 +232,10 @@ class Timer implements MessageComponentInterface
         $this->setHueTimerAlert();
     }
 
-    private function tryHueQuestionStart($clientId)
-    {
+    private function tryHueQuestionStart($clientId) {
         $this->clientCalledQuestionstart[$clientId] = true;
-        foreach ($this->clientCalledQuestionstart as $set)
-        {
-            if (!$set)
-            {
+        foreach ($this->clientCalledQuestionstart as $set) {
+            if (!$set) {
                 return;
             }
         }
@@ -279,11 +243,9 @@ class Timer implements MessageComponentInterface
         $this->hueLamp->setOnOff(true);
     }
 
-    private function setHueTimerAlert()
-    {
+    private function setHueTimerAlert() {
         $totalTime = floatval($this->questionTimerLength);
-        if ($this->secondChance)
-        {
+        if ($this->secondChance) {
             $totalTime = floatval($this->secondChanceTimerLength);
         }
 

@@ -212,3 +212,28 @@ label .value{
 	font-size: 28px;
 	font-style: italic;
 }
+
+.multi .button{
+    height:64px;
+    position:absolute;
+    right:20px;
+    top:185px !important;
+}
+
+.lobby{
+    margin-top:150px;
+    margin-left:auto;
+    margin-right:auto;
+    width: 200px;
+    height: 100px;
+    text-align: center;
+}
+
+#tekst{
+    height: 50px;
+}
+
+#button1{
+    height: 45px;
+    width: 100px;
+}
