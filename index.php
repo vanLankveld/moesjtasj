@@ -5,24 +5,30 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html>
     <head>
-        <title></title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <script src="js/jquery.js"></script>
         <link href="css/style.css" rel="stylesheet" type="text/css" />
+        <meta name="viewport" content="user-scalable=1.0,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <title>Quora</title>
+        <link href="css/input.css" rel="stylesheet" type="text/css" />
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="format-detection" content="telephone=no">
+        <script src="js/jquery.js"></script>
+        <script src="js/input.js"></script>
         <!-- non-retina iPhone pre iOS 7 -->
-        <link rel="apple-touch-icon" href="images/apple-touch-icon-57x57.png" sizes="57x57">
+        <link rel="apple-touch-icon" href="images/apple-touch-icon-57x57.PNG" sizes="57x57">
         <!-- non-retina iPhone iOS 7 -->
         <link rel="apple-touch-icon" href="images/apple-touch-icon-60x60.png" sizes="60x60">
         <!-- non-retina iPad pre iOS 7 -->
-        <link rel="apple-touch-icon" href="images/apple-touch-icon-72x72.png" sizes="72x72">
+        <link rel="apple-touch-icon" href="images/apple-touch-icon-72x72.PNG" sizes="72x72">
         <!-- non-retina iPad iOS 7 -->
-        <link rel="apple-touch-icon" href="images/apple-touch-icon-72x72.png" sizes="76x76">
+        <link rel="apple-touch-icon" href="images/apple-touch-icon-76x76.PNG" sizes="76x76">
         <!-- retina iPhone pre iOS 7 -->
-        <link rel="apple-touch-icon" href="images/apple-touch-icon-114x114.png" sizes="114x114">
+        <link rel="apple-touch-icon" href="images/apple-touch-icon-114x114.PNG" sizes="114x114">
         <!-- retina iPhone iOS 7 -->
-        <link rel="apple-touch-icon" href="images/apple-touch-icon-120x120.png" sizes="120x120">
+        <link rel="apple-touch-icon" href="images/apple-touch-icon-120x120.PNG" sizes="120x120">
         <!-- retina iPad pre iOS 7 -->
-        <link rel="apple-touch-icon" href="images/apple-touch-icon-144x144.png" sizes="144x144">
+        <link rel="apple-touch-icon" href="images/apple-touch-icon-144x144.PNG" sizes="144x144">
         <!-- retina iPad iOS 7 -->
         <link rel="apple-touch-icon" href="images/apple-touch-icon-152x152.png" sizes="152x152">
         <?php
@@ -44,13 +50,13 @@ and open the template in the editor.
             var vraag;
             var vak;
             var type;
+            var imgUrl;
             var antwoord1;
             var antwoord2;
             var antwoord3;
             var antwoord4;
             var vraagOpnieuw = false;
             var antwoord;
-
 
 
             //============================================= Websockets code =============================================
@@ -119,11 +125,14 @@ and open the template in the editor.
                         //vraag weergeven en timer starten 
                         hidePlayers();
                         showContainer();
+                        clearQuestion();
                         showQuestion();
                         if (type === "enkel") {
+                            hideMultiple();
                             showEnkel();
                         }
                         else if (type === "multiple") {
+                            hideEnkel();
                             showMultiple();
                         }
                         startTimer(timeForQ);
@@ -134,8 +143,19 @@ and open the template in the editor.
             }
 
 
+            //=================================== clearQuestion
+
+            function clearQuestion() {
+                $("#vraag").html('');
+                $("#antwoord").val('');
+            }
+
+
+
+
             //=================================== vraag laten zien
             function showQuestion() {
+                $("#vraagPlaatje").attr("src", imgUrl);
                 $("#vraag").append(vraag);
             }
 
@@ -154,47 +174,45 @@ and open the template in the editor.
 
             //=================================== container functies
             function showContainer() {
-                $(".container").attr('display', 'block');
-                $(".container").show();
+                $("#container").attr('display', 'block');
+                $("#container").show();
             }
 
             function hideContainer() {
-                $(".container").attr('display', 'none');
-                $(".container").hide();
+                $("#container").attr('display', 'none');
+                $("#container").hide();
             }
 
             //=================================== Multiple functies
 
             function showMultiple() {
+//                $('.multipleLabel').contents().filter(function() {
+//                    return this.nodeType === 3;
+//                }).remove();
+                $(".multipleValue").text("");
                 $("#multiple").attr('display', 'block');
                 $("#multiple").show();
-                $("#labelAnwoord0").append(antwoord1);
-                $("#labelAnwoord1").append(antwoord2);
-                $("#labelAnwoord2").append(antwoord3);
-                $("#labelAnwoord3").append(antwoord4);
+                $("#antwoord0Value").append(antwoord1);
+                $("#antwoord1Value").append(antwoord2);
+                $("#antwoord2Value").append(antwoord3);
+                $("#antwoord3Value").append(antwoord4);
+                $(".radio").removeAttr('disabled');
             }
 
             function disableMultiple() {
-                $("#antwoord0").attr('disabled', 'disabled');
-                $("#antwoord1").attr('disabled', 'disabled');
-                $("#antwoord2").attr('disabled', 'disabled');
-                $("#antwoord3").attr('disabled', 'disabled');
+                $(".radio").attr('disabled', 'disabled');
             }
 
             function hideMultiple() {
-                $(".#antwoord0").attr('display', 'none');
-                $(".#antwoord1").attr('display', 'none');
-                $(".#antwoord2").attr('display', 'none');
-                $(".#antwoord3").attr('display', 'none');
-                $(".#antwoord0").hide();
-                $(".#antwoord1").hide();
-                $(".#antwoord2").hide();
-                $(".#antwoord3").hide();
+                $(".multipleLabel").attr('display', 'none');
+                $("#multiple").hide();
             }
 
             //=================================== enkele vraag functies
 
             function showEnkel() {
+
+                $("#antwoord").removeAttr('disabled');
                 $("#antwoord").attr('display', 'block');
                 $("#antwoord").show();
             }
@@ -204,8 +222,8 @@ and open the template in the editor.
             }
 
             function hideEnkel() {
-                $(".#antwoord").attr('display', 'none');
-                $(".#antwoord").hide();
+                $("#antwoord").attr('display', 'none');
+                $("#antwoord").hide();
             }
 
             //=================================== speler is joined de lobby
@@ -241,15 +259,18 @@ and open the template in the editor.
 
             function checkAnswer(trueOrFalse)
             {
+                console.log("vraag opnieuw = " + vraagOpnieuw);
                 trueOrFalse = $.trim(trueOrFalse.toString());
-                if (trueOrFalse == "true")
+                if (trueOrFalse === "true" || vraagOpnieuw === true)
                 {
+                    console.log("nieuw vraag opvragen");
                     vraagOpnieuw = false;
                     websocket.send("newquestion_");
-                } else if (trueOrFalse === "false")
+                } else if (trueOrFalse === "false" && vraagOpnieuw === false)
                 {
+                    console.log("opnieuw proberen");
                     vraagOpnieuw = true;
-                    websocket.send("answer_" + antwoord);
+                    websocket.send("tryagain_");
                 }
             }
 
@@ -259,7 +280,16 @@ and open the template in the editor.
                 var obj = JSON.parse(json);
                 vak = obj['subject'];
                 type = obj['type'];
+
+                if (type.toLowerCase() === "enkel") {
+                    $("#container").attr("class", "reken");
+                } else if (type.toLowerCase() === "multiple") {
+                    $("#container").attr("class", "multi");
+                }
+
+
                 vraag = obj['questionText'];
+                imgUrl = obj['image'].replace('\/', '/');
                 if (type == 'multiple') {
                     var antwoorden = obj['multipleChoiceAnswers'];
                     antwoord1 = antwoorden[0];
@@ -280,10 +310,12 @@ and open the template in the editor.
             function saveAnswer() {
                 //wanneer het een enkele vraag is
                 if (type === "enkel") {
+                    disableEnkel();
                     antwoord = $("#antwoord").val();
                 }
                 //wanneer het een multiple choice vraag is 
                 else if (type === "multiple") {
+                    disableMultiple();
                     var labelNmmr = ($('input[name=antwoordMult]:checked', '#multipleForm').val());
                     antwoord = ($("#labelAnwoord" + (labelNmmr)).text());
                 }
@@ -305,49 +337,65 @@ and open the template in the editor.
 
         </script>
     </head>
-
-
-
-
-
     <body>
         <input type="text" id="tekst">
+        <div id="sketch">
+            <div id="sketchbar">
+                <div id="arrow_down">
+                    <span></span>
+                </div>
+                <div id="thrash">
+                    <span></span>
+                </div>
+            </div>
+            <canvas id="sketchpad" width="1024" height="520"></canvas>
+        </div>
         <button onclick="start();" id="button1">start</button>
         <div id="players"></div>
         <div id="timer"></div>
-        <div class="container"  style="display:none;">
-            <div class="tweederde">
-                <p class="vraag" id="vraag"> </p>
-                <img id="img" alt=""/>
-            </div>
-            <div class="eenderde">
-                <input type="text" name="antwoord" class="antwoord" id="antwoord"  style="display:none;" />
 
+
+        <div class="reken" id="container" style="display:none;">
+            <div class="top">
+                <div class="upperbar"></div>
+                <p class="vraag" id="vraag"> </p>
+                <div class="image">
+                    <img id="vraagPlaatje" src="" alt="afbeelding"/>
+                </div>
+            </div>
+            <div class="bottom">
+                <input type="text" name="antwoord" class="antwoord number"  style="display:none;" id="antwoord" />
+                <!-- type="number"  -->
                 <div id="multiple"  style="display:none;">
                     <form id="multipleForm">
                         <!-- A -->
-                        A<label id="labelAnwoord0">
+                        <label id="labelAnwoord0" class="multipleLabel">
                             <input type="radio" class="radio" name="antwoordMult" value="0" id="antwoord1">
                             <span class="radio"></span>
+                            <span id="antwoord0Value" class="value multipleValue"></span>
                         </label><br/>
                         <!-- B -->
-                        B<label id="labelAnwoord1">
+                        <label id="labelAnwoord1" class="multipleLabel">
                             <input type="radio" class="radio" name="antwoordMult" value="1" id="antwoord2">
                             <span class="radio"></span>
+                            <span id="antwoord1Value" class="value multipleValue"></span>
                         </label><br/>
                         <!-- C -->
-                        C<label id="labelAnwoord2">
+                        <label id="labelAnwoord2" class="multipleLabel">
                             <input type="radio" class="radio" name="antwoordMult" value="2" id="antwoord3">
                             <span class="radio"></span>
+                            <span id="antwoord2Value" class="value multipleValue"></span>
                         </label><br/>
                         <!-- D -->
-                        D<label id="labelAnwoord3">
+                        <label id="labelAnwoord3" class="multipleLabel">
                             <input type="radio" class="radio" name="antwoordMult" value="3" id="antwoord4">
                             <span class="radio"></span>
+                            <span id="antwoord3Value" class="value multipleValue"></span>
                         </label>
                     </form>
                 </div>
-                <button class="submitAnswer" onclick="timerToZero();">geef antwoord</button>
+
+                <div class="button submitAnswer" onclick="timerToZero();"></div>
                 <div class="statusbalk">
                     <ul>
                         <li>
