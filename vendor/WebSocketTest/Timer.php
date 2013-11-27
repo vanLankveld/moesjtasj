@@ -223,7 +223,7 @@ class Timer implements MessageComponentInterface {
     private function trySetTimerBrightness($clientId) {
         $this->clientCalled10Seconds[$clientId] = true;
         foreach ($this->clientCalled10Seconds as $set) {
-            if (!$set) {
+            if (!$set && $this->clientAnswers[$clientId] === "") {
                 return;
             }
         }
