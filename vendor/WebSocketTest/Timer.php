@@ -29,8 +29,7 @@ class Timer implements MessageComponentInterface {
 
     public function __construct() {
         $this->clients = new \SplObjectStorage;
-        $ip = "http://192.168.1.39";
-        //$ip = "http://192.168.1.102";
+        $ip = "http://192.168.1.102";
         $this->hueLamp = new HueLamp($ip, "newdeveloper", getQuoraId());
     }
 

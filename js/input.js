@@ -7,23 +7,23 @@ $(document).ready(function(){
 	// textveld focus functie
     $('.number').bind('focus',function() {
 		$("body").scrollLeft(0);
-		$(".top .image").hide();
-        $(".top").css('height','247px');
-		$(".bottom").css('height','125px');
-		$(".antwoord").css('height','70px');
-		$(".vraag").css('marginTop','40px');
-		$(".button").css('height','95px');
+		$(".reken .top .image").hide();
+        $(".reken .top").css('height','247px');
+		$(".reken .bottom").css('height','125px');
+		$(".reken .antwoord").css('height','70px');
+		$(".reken .vraag").css('marginTop','40px');
+		$(".reken .button").css('height','95px');
 		$(".statusbalk").hide();
     });
 	
 	// textvel focusout functie
 	$('.number').focusout(function() {
         $("body").scrollLeft(0);
-		$(".top .image").show();
-        $(".top").css('height','512px');
-		$(".bottom").css('height','256px');
-		$(".antwoord").css('height','155px');
-		$(".button").css('height','180px');
+		$(".reken .top .image").show();
+        $(".reken .top").css('height','512px');
+		$(".reken .bottom").css('height','256px');
+		$(".reken .antwoord").css('height','155px');
+		$(".reken .button").css('height','180px');
 		$(".statusbalk").show();
 		tekstResize();
     });
@@ -38,11 +38,11 @@ $(document).ready(function(){
 	$(document).keypress(function(e) {
 		if(e.which == 13) {
 			$("body").scrollLeft(0);
-			$(".top .image").show();
-			$(".top").css('height','512px');
-			$(".bottom").css('height','256px');
-			$(".antwoord").css('height','155px');
-			$(".button").css('height','180px');
+			$(".reken .top .image").show();
+			$(".reken .top").css('height','512px');
+			$(".reken .bottom").css('height','256px');
+			$(".reken .antwoord").css('height','155px');
+			$(".reken .button").css('height','180px');
 			$(".statusbalk").show();
 			e.preventDefault();
 			document.activeElement.blur();

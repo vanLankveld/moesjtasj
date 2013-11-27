@@ -38,11 +38,11 @@ body{
 }
 
 .multi .bottom{
-	height:320px;
+	height:320px !important;
 }
 
 .multi .top{
-	height:448px; 
+	height:448px !important; 
 }
 .statusbalk{
 	position:absolute;
@@ -214,9 +214,9 @@ label .value{
 }
 
 .multi .button{
-    height:64px;
-    position:absolute;
-    right:20px;
+    height:64px !important;
+    position:absolute !important;
+    right:20px !important;
     top:185px !important;
 }
 

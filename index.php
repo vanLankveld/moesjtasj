@@ -155,7 +155,6 @@ and open the template in the editor.
             //=================================== vraag laten zien
             function showQuestion() {
                 $("#vraagPlaatje").attr("src", imgUrl);
-                tekstResize();
                 $("#sketch").hide();
                 if (type.toLowerCase() === "enkel") {
                     $("#container").attr("class", "reken");
@@ -163,6 +162,7 @@ and open the template in the editor.
                     $("#container").attr("class", "multi");
                 }
                 $("#vraag").append(vraag);
+                tekstResize();
             }
 
 
