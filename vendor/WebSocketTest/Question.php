@@ -38,8 +38,10 @@ class Question
 
     public function checkAnswer($answer)
     {
+        $givenAnswer = strtolower($answer);
+        $correctAnswer = strtolower($this->multipleChoiceAnswers[$this->correctAnswer]);
         echo "Correct answer: ".$this->multipleChoiceAnswers[$this->correctAnswer]."\n";
-        if ($answer != $this->multipleChoiceAnswers[$this->correctAnswer])
+        if ($givenAnswer != $correctAnswer)
         {
             return false;
         }
