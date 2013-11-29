@@ -344,6 +344,15 @@ and open the template in the editor.
                 console.log('antwoord dat opgestuurd wordt = ' + antwoord);
                 websocket.send("answer_" + antwoord);
             }
+			
+			//=================================== touchevent voor de submit
+			$( ".submitAnswer" ).on( "touchend", function() {
+				timerToZero();
+			});
+			
+			$( ".submitAnswer" ).on( "touchmove", function() {
+				timerToZero();
+			});
 
 
         </script>

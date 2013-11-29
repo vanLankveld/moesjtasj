@@ -73,14 +73,6 @@ $(document).ready(function(){
 	$( "#arrow_down" ).on( "touchmove", function() {
 		canvasHide();
 	});
-	
-	$( ".submitAnswer" ).on( "touchend", function() {
-		timerToZero();
-	});
-	
-	$( ".submitAnswer" ).on( "touchmove", function() {
-		timerToZero();
-	});
 });
 
 // canvas sketchpad
