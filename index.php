@@ -282,11 +282,13 @@ and open the template in the editor.
                 if (trueOrFalse === "true" || vraagOpnieuw === true)
                 {
                     canvasReset(); // sketchpad leegmaken
+					$("#icon").css('background','url(../images/individu.png)');
 					console.log("nieuw vraag opvragen");
                     vraagOpnieuw = false;
                     websocket.send("newquestion_");
                 } else if (trueOrFalse === "false" && vraagOpnieuw === false)
                 {
+					$("#icon").css('background','url(../images/groep.png)');
                     console.log("opnieuw proberen");
                     vraagOpnieuw = true;
                     websocket.send("tryagain_");
