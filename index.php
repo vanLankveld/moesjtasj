@@ -253,11 +253,11 @@ and open the template in the editor.
 
             //=================================== je naam opsturen en naar de server sturen dat je wilt starten
 
-            function start() {
-                var naam = $("#tekst").val();
-                    websocket.send("start_" + naam);
-                    $("#tekst").hide();
-                    $("#button1").hide();
+            function start(naam) {
+                //$("#tekst").val();
+                websocket.send("start_" + naam);
+                $("#tekst").hide();
+                $("#button1").hide();
             }
 
             //=================================== vraag laten zien op het scherm
@@ -278,7 +278,7 @@ and open the template in the editor.
                 if (trueOrFalse === "true" || vraagOpnieuw === true)
                 {
                     canvasReset(); // sketchpad leegmaken
-					console.log("nieuw vraag opvragen");
+                    console.log("nieuw vraag opvragen");
                     vraagOpnieuw = false;
                     websocket.send("newquestion_");
                 } else if (trueOrFalse === "false" && vraagOpnieuw === false)
