@@ -14,18 +14,10 @@ and open the template in the editor.
         <meta name="format-detection" content="telephone=no">
         <script src="js/jquery.js"></script>
         <script src="js/input.js"></script>
-        <!-- non-retina iPhone pre iOS 7 -->
-        <link rel="apple-touch-icon" href="images/apple-touch-icon-57x57.PNG" sizes="57x57">
-        <!-- non-retina iPhone iOS 7 -->
-        <link rel="apple-touch-icon" href="images/apple-touch-icon-60x60.png" sizes="60x60">
         <!-- non-retina iPad pre iOS 7 -->
         <link rel="apple-touch-icon" href="images/apple-touch-icon-72x72.PNG" sizes="72x72">
         <!-- non-retina iPad iOS 7 -->
         <link rel="apple-touch-icon" href="images/apple-touch-icon-76x76.PNG" sizes="76x76">
-        <!-- retina iPhone pre iOS 7 -->
-        <link rel="apple-touch-icon" href="images/apple-touch-icon-114x114.PNG" sizes="114x114">
-        <!-- retina iPhone iOS 7 -->
-        <link rel="apple-touch-icon" href="images/apple-touch-icon-120x120.PNG" sizes="120x120">
         <!-- retina iPad pre iOS 7 -->
         <link rel="apple-touch-icon" href="images/apple-touch-icon-144x144.PNG" sizes="144x144">
         <!-- retina iPad iOS 7 -->
