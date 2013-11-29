@@ -34,6 +34,8 @@ and open the template in the editor.
         $exec = exec("hostname"); //the "hostname" is a valid command in both windows and linux
         $hostname = trim($exec); //remove any spaces before and after
         $ip = gethostbyname($hostname); //resolves the hostname using local hosts resolver or DNS
+
+        include "bestanden/config.php";
         ?>
 
         <script type="text/javascript">
@@ -56,7 +58,8 @@ and open the template in the editor.
             var antwoord4;
             var vraagOpnieuw = false;
             var antwoord;
-
+            var naam;
+            var lamp;
 
             //============================================= Websockets code =============================================
 
@@ -73,6 +76,7 @@ and open the template in the editor.
                 console.log(e.data.toString());
                 //e is het bericht dat binnenkomt
                 var commandArr = e.data.toString().split("_");
+
                 if (commandArr[0] == "startTimer") {
                     timeForQ = parseInt(commandArr[1]);
                     startTimer(3);
@@ -344,16 +348,26 @@ and open the template in the editor.
                 console.log('antwoord dat opgestuurd wordt = ' + antwoord);
                 websocket.send("answer_" + antwoord);
             }
-			
-			//=================================== touchevent voor de submit
-			$( ".submitAnswer" ).on( "touchend", function() {
-				timerToZero();
-			});
-			
-			$( ".submitAnswer" ).on( "touchmove", function() {
-				timerToZero();
-			});
 
+            //=================================== touchevent voor de submit
+            $(".submitAnswer").on("touchend", function() {
+                timerToZero();
+            });
+
+            $(".submitAnswer").on("touchmove", function() {
+                timerToZero();
+            });
+
+
+
+            function playerJoin() {
+                lamp = $("#lampSelect").val();
+                naam = $("#player").val();
+                start(naam);
+                $("#player").attr("disabled","disabled");
+                $("#lampSelect").attr("disabled","disabled");
+                
+            }
 
         </script>
     </head>
@@ -370,8 +384,17 @@ and open the template in the editor.
             <canvas id="sketchpad" width="1024" height="520"></canvas>
         </div>
         <div class="lobby">
-            <input type="text" id="tekst">
-            <button onclick="start();" id="button1">start</button>
+            <select id="lampSelect">
+                <?php
+                $query = "SELECT * FROM lamp WHERE free != 0 ;";
+                $result = mysql_query($query) or die(mysql_error());
+                while ($waardes = mysql_fetch_array($result)) {
+                    echo "<option value='".$waardes['id']."'>lamp ".$waardes['id'] . "</option>";
+                }
+                ?>
+            </select>
+            <input type="text" id="player">
+            <button onclick="playerJoin();" id="button1">start</button>
             <div id="players"></div>
         </div>
 
@@ -419,13 +442,13 @@ and open the template in the editor.
                 <div class="statusbalk">
                     <ul>
                         <li>
-                            <span></span>
+                            <span>1</span>
                         </li>
                         <li>
-                            <span></span>
+                            <span>2</span>
                         </li>
                         <li>
-                            <span></span>
+                            <span>3</span>
                         </li>
                         <li>
                             <span></span>

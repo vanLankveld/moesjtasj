@@ -256,8 +256,9 @@ label .value{
     text-align: center;
 }
 
-#tekst{
+#player{
     height: 50px;
+    text-align: center;
 }
 
 #button1{
