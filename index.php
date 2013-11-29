@@ -154,7 +154,13 @@ and open the template in the editor.
 
             //=================================== vraag laten zien
             function showQuestion() {
-                $("#vraagPlaatje").attr("src", imgUrl);
+                $(".button").show();
+                if (imgUrl !== "") {
+                    $("#vraagPlaatje").attr("src", imgUrl);
+                    $("#vraagPlaatje").show();
+                } else {
+                    $("#vraagPlaatje").hide();
+                }
                 $("#sketch").hide();
                 if (type.toLowerCase() === "enkel") {
                     $("#container").attr("class", "reken");
@@ -196,6 +202,11 @@ and open the template in the editor.
 //                $('.multipleLabel').contents().filter(function() {
 //                    return this.nodeType === 3;
 //                }).remove();
+
+                $("input:radio[name='antwoordMult']").each(function(i) {
+                    this.checked = false;
+                });
+
                 $(".multipleValue").text("");
                 $("#multiple").attr('display', 'block');
                 $("#multiple").show();
@@ -236,8 +247,8 @@ and open the template in the editor.
             //=================================== speler is joined de lobby
 
             function playerJoined(player) {
-                console.log(player + " joined");
-                $("#players").append("<br/>" + player + " joined");
+                console.log(player + " doet mee");
+                $("#players").append("<br/>" + player + " doet mee!");
             }
 
             //=================================== je naam opsturen en naar de server sturen dat je wilt starten
@@ -301,6 +312,10 @@ and open the template in the editor.
             //=================================== timer op 0 zetten om de vraag meteen op te sturen
 
             function timerToZero() {
+                $(".button").hide();
+                if (time > 10) {
+                    websocket.send("setBrightness_" + 10);
+                }
                 time = 0;
             }
 
@@ -398,34 +413,34 @@ and open the template in the editor.
                 <div class="statusbalk">
                     <ul>
                         <li>
-                            <span class="active">1</span>
+                            <span></span>
                         </li>
                         <li>
-                            <span>2</span>
+                            <span></span>
                         </li>
                         <li>
-                            <span>3</span>
+                            <span></span>
                         </li>
                         <li>
-                            <span>4</span>
+                            <span></span>
                         </li>
                         <li>
-                            <span>5</span>
+                            <span></span>
                         </li>
                         <li>
-                            <span>6</span>
+                            <span></span>
                         </li>
                         <li>
-                            <span>7</span>
+                            <span></span>
                         </li>
                         <li>
-                            <span>8</span>
+                            <span></span>
                         </li>
                         <li>
-                            <span>9</span>
+                            <span></span>
                         </li>
                         <li>
-                            <span>10</span>
+                            <span></span>
                         </li>
                     </ul>
                     <div class="potlood">

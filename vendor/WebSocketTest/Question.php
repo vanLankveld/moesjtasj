@@ -39,7 +39,7 @@ class Question
     public function checkAnswer($answer)
     {
         $givenAnswer = strtolower($answer);
-        $correctAnswer = strtolower($this->multipleChoiceAnswers[$this->correctAnswer]);
+        $correctAnswer = strip_tags(strtolower($this->multipleChoiceAnswers[$this->correctAnswer]));
         echo "Correct answer: ".$this->multipleChoiceAnswers[$this->correctAnswer]."\n";
         if ($givenAnswer != $correctAnswer)
         {

@@ -23,7 +23,7 @@ class Timer implements MessageComponentInterface {
     private $currentQuestion;
     private $messageGoodAnswer = "answer_true";
     private $messageWrongAnswer = "answer_false";
-    private $questionTimerLength = 30;
+    private $questionTimerLength = 60;
     private $secondChanceTimerLength = 120;
     private $secondChance;
 
@@ -223,7 +223,7 @@ class Timer implements MessageComponentInterface {
     private function trySetTimerBrightness($clientId) {
         $this->clientCalled10Seconds[$clientId] = true;
         foreach ($this->clientCalled10Seconds as $set) {
-            if (!$set && $this->clientAnswers[$clientId] === "") {
+            if (!$set) {
                 return;
             }
         }
