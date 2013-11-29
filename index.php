@@ -350,12 +350,14 @@ and open the template in the editor.
             }
 			
 			//=================================== touchevent voor de submit
-			$( ".submitAnswer" ).on( "touchend", function() {
-				timerToZero();
-			});
-			
-			$( ".submitAnswer" ).on( "touchmove", function() {
-				timerToZero();
+			$(document).ready(function(){
+				$( ".submitAnswer" ).on( "touchend", function() {
+					timerToZero();
+				});
+				
+				$( ".submitAnswer" ).on( "touchmove", function() {
+					timerToZero();
+				});
 			});
 
 
