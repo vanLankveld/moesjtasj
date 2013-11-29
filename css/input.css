@@ -5,7 +5,19 @@ body{
 	max-width:1049px;
 	background:#e7f6f5;
 	-webkit-user-select: none;
+	font-family: SourceSansPro;
 }
+
+@font-face{
+	font-family: SourceSansPro;
+	src: url(../font/SourceSansPro-Regular.ttf);
+}
+
+@font-face{
+	font-family: SourceSansProLight;
+	src:url(../font/SourceSansPro-ExtraLight.ttf);
+}
+
 #container{
 	float:left;
 	width:1024px;
@@ -52,6 +64,7 @@ body{
 	background:#16aa9e;
 }
 .vraag{
+	font-family: SourceSansPro;
 	width:840px;
 	margin:0 70px;
 	color:#333;
@@ -70,6 +83,7 @@ body{
 	height:100%;	
 }
 .antwoord{
+	font-family: SourceSansPro;
 	width:700px;
 	height:155px;
 	margin-left:70px;
@@ -94,12 +108,14 @@ li{
 }
 
 li span{
+	font-family: SourceSansProLight;
 	line-height:50px;
 	font-size:14px;
 	color:#e7f6f5;	
 }
 
 li span.active{
+	font-family: SourceSansPro;
 	font-size:26px;
 	color:#fff;	
 	font-weight:bold;
@@ -116,6 +132,19 @@ li span.active{
 	height:38px;
 	margin:6px 0;
 	background:url(../images/pencil.png);	
+}
+.icon{
+	float:left;
+	width:25px;
+	height:50px;
+	margin-left:20px;
+}
+.icon span{
+	float:left;
+	width:25px;
+	height:13px;
+	margin:18px 0;
+	background:url(../images/individu.png);	
 }
 
 #sketch{
