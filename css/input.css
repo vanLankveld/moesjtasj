@@ -97,6 +97,8 @@ body{
 ul{
 	float:left;
 	list-style:none;	
+	-webkit-margin-before:0px;
+	-webkit-padding-start:0px;
 	margin:0px 30px;
 }
 
@@ -227,8 +229,8 @@ input[type=radio]:checked + .radio {
 
 label{
 	float:left;
-	margin:7px 70px;
-	width:840px;
+	margin:7px 70px 7px 30px;
+	width:750px;
 }
 
 label .value{
@@ -263,4 +265,9 @@ label .value{
 #button1{
     height: 45px;
     width: 100px;
+}
+
+#multipleForm{
+	width:840px;
+	float:left;
 }

@@ -423,6 +423,9 @@ and open the template in the editor.
 
                 <div class="button submitAnswer"></div>
                 <div class="statusbalk">
+                	<div class="icon">
+                        <span></span>
+                    </div>
                     <ul>
                         <li>
                             <span></span>
