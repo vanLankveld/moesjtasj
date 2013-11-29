@@ -254,14 +254,10 @@ and open the template in the editor.
             //=================================== je naam opsturen en naar de server sturen dat je wilt starten
 
             function start() {
-                if ($("#tekst").val() == "")
-                {
-                    alert('Naam is niet ingevuld');
-                } else {
-                    websocket.send("start_" + $("#tekst").val());
+                var naam = $("#tekst").val();
+                    websocket.send("start_" + naam);
                     $("#tekst").hide();
                     $("#button1").hide();
-                }
             }
 
             //=================================== vraag laten zien op het scherm
@@ -281,6 +277,7 @@ and open the template in the editor.
                 trueOrFalse = $.trim(trueOrFalse.toString());
                 if (trueOrFalse === "true" || vraagOpnieuw === true)
                 {
+                    
                     console.log("nieuw vraag opvragen");
                     vraagOpnieuw = false;
                     websocket.send("newquestion_");
