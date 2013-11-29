@@ -54,12 +54,32 @@ $(document).ready(function(){
 		canvasStart();
 	});
 	
+	$( ".potlood" ).on( "touchmove", function() {
+		canvasStart();
+	});
+	
 	$( "#thrash" ).on( "touchend", function() {
+		canvasReset();
+	});
+	
+	$( "#thrash" ).on( "touchmove", function() {
 		canvasReset();
 	});
 	
 	$( "#arrow_down" ).on( "touchend", function() {
 		canvasHide();
+	});
+	
+	$( "#arrow_down" ).on( "touchmove", function() {
+		canvasHide();
+	});
+	
+	$( ".submitAnswer" ).on( "touchend", function() {
+		timerToZero();
+	});
+	
+	$( ".submitAnswer" ).on( "touchmove", function() {
+		timerToZero();
 	});
 });
 

@@ -277,8 +277,8 @@ and open the template in the editor.
                 trueOrFalse = $.trim(trueOrFalse.toString());
                 if (trueOrFalse === "true" || vraagOpnieuw === true)
                 {
-                    
-                    console.log("nieuw vraag opvragen");
+                    canvasReset(); // sketchpad leegmaken
+					console.log("nieuw vraag opvragen");
                     vraagOpnieuw = false;
                     websocket.send("newquestion_");
                 } else if (trueOrFalse === "false" && vraagOpnieuw === false)
@@ -406,7 +406,7 @@ and open the template in the editor.
                     </form>
                 </div>
 
-                <div class="button submitAnswer" onclick="timerToZero();"></div>
+                <div class="button submitAnswer"></div>
                 <div class="statusbalk">
                     <ul>
                         <li>
