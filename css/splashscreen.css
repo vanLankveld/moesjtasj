@@ -1,2 +1,34 @@
+#container{
+	background:#16aa9e;
+	background: -webkit-radial-gradient(center, ellipse cover, #5ec4bc 0%,#16aa9e 100%);
+	height:768px;	
+}
 
+#logo{
+	margin:0 auto;
+	margin-top:200px;
+	width:221px;
+	height:298px;	
+}
 
+#logo span {
+	float:left;
+	width:100%;
+	height:100%;
+	background:url(../images/elements/quora_logo.png);	
+}
+
+#laden{
+	margin:0 auto;
+	width:80px;
+	height:64px;
+	margin-top:220px;	
+}
+
+#laden span{
+	font-family: SourceSansProLight;
+	font-size:24px;
+	color:white;
+	float:left;
+	text-align:center;	
+}
