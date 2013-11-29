@@ -410,7 +410,7 @@ and open the template in the editor.
                     </form>
                 </div>
 
-                <div class="button submitAnswer" onclick="timerToZero();"></div>
+                <div class="button submitAnswer"></div>
                 <div class="statusbalk">
                     <ul>
                         <li>
