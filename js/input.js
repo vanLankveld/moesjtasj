@@ -54,7 +54,15 @@ $(document).ready(function(){
 		canvasStart();
 	});
 	
+	$( ".potlood" ).on( "touchmove", function() {
+		canvasStart();
+	});
+	
 	$( "#thrash" ).on( "touchend", function() {
+		canvasReset();
+	});
+	
+	$( "#thrash" ).on( "touchmove", function() {
 		canvasReset();
 	});
 	
