@@ -271,3 +271,8 @@ label .value{
 	width:840px;
 	float:left;
 }
+
+input[type="text"], input[type="email"], input[type="search"], input[type="password"] {
+	-webkit-appearance: caret;
+	-moz-appearance: caret; /* mobile firefox too! */
+}
