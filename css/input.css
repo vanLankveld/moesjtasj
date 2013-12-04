@@ -1,3 +1,4 @@
+/* ----- Algemeen ----- */
 body{
     margin:0;	
     font-family:Helvetica;
@@ -7,6 +8,131 @@ body{
     -webkit-user-select: none;
     font-family: SourceSansPro;
 }
+
+input[type="text"], input[type="email"], input[type="search"], input[type="password"] { /* Schaduw van inputvelden verwijderen */
+	-webkit-appearance: caret;
+}
+
+.button{
+	float:left;
+	width:140px;
+	height:180px;	
+}
+
+/* ----- Positionering ----- */
+
+#container{
+	float:left;
+	width:1024px;
+	background:#e7f6f5;
+}
+
+.top{
+	position:relative;
+	float:left;
+	width:100%;		
+}
+
+.top .upperbar{
+	height:20px;
+	width:100%;
+	background:	#16aa9e;
+	float:left;
+}
+
+.top .vraag{
+	width:840px;
+	margin:0 70px;
+	margin-top:40px;
+}
+
+.top .image{
+	margin:25px 0;
+}
+
+.top .image img{
+	display: block;
+    margin-left: auto;
+    margin-right: auto; 
+	height:100%;	
+}
+
+.bottom{
+	position:relative;
+	float:left;
+	width:100%;	
+}
+
+.bottom .statusbalk{
+	position:absolute;
+	bottom:0;
+	width:100%;
+	height:50px;	/* (50/768) * 100 = 6,51% */
+	background:#16aa9e;
+}
+
+.bottom .statusbalk ul{
+	float:left;
+	list-style:none;	
+	-webkit-margin-before:0px;
+	-webkit-padding-start:0px;
+	margin:0px 30px;
+}
+
+.bottom .statusbalk li{
+	float:left;
+	width:80px;
+	height:50px;
+	text-align:center;	
+}
+
+.bottom .statusbalk li span{
+	color:#e7f6f5;	
+}
+
+.bottom .statusbalk li span.active{
+	color:#fff;	
+}
+
+.bottom .statusbalk .potlood{
+	float:left;
+	width:38px;
+	height:50px;
+	margin-left:60px;
+}
+.bottom .statusbalk .potlood span{
+	float:left;
+	width:38px;
+	height:38px;
+	margin:6px 0;	
+}
+.bottom .statusbalk .icon{
+	float:left;
+	width:25px;
+	height:50px;
+	margin-left:20px;
+}
+.bottom .statusbalk .icon span{
+	float:left;
+	width:25px;
+	height:13px;
+	margin:18px 0;	
+}
+
+
+
+/* ----- Icons ----- */
+.button{ background:#16aa9e url(../images/icons/arrow_right.png) no-repeat center center; }
+
+.bottom .statusbalk .icon span{ background:url(../images/icons/individu.png) no-repeat center center; } 
+.bottom .statusbalk .potlood span{ background:url(../images/icons/pencil.png) no-repeat center center; }
+
+#sketch #sketchbar #thrash span{ background:url(../images/icons/thrashcan.png) no-repeat center center; }
+#sketch #sketchbar #arrow_down span{ background:url(../images/icons/arrow_down.png) no-repeat center center; }
+
+input[type=radio]:checked + .radio { background: url(../images/vinkje.png) #16aa9e no-repeat center center; }
+
+/* ----- Typografie ----- */
 
 @font-face{
     font-family: SourceSansPro;
@@ -18,29 +144,47 @@ body{
     src:url(../font/SourceSansPro-ExtraLight.ttf);
 }
 
-#container{
-    z-index: 1;
-    float:left;
-    width:1024px;
-    background:#e7f6f5;
+body, .vraag, .antwoord, li span.active { /* Regelar font */
+	font-family: SourceSansPro;	
 }
 
-.upperbar{
-    height:20px;
-    width:100%;
-    background:	#16aa9e;
-    float:left;
+li span{ /* Light font */
+	font-family: SourceSansProLight;	
 }
-.bottom{
-    position:relative;
-    float:left;
-    width:100%;	
+
+.vraag{
+	font-size:32px;
+	line-height:46px;
+	color:#333;	
 }
-.top{
-    position:relative;
-    float:left;
-    width:100%;		
+
+.antwoord{
+	font-size:48px;
+	text-align:center;	
 }
+
+li span{
+	line-height:50px;
+	font-size:14px;
+}
+
+li span.active{
+	font-size:26px;
+	font-weight:bold;
+}
+
+label .value{
+	line-height:42px;
+	font-size: 28px;	
+}
+
+.lobby{
+	text-align:center;	
+}
+
+
+
+/* ----- Enkele Vraag ----- */
 
 .reken .bottom{
     height:256px;
@@ -50,6 +194,20 @@ body{
     height:512px; 
 }
 
+.reken .antwoord{
+	width:700px;
+	height:155px;
+	margin-left:70px;
+	border:1px solid #16aa9e;	
+	color:#333;
+	border-radius:0;
+	float:left;
+}
+
+
+
+/* ----- Multiple Choice vraag ----- */
+
 .multi .bottom{
     height:320px !important;
 }
@@ -57,152 +215,17 @@ body{
 .multi .top{
     height:448px !important; 
 }
-.statusbalk{
-    position:absolute;
-    bottom:0;
-    width:100%;
-    height:50px;	/* (50/768) * 100 = 6,51% */
-    background:#16aa9e;
-}
-.vraag{
-    font-family: SourceSansPro;
-    width:840px;
-    margin:0 70px;
-    color:#333;
-    font-size:32px;	
-    line-height:46px;
-    margin-top:40px;
-}
-.top .image{
-    margin:25px 0;
+
+.multi .button{
+    height:64px !important;
+    position:absolute !important;
+    right:20px !important;
+    top:185px !important;
 }
 
-.top .image img{
-    display: block;
-    margin-left: auto;
-    margin-right: auto; 
-    height:100%;	
-}
-.antwoord{
-    font-family: SourceSansPro;
-    width:700px;
-    height:155px;
-    margin-left:70px;
-    border:1px solid #16aa9e;	
-    color:#333;
-    font-size:48px;
-    text-align:center;
-    border-radius:0;
-    float:left;
-}
-ul{
-    float:left;
-    list-style:none;	
-    margin:0px 30px;
-}
-
-li{
-    float:left;
-    width:80px;
-    height:50px;
-    text-align:center;	
-}
-
-li span{
-    font-family: SourceSansProLight;
-    line-height:50px;
-    font-size:14px;
-    color:#e7f6f5;	
-}
-
-li span.active{
-    font-family: SourceSansPro;
-    font-size:26px;
-    color:#fff;	
-    font-weight:bold;
-}
-.potlood{
-    float:left;
-    width:38px;
-    height:50px;
-    margin-left:60px;
-}
-.potlood span{
-    float:left;
-    width:38px;
-    height:38px;
-    margin:6px 0;
-    background:url(../images/pencil.png);	
-}
-.icon{
-    float:left;
-    width:25px;
-    height:50px;
-    margin-left:20px;
-}
-.icon span{
-    float:left;
-    width:25px;
-    height:13px;
-    margin:18px 0;
-    background:url(../images/individu.png);	
-}
-
-#sketch{
-    position:absolute;
-    left:0;
-    top:768px;	
-    width:1024px;
-    height:570px;
-    z-index:2;
-}
-
-#sketchbar{
-    height:60px;
-    width:1024px;
-    background: #16aa9e;
-    float:left;
-}
-
-#sketchpad {
-    float:left;
-    width:1024px;
-    height:520px;
-    background-color: rgba(0, 0, 0, 0.75);
-}
-
-#thrash{
-    float:left;
-    width:38px;
-    height:60px;
-    margin-left:420px;
-}
-#thrash span{
-    float:left;
-    width:38px;
-    height:38px;
-    margin:11px 0;
-    background:url(../images/thrashcan.png);	
-}
-
-#arrow_down{
-    float:left;
-    width:38px;
-    height:60px;
-    margin-left:493px;
-}
-#arrow_down span{
-    float:left;
-    width:38px;
-    height:38px;
-    margin:11px 0;
-    background:url(../images/arrow_down.png);	
-}
-.button{
-    float:left;
-    width:140px;
-    height:180px;	
-    background:#16aa9e url(../images/arrow_right.png) no-repeat center center;
+#multipleForm{
+	width:840px;
+	float:left;
 }
 
 input[type=radio] {
@@ -219,42 +242,83 @@ input[type=radio] + .radio {
     height:36px;
     float:left;
 }
-input[type=radio]:checked + .radio {
-    background-color: #16aa9e;
-    background-image: url('../images/vinkje.png');
-    background-repeat:no-repeat;
-    background-position:center center;
-}
 
 label{
-    float:left;
-    margin:7px 70px;
-    width:840px;
+	float:left;
+	margin:7px 70px 7px 30px;
+	width:750px;
 }
 
 label .value{
-    display:block;
-    float:left;
-    height:50px;
-    margin-left:25px;	
-    line-height:42px;
-    font-size: 28px;
+	display:block;
+	float:left;
+	height:50px;
+	margin-left:25px;	
 }
 
-.multi .button{
-    height:64px !important;
-    position:absolute !important;
-    right:20px !important;
-    top:185px !important;
+
+
+/* ----- Sketch ----- */
+
+#sketch{
+	position:absolute;
+	left:0;
+	top:768px;	
+	width:1024px;
+	height:570px;
+	z-index:2;
 }
 
+#sketch #sketchbar{
+	height:60px;
+	width:1024px;
+	background: #16aa9e;
+	float:left;
+}
+
+#sketch #sketchbar #thrash{
+	float:left;
+	width:38px;
+	height:60px;
+	margin-left:420px;
+}
+
+#sketch #sketchbar #thrash span{
+	float:left;
+	width:38px;
+	height:38px;
+	margin:11px 0;	
+}
+
+#sketch #sketchbar #arrow_down{
+	float:left;
+	width:38px;
+	height:60px;
+	margin-left:493px;
+}
+#sketch #sketchbar #arrow_down span{
+	float:left;
+	width:38px;
+	height:38px;
+	margin:11px 0;
+}
+
+#sketch #sketchpad {
+	float:left;
+	width:1024px;
+	height:520px;
+	background-color: rgba(0, 0, 0, 0.75);
+}
+
+
+
+/* ---- Lobby ----- */
 .lobby{
     margin-top:150px;
     margin-left:auto;
     margin-right:auto;
     width: 200px;
     height: 100px;
-    text-align: center;
 }
 
 #player{

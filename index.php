@@ -14,18 +14,10 @@ and open the template in the editor.
         <meta name="format-detection" content="telephone=no">
         <script src="js/jquery.js"></script>
         <script src="js/input.js"></script>
-        <!-- non-retina iPhone pre iOS 7 -->
-        <link rel="apple-touch-icon" href="images/apple-touch-icon-57x57.PNG" sizes="57x57">
-        <!-- non-retina iPhone iOS 7 -->
-        <link rel="apple-touch-icon" href="images/apple-touch-icon-60x60.png" sizes="60x60">
         <!-- non-retina iPad pre iOS 7 -->
         <link rel="apple-touch-icon" href="images/apple-touch-icon-72x72.PNG" sizes="72x72">
         <!-- non-retina iPad iOS 7 -->
         <link rel="apple-touch-icon" href="images/apple-touch-icon-76x76.PNG" sizes="76x76">
-        <!-- retina iPhone pre iOS 7 -->
-        <link rel="apple-touch-icon" href="images/apple-touch-icon-114x114.PNG" sizes="114x114">
-        <!-- retina iPhone iOS 7 -->
-        <link rel="apple-touch-icon" href="images/apple-touch-icon-120x120.PNG" sizes="120x120">
         <!-- retina iPad pre iOS 7 -->
         <link rel="apple-touch-icon" href="images/apple-touch-icon-144x144.PNG" sizes="144x144">
         <!-- retina iPad iOS 7 -->
@@ -63,7 +55,7 @@ and open the template in the editor.
             var correctAnswer = "";
             var currentQuestion = 1;
             var maxQuestion = 0;
-
+            var questionLabels = ['labelQ1', 'labelQ2', 'labelQ3', 'labelQ4', 'labelQ5', 'labelQ6', 'labelQ7', 'labelQ8', 'labelQ9'];
 
 
             //=================================== touchevent voor de submit
@@ -329,9 +321,11 @@ and open the template in the editor.
                 trueOrFalse = $.trim(trueOrFalse.toString());
                 if (trueOrFalse === "true" || vraagOpnieuw === true)
                 {
-                    questionCounter(99);
                     currentQuestion++;
+                    questionCounter(currentQuestion);
                     canvasReset(); // sketchpad leegmaken
+
+                    $(".icon span").css('background', 'url(./images/icons/individu.png)');
                     console.log("nieuw vraag opvragen");
                     vraagOpnieuw = false;
                     if (trueOrFalse === "false") {
@@ -340,6 +334,7 @@ and open the template in the editor.
                     showNext();
                 } else if (trueOrFalse === "false" && vraagOpnieuw === false)
                 {
+                    $(".icon span").css('background', 'url(./images/icons/groep.png)');
                     console.log("opnieuw proberen");
                     vraagOpnieuw = true;
                     websocket.send("tryagain_");
@@ -434,6 +429,17 @@ and open the template in the editor.
                 websocket.send("answer_" + antwoord);
             }
 
+            //=================================== touchevent voor de submit
+            $(document).ready(function() {
+                $(".submitAnswer").on("touchend", function() {
+                    timerToZero();
+                });
+
+                $(".submitAnswer").on("touchmove", function() {
+                    timerToZero();
+                });
+            });
+
             function playerJoin() {
                 lamp = $("#lampSelect").val();
                 naam = $("#player").val();
@@ -450,10 +456,27 @@ and open the template in the editor.
 
 
             function questionCounter(currentQ) {
-                $(".active").text(currentQ);
-                for (var i = currentQ - 4; i > currentQ; i++) {
-                    
+                console.log('labels goedzetten');
+                //questionLabels = ['labelQ1'];
+
+                var teller = 1;
+                for (var i = -4; i <= 4; i++) {
+                    if (currentQ + i > 0) {
+                        $("#labelQ" + teller).text(currentQ + i);
+                    }
+                    teller++;
                 }
+                /*
+                 $("#labelQ1").text(currentQ - 4);
+                 $("#labelQ2").text(currentQ - 3);
+                 $("#labelQ3").text(currentQ - 2);
+                 $("#labelQ4").text(currentQ - 1);
+                 $("#labelQ5").text(currentQ);
+                 $("#labelQ6").text(currentQ + 1);
+                 $("#labelQ7").text(currentQ + 2);
+                 $("#labelQ8").text(currentQ + 3);
+                 $("#labelQ9").text(currentQ + 4);
+                 */
             }
 
         </script>
@@ -527,6 +550,9 @@ and open the template in the editor.
 
                 <div class="button submitAnswer"></div>
                 <div class="statusbalk">
+                    <div class="icon">
+                        <span></span>
+                    </div>
                     <ul>
                         <li>
                             <span id="labelQ1"></span>
@@ -554,6 +580,9 @@ and open the template in the editor.
                         </li>
                         <li>
                             <span id="labelQ9">5</span>
+                        </li>
+                        <li>
+                            <span></span>
                         </li>
                     </ul>
                     <div class="potlood">
