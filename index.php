@@ -324,9 +324,8 @@ and open the template in the editor.
                     currentQuestion++;
                     questionCounter(currentQuestion);
                     canvasReset(); // sketchpad leegmaken
-
-                    $(".icon span").css('background', 'url(./images/icons/individu.png)');
-                    console.log("nieuw vraag opvragen");
+					$("#icon").css('background','url(../images/icons/individu.png)');
+					console.log("nieuw vraag opvragen");
                     vraagOpnieuw = false;
                     if (trueOrFalse === "false") {
                         showRightAnswer();
@@ -334,7 +333,7 @@ and open the template in the editor.
                     showNext();
                 } else if (trueOrFalse === "false" && vraagOpnieuw === false)
                 {
-                    $(".icon span").css('background', 'url(./images/icons/groep.png)');
+					$("#icon").css('background','url(../images/icons/groep.png)');
                     console.log("opnieuw proberen");
                     vraagOpnieuw = true;
                     websocket.send("tryagain_");
@@ -428,6 +427,17 @@ and open the template in the editor.
                 console.log('antwoord dat opgestuurd wordt = ' + antwoord);
                 websocket.send("answer_" + antwoord);
             }
+			
+			//=================================== touchevent voor de submit
+			$(document).ready(function(){
+				$( ".submitAnswer" ).on( "touchend", function() {
+					timerToZero();
+				});
+				
+				$( ".submitAnswer" ).on( "touchmove", function() {
+					timerToZero();
+				});
+			});
 
             //=================================== touchevent voor de submit
             $(document).ready(function() {
@@ -550,7 +560,7 @@ and open the template in the editor.
 
                 <div class="button submitAnswer"></div>
                 <div class="statusbalk">
-                    <div class="icon">
+                	<div class="icon">
                         <span></span>
                     </div>
                     <ul>

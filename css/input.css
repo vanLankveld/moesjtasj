@@ -1,12 +1,10 @@
 /* ----- Algemeen ----- */
 body{
-    margin:0;	
-    font-family:Helvetica;
-    width:1024px;
-    max-width:1049px;
-    background:#e7f6f5;
-    -webkit-user-select: none;
-    font-family: SourceSansPro;
+	margin:0;	
+	width:1024px;
+	max-width:1049px;
+	background:#e7f6f5;
+	-webkit-user-select: none;
 }
 
 input[type="text"], input[type="email"], input[type="search"], input[type="password"] { /* Schaduw van inputvelden verwijderen */
@@ -124,7 +122,7 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
 /* ----- Icons ----- */
 .button{ background:#16aa9e url(../images/icons/arrow_right.png) no-repeat center center; }
 
-.bottom .statusbalk .icon span{ background:url(../images/icons/individu.png) no-repeat center center; } 
+.bottom .statusbalk .icon span{ background:url(../images/icons/individu.png) no-repeat center center; }
 .bottom .statusbalk .potlood span{ background:url(../images/icons/pencil.png) no-repeat center center; }
 
 #sketch #sketchbar #thrash span{ background:url(../images/icons/thrashcan.png) no-repeat center center; }
@@ -134,15 +132,17 @@ input[type=radio]:checked + .radio { background: url(../images/vinkje.png) #16aa
 
 /* ----- Typografie ----- */
 
-@font-face{
-    font-family: SourceSansPro;
-    src: url(../font/SourceSansPro-Regular.ttf);
+input[type="text"], input[type="email"], input[type="search"], input[type="password"] { /* Schaduw van inputvelden verwijderen */
+	-webkit-appearance: caret;
 }
 
-@font-face{
-    font-family: SourceSansProLight;
-    src:url(../font/SourceSansPro-ExtraLight.ttf);
+.button{
+	float:left;
+	width:140px;
+	height:180px;	
 }
+
+/* ----- Positionering ----- */
 
 body, .vraag, .antwoord, li span.active { /* Regelar font */
 	font-family: SourceSansPro;	
@@ -187,11 +187,11 @@ label .value{
 /* ----- Enkele Vraag ----- */
 
 .reken .bottom{
-    height:256px;
+	height:256px;
 }
 
 .reken .top{
-    height:512px; 
+	height:512px; 
 }
 
 .reken .antwoord{
@@ -209,11 +209,11 @@ label .value{
 /* ----- Multiple Choice vraag ----- */
 
 .multi .bottom{
-    height:320px !important;
+	height:320px !important;
 }
 
 .multi .top{
-    height:448px !important; 
+	height:448px !important; 
 }
 
 .multi .button{
@@ -237,10 +237,10 @@ input[type=radio] + .radio {
     border-radius: 0;
     margin: 0 5px;
     margin-bottom: -10px;
-    background:#fff;
-    width:36px;
-    height:36px;
-    float:left;
+	background:#fff;
+	width:36px;
+	height:36px;
+	float:left;
 }
 
 label{
@@ -331,25 +331,3 @@ label .value{
     width: 100px;
 }
 
-.overlay{
-    background-color: #16aa9e;
-    position: absolute;
-    width: 1024px;
-    height : 768px;
-    top:0;
-    left:0;
-}
-
-.nextButton{
-    background-color: #5bc3bb;
-    width:140px;
-    height:65px;	
-    margin-left: auto;
-    margin-right: auto;
-    margin-top:650px;
-    position:relative;
-    text-align: center;
-    padding-top: 20px;
-    box-sizing:border-box;
-    box-shadow: 0 0 15px 1px rgba(0 , 0 , 0 , 0.5);
-}
