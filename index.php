@@ -60,6 +60,43 @@ and open the template in the editor.
             var antwoord;
             var naam;
             var lamp;
+            var correctAnswer = "";
+            var currentQuestion = 1;
+            var maxQuestion = 0;
+
+
+
+            //=================================== touchevent voor de submit
+            $(document).ready(function() {
+                $(".overlay").hide();
+                $(".submitAnswer").on("touchend", function() {
+                    timerToZero();
+                });
+
+                $(".submitAnswer").on("touchmove", function() {
+                    timerToZero();
+                });
+
+                $("#nextButton").on("touchend", function() {
+                    gotoNextQuestion();
+                });
+
+                $("#nextButton").on("touchmove", function() {
+                    gotoNextQuestion();
+                });
+            });
+
+            //=================================== touchevent voor de submit
+            $(".submitAnswer").on("touchend", function() {
+                timerToZero();
+            });
+
+            $(".submitAnswer").on("touchmove", function() {
+                timerToZero();
+            });
+
+
+
 
             //============================================= Websockets code =============================================
 
@@ -130,6 +167,7 @@ and open the template in the editor.
                         showContainer();
                         clearQuestion();
                         showQuestion();
+                        $(".overlay").hide();
                         if (type === "enkel") {
                             hideMultiple();
                             showEnkel();
@@ -158,6 +196,7 @@ and open the template in the editor.
 
             //=================================== vraag laten zien
             function showQuestion() {
+                console.log("vraag: " + currentQuestion);
                 $(".button").show();
                 if (imgUrl !== "") {
                     $("#vraagPlaatje").attr("src", imgUrl);
@@ -273,6 +312,15 @@ and open the template in the editor.
                 startTimer(timeForQ);
             }
 
+
+            //=================================== next button showen
+
+            function showNext() {
+                $(".overlay").fadeIn(300);
+            }
+
+
+
             //=================================== kijken of alles goed is of dat er iets fout was
 
             function checkAnswer(trueOrFalse)
@@ -281,10 +329,15 @@ and open the template in the editor.
                 trueOrFalse = $.trim(trueOrFalse.toString());
                 if (trueOrFalse === "true" || vraagOpnieuw === true)
                 {
+                    questionCounter(99);
+                    currentQuestion++;
                     canvasReset(); // sketchpad leegmaken
                     console.log("nieuw vraag opvragen");
                     vraagOpnieuw = false;
-                    websocket.send("newquestion_");
+                    if (trueOrFalse === "false") {
+                        showRightAnswer();
+                    }
+                    showNext();
                 } else if (trueOrFalse === "false" && vraagOpnieuw === false)
                 {
                     console.log("opnieuw proberen");
@@ -292,6 +345,15 @@ and open the template in the editor.
                     websocket.send("tryagain_");
                 }
             }
+
+
+
+            function showRightAnswer() {
+                $("#uitleg").html("Het juiste antwoord is:<br/>" + correctAnswer);
+                //show next button
+            }
+
+
 
             //==================================== vraag / antwoord / type etc opslaan
 
@@ -301,12 +363,35 @@ and open the template in the editor.
                 type = obj['type'];
                 vraag = obj['questionText'];
                 imgUrl = obj['image'].replace('\/', '/');
+                maxQuestion = 10;
+                var correct = 0;
                 if (type == 'multiple') {
+                    correct = parseInt(obj['correctAnswer']);
                     var antwoorden = obj['multipleChoiceAnswers'];
                     antwoord1 = antwoorden[0];
                     antwoord2 = antwoorden[1];
                     antwoord3 = antwoorden[2];
                     antwoord4 = antwoorden[3];
+                }
+                else
+                {
+                    antwoord1 = obj['multipleChoiceAnswers'][0];
+                }
+
+                switch (correct)
+                {
+                    case 0:
+                        correctAnswer = antwoord1;
+                        break;
+                    case 1:
+                        correctAnswer = antwoord2;
+                        break;
+                    case 2:
+                        correctAnswer = antwoord3;
+                        break;
+                    case 3:
+                        correctAnswer = antwoord4;
+                        break;
                 }
             }
 
@@ -349,24 +434,26 @@ and open the template in the editor.
                 websocket.send("answer_" + antwoord);
             }
 
-            //=================================== touchevent voor de submit
-            $(".submitAnswer").on("touchend", function() {
-                timerToZero();
-            });
-
-            $(".submitAnswer").on("touchmove", function() {
-                timerToZero();
-            });
-
-
-
             function playerJoin() {
                 lamp = $("#lampSelect").val();
                 naam = $("#player").val();
                 start(naam);
-                $("#player").attr("disabled","disabled");
-                $("#lampSelect").attr("disabled","disabled");
-                
+                $("#player").attr("disabled", "disabled");
+                $("#lampSelect").attr("disabled", "disabled");
+
+            }
+
+            function gotoNextQuestion() {
+                websocket.send("newquestion_");
+            }
+
+
+
+            function questionCounter(currentQ) {
+                $(".active").text(currentQ);
+                for (var i = currentQ - 4; i > currentQ; i++) {
+                    
+                }
             }
 
         </script>
@@ -389,7 +476,7 @@ and open the template in the editor.
                 $query = "SELECT * FROM lamp WHERE free != 0 ;";
                 $result = mysql_query($query) or die(mysql_error());
                 while ($waardes = mysql_fetch_array($result)) {
-                    echo "<option value='".$waardes['id']."'>lamp ".$waardes['id'] . "</option>";
+                    echo "<option value='" . $waardes['id'] . "'>lamp " . $waardes['id'] . "</option>";
                 }
                 ?>
             </select>
@@ -442,34 +529,31 @@ and open the template in the editor.
                 <div class="statusbalk">
                     <ul>
                         <li>
-                            <span>1</span>
+                            <span id="labelQ1"></span>
                         </li>
                         <li>
-                            <span>2</span>
+                            <span id="labelQ2"></span>
                         </li>
                         <li>
-                            <span>3</span>
+                            <span id="labelQ3"></span>
                         </li>
                         <li>
-                            <span></span>
+                            <span id="labelQ4"></span>
                         </li>
                         <li>
-                            <span></span>
+                            <span id="labelQ5" class="active">1</span>
                         </li>
                         <li>
-                            <span></span>
+                            <span id="labelQ6">2</span>
                         </li>
                         <li>
-                            <span></span>
+                            <span id="labelQ7">3</span>
                         </li>
                         <li>
-                            <span></span>
+                            <span id="labelQ8">4</span>
                         </li>
                         <li>
-                            <span></span>
-                        </li>
-                        <li>
-                            <span></span>
+                            <span id="labelQ9">5</span>
                         </li>
                     </ul>
                     <div class="potlood">
@@ -477,6 +561,10 @@ and open the template in the editor.
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="overlay">
+            <p id="uitleg"></p>
+            <div id="nextButton" class="nextButton">Volgende vraag</div>
         </div>
     </body>
 </html>
