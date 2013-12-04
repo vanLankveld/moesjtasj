@@ -8,10 +8,6 @@ body{
     -webkit-user-select: none;
 }
 
-input[type="text"], input[type="email"], input[type="search"], input[type="password"] { /* Schaduw van inputvelden verwijderen */
-    -webkit-appearance: caret;
-}
-
 .button{
     float:left;
     width:140px;
@@ -34,7 +30,7 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
     width:100%;		
 }
 
-.top .upperbar{
+.top .upperbar, .lobby .upperbar{
     height:20px;
     width:100%;
     background:	#16aa9e;
@@ -64,7 +60,7 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
     width:100%;	
 }
 
-.bottom .statusbalk{
+.bottom .statusbalk, .lobby .bottom-bar{
     position:absolute;
     bottom:0;
     width:100%;
@@ -124,7 +120,9 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
 
 /* ----- Icons ----- */
 
-.button{ background:#16aa9e url(../images/icons/arrow_right.png) no-repeat center center; }
+.button, #button1{ background:#16aa9e url(../images/icons/arrow_right.png) no-repeat center center; }
+
+.bottom-bar .bottom-logo{ background:#16aa9e url(../images/elements/quora_logo_small.png) no-repeat center center; }
 
 .bottom .statusbalk .icon span{ background:url(../images/icons/individu.png) no-repeat center center; }
 .bottom .statusbalk .potlood span{ background:url(../images/icons/pencil.png) no-repeat center center; }
@@ -148,15 +146,31 @@ input[type=radio]:checked + .radio { background: url(../images/vinkje.png) #16aa
     src:url(../font/SourceSansPro-ExtraLight.ttf);
 }
 
-body, .vraag, .antwoord, li span.active { /* Regelar font */
+@font-face{
+    font-family: OpenSansCondBold;
+    src: url(../font/OpenSans-CondBold.ttf);
+}
+
+body, .vraag, .antwoord, li span.active, .lobby .loginform #player, .lobby .loginform #password, .lobby #players span { /* Regelar font */
     font-family: SourceSansPro;	
 }
 
-li span{ /* Light font */
+li span, .lobby .loginform span, .button-container span, .lobby #players h2{ /* Light font */
     font-family: SourceSansProLight;	
 }
 
-.vraag{
+.lobby .loginform span, .lobby #players h2, .lobby #players span{
+	font-size:34px;
+	color:#333;	
+	font-weight:normal;
+}
+
+.button-container span{
+	font-size:32px;
+	color:#333;	
+}
+
+.vraag, .lobby .loginform #player, .lobby .loginform #password{
     font-size:32px;
     line-height:46px;
     color:#333;	
@@ -184,6 +198,13 @@ label .value{
 
 .lobby{
     text-align:center;	
+}
+
+.lobby h1{
+	font-family: OpenSansCondBold;
+	font-size:100px;
+	font-weight:normal;
+	color:#333333;
 }
 
 
@@ -319,23 +340,88 @@ label .value{
 /* ---- Lobby ----- */
 
 .lobby{
-    margin-top:150px;
-    margin-left:auto;
-    margin-right:auto;
-    width: 200px;
-    height: 100px;
+    width: 1024px;
+    height: 768px;
+	position:relative;
 }
 
-#player{
-    height: 50px;
+.lobby .title, .lobby .loginform{
+	margin:0 auto;
+	width:512px;
+	text-align:center;	
+}
+
+.lobby .title h1{
+	margin:0;
+	padding-top:50px;	
+	padding-bottom:20px;
+}
+
+.lobby .loginform span{
+	width:320px;
+	float:left;	
+	margin:20px 96px 10px;
+	text-align:left;
+}
+
+.lobby .loginform #player, .lobby .loginform #password{
+    height: 64px;
+	width:320px;
+	float:left;
+	margin:0 96px;
     text-align: center;
+	border:1px solid #16aa9e;
+}
+
+.lobby #players h2{
+	margin:0;	
+}
+
+.lobby #players span{
+	float:left;
+	width:100%;	
 }
 
 #button1{
-    height: 45px;
-    width: 100px;
+	float:left;
+    width: 140px;
+	height:64px;
+   	z-index:100;
+	bottom:4px;
+	position:absolute;
 }
 
+.button-container{
+	width:144px;
+	height:113px;
+	position:absolute;
+	bottom:72px;
+    right:60px;		
+}
+
+.button-container .button-text{
+	width:100px;
+	float:left;	
+	text-align:left;
+	margin-bottom:5px;
+}
+
+.button-shadow{
+	z-index:1;
+	width:140px;
+	height:64px;
+	background:#333;
+	position:absolute;
+	float:left;
+	bottom:0px;
+	right:0px;
+}
+
+.bottom-bar .bottom-logo{
+	width:29px;
+	height:38px;
+	margin:6px auto 0;	
+}
 
 
 /* ---- Overlay ----*/

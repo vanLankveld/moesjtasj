@@ -79,6 +79,14 @@ and open the template in the editor.
                     gotoNextQuestion();
                     wachtenWeergeven();
                 });
+				
+				$("#button1").on("touchend", function() {
+                    playerJoin();
+                });
+
+                $("#button1").on("touchmove", function() {
+                    playerJoin();
+                });
             });
 
             //============================================= Websockets code =============================================
@@ -273,7 +281,8 @@ and open the template in the editor.
 
             function playerJoined(player) {
                 console.log(player + " doet mee");
-                $("#players").append("<br/>" + player + " doet mee!");
+				$("#players").show();
+                $("#players").append("<span>" + player + "</span>");
             }
 
             //=================================== je naam opsturen en naar de server sturen dat je wilt starten
@@ -281,8 +290,9 @@ and open the template in the editor.
             function start(naam) {
                 //$("#tekst").val();
                 websocket.send("start_" + naam);
-                $("#tekst").hide();
-                $("#button1").hide();
+				$(".title h1").html('Welkom');
+                $(".loginform").hide();
+                $(".button-container").hide();
             }
 
             //=================================== vraag laten zien op het scherm
@@ -493,18 +503,36 @@ and open the template in the editor.
             <canvas id="sketchpad" width="1024" height="520"></canvas>
         </div>
         <div class="lobby">
-            <select id="lampSelect">
-                <?php
-                $query = "SELECT * FROM lamp WHERE free != 0 ;";
-                $result = mysql_query($query) or die(mysql_error());
-                while ($waardes = mysql_fetch_array($result)) {
-                    echo "<option value='" . $waardes['id'] . "'>lamp " . $waardes['id'] . "</option>";
-                }
-                ?>
-            </select>
-            <input type="text" id="player">
-            <button onclick="playerJoin();" id="button1">start</button>
-            <div id="players"></div>
+        	<div class="upperbar"></div>
+        	<div class="title">
+        		<h1>Inloggen</h1>
+            </div>
+            <div class="loginform">
+                <select id="lampSelect">
+                    <?php
+                    $query = "SELECT * FROM lamp WHERE free != 0 ;";
+                    $result = mysql_query($query) or die(mysql_error());
+                    while ($waardes = mysql_fetch_array($result)) {
+                        echo "<option value='" . $waardes['id'] . "'>lamp " . $waardes['id'] . "</option>";
+                    }
+                    ?>
+                </select>
+                <span>Voer je naam in:</span>
+                <input type="text" id="player">
+                <span>Wachtwoord:</span>
+                <input type="password" id="password">
+            </div>
+            <div id="players" style="display:none;">
+            	<h2>Wie spelen er mee?</h2>
+            </div>
+            <div class="button-container">
+            	<span class="button-text">Bevestigen</span>
+            	<div id="button1"></div>
+                <span class="button-shadow"></span>
+            </div>
+            <div class="bottom-bar">
+            	<div class="bottom-logo"></div>
+            </div>
         </div>
 
         <div class="reken" id="container" style="display:none;">
@@ -600,7 +628,7 @@ and open the template in the editor.
             </div>
             <div id="nextButton" class="nextButton"></div>
             <div id="laden" style="display:none;">
-                <h3>Wachten op andere spelers</h3>
+                <h3>Wachten op spelers</h3>
             </div>
         </div>
     </body>
