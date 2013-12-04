@@ -331,3 +331,25 @@ label .value{
     width: 100px;
 }
 
+.overlay{
+    background-color: #16aa9e;
+    position: absolute;
+    width: 1024px;
+    height : 768px;
+    top:0;
+    left:0;
+}
+
+.nextButton{
+    background-color: #5bc3bb;
+    width:140px;
+    height:65px;	
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:650px;
+    position:relative;
+    text-align: center;
+    padding-top: 20px;
+    box-sizing:border-box;
+    box-shadow: 0 0 15px 1px rgba(0 , 0 , 0 , 0.5);
+}
