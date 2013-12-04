@@ -72,12 +72,12 @@ and open the template in the editor.
 
                 $("#nextButton").on("touchend", function() {
                     gotoNextQuestion();
-					vraagDetails();
+                    wachtenWeergeven();
                 });
 
                 $("#nextButton").on("touchmove", function() {
                     gotoNextQuestion();
-					vraagDetails();
+                    wachtenWeergeven();
                 });
             });
 
@@ -333,6 +333,8 @@ and open the template in the editor.
                     vraagOpnieuw = false;
                     if (trueOrFalse === "false") {
                         showRightAnswer();
+                    } else if (trueOrFalse === "true") {
+                        emptyRightAnswer();
                     }
                     showNext();
                 } else if (trueOrFalse === "false" && vraagOpnieuw === false)
@@ -344,11 +346,15 @@ and open the template in the editor.
                 }
             }
 
-
+            function emptyRightAnswer() {
+                $("#uitleg").empty();
+                wachtOpVerder();
+            }
 
             function showRightAnswer() {
+                console.log('juiste antwoord: ' + correctAnswer + " weergeven");
                 $("#uitleg").html("Het juiste antwoord is:<br/>" + correctAnswer);
-                //show next button
+                uitlegWeergeven();
             }
 
 
@@ -600,14 +606,14 @@ and open the template in the editor.
         <div class="overlay">
             <p id="uitleg"></p>
             <div id="vraagnummer" style="display:none;">
-            	<h1>Vraag <span>1</span></h1>
+                <h1>Vraag <span>1</span></h1>
             </div>
             <div id="categorie" style="display:none;">
-            	<h2>rekenen</h2>
+                <h2></h2>
             </div>
             <div id="nextButton" class="nextButton"></div>
             <div id="laden" style="display:none;">
-            	<h3>Wachten op andere spelers</h3>
+                <h3>Wachten op andere spelers</h3>
             </div>
         </div>
     </body>

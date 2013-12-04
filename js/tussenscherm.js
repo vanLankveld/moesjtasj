@@ -1,46 +1,93 @@
-$(function() {
-	$( ".nextButton" ).on( "click", function() {
-		vraagDetails();
-	});
-	
-	$( ".nextButton" ).on( "touchend", function() {
-		vraagDetails();
-	});
-	
-	$( ".nextButton" ).on( "touchmove", function() {
-		vraagDetails();
-	});
-});
-
-function vraagDetails(){
-	$(".uitleg").hide();
-	$(".nextButton").hide();
-	$("#laden").show();
-	$("#vraagnummer").show();
-	$("#categorie").show();
-	$("#categorie").html(vak);
-	$("#vraagnummer h1 span").html(currentQ);
-	laden();	
+function uitlegWeergeven() {
+    console.log('uitleg weergeven');
+    hideVraagnummer();
+    showUitleg();
+    //hideCategorie();
+    showNextButton();
+    hideLaadText();
 }
 
-function laden(){
-	$('#laden h3')
-	.delay(250)
-	.queue(function() {
-		laadwaarde = $(this).html();
-		$(this).append(".").dequeue();
-	})
-	.delay(250)
-	.queue(function() {
-		$(this).append(".").dequeue();
-	})
-	.delay(250)
-	.queue(function() {
-		$(this).append(".").dequeue();
-	})
-	.delay(500)
-	.queue(function() {
-		$(this).html(laadwaarde).dequeue();
-		laden();
-	});
+
+function wachtOpVerder() {
+    console.log('wachten tot speler op verder klikt');
+    hideVraagnummer();
+    //hideCategorie();
+    showNextButton();
+    hideLaadText();
+}
+
+function wachtenWeergeven() {
+    console.log('wachten weergeven');
+    hideNextButton();
+    hideUitleg();
+    showVraagnummer();
+    //showCategorie();
+    showLaadText();
+}
+
+
+function showUitleg() {
+    $("#uitleg").show();
+}
+
+function hideUitleg() {
+    console.log("uitleg weghalen");
+    $("#uitleg").hide();
+}
+
+function showVraagnummer() {
+    $("#vraagnummer h1 span").html(currentQuestion);
+    $("#vraagnummer").show();
+}
+
+function hideVraagnummer() {
+    $("#vraagnummer").hide();
+}
+
+function showCategorie() {
+    $("#categorie").show();
+    $("#categorie").html(vak);
+}
+
+function hideCategorie() {
+    $("#categorie").hide();
+}
+
+function showNextButton() {
+    $(".nextButton").show();
+}
+
+function hideNextButton() {
+    $(".nextButton").hide();
+}
+
+function showLaadText() {
+    $("#laden").show();
+    laden();
+}
+
+function hideLaadText() {
+    $("#laden").hide();
+}
+
+function laden() {
+    $('#laden h3')
+            .delay(250)
+            .queue(function() {
+        laadwaarde = $(this).html();
+        $(this).append(".").dequeue();
+    })
+            .delay(250)
+            .queue(function() {
+        $(this).append(".").dequeue();
+    })
+            .delay(250)
+            .queue(function() {
+        $(this).append(".").dequeue();
+    })
+            .delay(500)
+            .queue(function() {
+        $(this).html(laadwaarde).dequeue();
+        laden();
+    });
 }

@@ -1,21 +1,21 @@
 /* ----- Algemeen ----- */
 
 body{
-	margin:0;	
-	width:1024px;
-	max-width:1049px;
-	background:#e7f6f5;
-	-webkit-user-select: none;
+    margin:0;	
+    width:1024px;
+    max-width:1049px;
+    background:#e7f6f5;
+    -webkit-user-select: none;
 }
 
 input[type="text"], input[type="email"], input[type="search"], input[type="password"] { /* Schaduw van inputvelden verwijderen */
-	-webkit-appearance: caret;
+    -webkit-appearance: caret;
 }
 
 .button{
-	float:left;
-	width:140px;
-	height:180px;	
+    float:left;
+    width:140px;
+    height:180px;	
 }
 
 
@@ -23,101 +23,101 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
 /* ----- Positionering ----- */
 
 #container{
-	float:left;
-	width:1024px;
-	background:#e7f6f5;
+    float:left;
+    width:1024px;
+    background:#e7f6f5;
 }
 
 .top{
-	position:relative;
-	float:left;
-	width:100%;		
+    position:relative;
+    float:left;
+    width:100%;		
 }
 
 .top .upperbar{
-	height:20px;
-	width:100%;
-	background:	#16aa9e;
-	float:left;
+    height:20px;
+    width:100%;
+    background:	#16aa9e;
+    float:left;
 }
 
 .top .vraag{
-	width:840px;
-	margin:0 70px;
-	margin-top:40px;
+    width:840px;
+    margin:0 70px;
+    margin-top:40px;
 }
 
 .top .image{
-	margin:25px 0;
+    margin:25px 0;
 }
 
 .top .image img{
-	display: block;
+    display: block;
     margin-left: auto;
     margin-right: auto; 
-	height:100%;	
+    height:100%;	
 }
 
 .bottom{
-	position:relative;
-	float:left;
-	width:100%;	
+    position:relative;
+    float:left;
+    width:100%;	
 }
 
 .bottom .statusbalk{
-	position:absolute;
-	bottom:0;
-	width:100%;
-	height:50px;	/* (50/768) * 100 = 6,51% */
-	background:#16aa9e;
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:50px;	/* (50/768) * 100 = 6,51% */
+    background:#16aa9e;
 }
 
 .bottom .statusbalk ul{
-	float:left;
-	list-style:none;	
-	-webkit-margin-before:0px;
-	-webkit-padding-start:0px;
-	margin:0px 30px;
+    float:left;
+    list-style:none;	
+    -webkit-margin-before:0px;
+    -webkit-padding-start:0px;
+    margin:0px 30px;
 }
 
 .bottom .statusbalk li{
-	float:left;
-	width:80px;
-	height:50px;
-	text-align:center;	
+    float:left;
+    width:80px;
+    height:50px;
+    text-align:center;	
 }
 
 .bottom .statusbalk li span{
-	color:#e7f6f5;	
+    color:#e7f6f5;	
 }
 
 .bottom .statusbalk li span.active{
-	color:#fff;	
+    color:#fff;	
 }
 
 .bottom .statusbalk .potlood{
-	float:left;
-	width:38px;
-	height:50px;
-	margin-left:60px;
+    float:left;
+    width:38px;
+    height:50px;
+    margin-left:60px;
 }
 .bottom .statusbalk .potlood span{
-	float:left;
-	width:38px;
-	height:38px;
-	margin:6px 0;	
+    float:left;
+    width:38px;
+    height:38px;
+    margin:6px 0;	
 }
 .bottom .statusbalk .icon{
-	float:left;
-	width:25px;
-	height:50px;
-	margin-left:20px;
+    float:left;
+    width:25px;
+    height:50px;
+    margin-left:20px;
 }
 .bottom .statusbalk .icon span{
-	float:left;
-	width:25px;
-	height:13px;
-	margin:18px 0;	
+    float:left;
+    width:25px;
+    height:13px;
+    margin:18px 0;	
 }
 
 
@@ -139,51 +139,51 @@ input[type=radio]:checked + .radio { background: url(../images/vinkje.png) #16aa
 /* ----- Typografie ----- */
 
 @font-face{
-        font-family: SourceSansPro;
-        src: url(../font/SourceSansPro-Regular.ttf);
+    font-family: SourceSansPro;
+    src: url(../font/SourceSansPro-Regular.ttf);
 }
 
 @font-face{
-        font-family: SourceSansProLight;
-        src:url(../font/SourceSansPro-ExtraLight.ttf);
+    font-family: SourceSansProLight;
+    src:url(../font/SourceSansPro-ExtraLight.ttf);
 }
 
 body, .vraag, .antwoord, li span.active { /* Regelar font */
-	font-family: SourceSansPro;	
+    font-family: SourceSansPro;	
 }
 
 li span{ /* Light font */
-	font-family: SourceSansProLight;	
+    font-family: SourceSansProLight;	
 }
 
 .vraag{
-	font-size:32px;
-	line-height:46px;
-	color:#333;	
+    font-size:32px;
+    line-height:46px;
+    color:#333;	
 }
 
 .antwoord{
-	font-size:48px;
-	text-align:center;	
+    font-size:48px;
+    text-align:center;	
 }
 
 li span{
-	line-height:50px;
-	font-size:14px;
+    line-height:50px;
+    font-size:14px;
 }
 
 li span.active{
-	font-size:26px;
-	font-weight:bold;
+    font-size:26px;
+    font-weight:bold;
 }
 
 label .value{
-	line-height:42px;
-	font-size: 28px;	
+    line-height:42px;
+    font-size: 28px;	
 }
 
 .lobby{
-	text-align:center;	
+    text-align:center;	
 }
 
 
@@ -191,21 +191,21 @@ label .value{
 /* ----- Enkele Vraag ----- */
 
 .reken .bottom{
-	height:256px;
+    height:256px;
 }
 
 .reken .top{
-	height:512px; 
+    height:512px; 
 }
 
 .reken .antwoord{
-	width:700px;
-	height:155px;
-	margin-left:70px;
-	border:1px solid #16aa9e;	
-	color:#333;
-	border-radius:0;
-	float:left;
+    width:700px;
+    height:155px;
+    margin-left:70px;
+    border:1px solid #16aa9e;	
+    color:#333;
+    border-radius:0;
+    float:left;
 }
 
 
@@ -213,11 +213,11 @@ label .value{
 /* ----- Multiple Choice vraag ----- */
 
 .multi .bottom{
-	height:320px !important;
+    height:320px !important;
 }
 
 .multi .top{
-	height:448px !important; 
+    height:448px !important; 
 }
 
 .multi .button{
@@ -228,8 +228,8 @@ label .value{
 }
 
 #multipleForm{
-	width:840px;
-	float:left;
+    width:840px;
+    float:left;
 }
 
 input[type=radio] {
@@ -241,23 +241,23 @@ input[type=radio] + .radio {
     border-radius: 0;
     margin: 0 5px;
     margin-bottom: -10px;
-	background:#fff;
-	width:36px;
-	height:36px;
-	float:left;
+    background:#fff;
+    width:36px;
+    height:36px;
+    float:left;
 }
 
 label{
-	float:left;
-	margin:7px 70px 7px 30px;
-	width:750px;
+    float:left;
+    margin:7px 70px 7px 30px;
+    width:750px;
 }
 
 label .value{
-	display:block;
-	float:left;
-	height:50px;
-	margin-left:25px;	
+    display:block;
+    float:left;
+    height:50px;
+    margin-left:25px;	
 }
 
 
@@ -265,53 +265,53 @@ label .value{
 /* ----- Sketch ----- */
 
 #sketch{
-	position:absolute;
-	left:0;
-	top:768px;	
-	width:1024px;
-	height:570px;
-	z-index:2;
+    position:absolute;
+    left:0;
+    top:768px;	
+    width:1024px;
+    height:570px;
+    z-index:2;
 }
 
 #sketch #sketchbar{
-	height:60px;
-	width:1024px;
-	background: #16aa9e;
-	float:left;
+    height:60px;
+    width:1024px;
+    background: #16aa9e;
+    float:left;
 }
 
 #sketch #sketchbar #thrash{
-	float:left;
-	width:38px;
-	height:60px;
-	margin-left:420px;
+    float:left;
+    width:38px;
+    height:60px;
+    margin-left:420px;
 }
 
 #sketch #sketchbar #thrash span{
-	float:left;
-	width:38px;
-	height:38px;
-	margin:11px 0;	
+    float:left;
+    width:38px;
+    height:38px;
+    margin:11px 0;	
 }
 
 #sketch #sketchbar #arrow_down{
-	float:left;
-	width:38px;
-	height:60px;
-	margin-left:493px;
+    float:left;
+    width:38px;
+    height:60px;
+    margin-left:493px;
 }
 #sketch #sketchbar #arrow_down span{
-	float:left;
-	width:38px;
-	height:38px;
-	margin:11px 0;
+    float:left;
+    width:38px;
+    height:38px;
+    margin:11px 0;
 }
 
 #sketch #sketchpad {
-	float:left;
-	width:1024px;
-	height:520px;
-	background-color: rgba(0, 0, 0, 0.75);
+    float:left;
+    width:1024px;
+    height:520px;
+    background-color: rgba(0, 0, 0, 0.75);
 }
 
 
@@ -342,7 +342,7 @@ label .value{
 
 .overlay{
     background:#16aa9e;
-	background: -webkit-radial-gradient(center, ellipse cover, #5ec4bc 0%,#16aa9e 100%);
+    background: -webkit-radial-gradient(center, ellipse cover, #5ec4bc 0%,#16aa9e 100%);
     position: absolute;
     width: 1024px;
     height : 768px;
@@ -352,54 +352,55 @@ label .value{
 
 .nextButton{
     width:140px;
-	height:64px;
-	position:absolute;
-	float:right;
-	bottom:64px;
-	right:76px;	
-	background:url(../images/icons/arrow_right_blue.png) white no-repeat center center;	
+    height:64px;
+    position:absolute;
+    float:right;
+    bottom:64px;
+    right:76px;	
+    background:url(../images/icons/arrow_right_blue.png) white no-repeat center center;	
 }
 
 #laden{
-	margin:0 auto;
-	width:280px;
-	height:64px;
-	margin-top:220px;
-	text-align:center;		
+    margin:0 auto;
+    width:280px;
+    height:64px;
+    margin-top:220px;
+    text-align:center;		
 }
 
 #laden h3{
-	font-family: SourceSansProLight;
-	font-size:24px;
-	color:white;
-	text-align:center;	
-	font-weight:normal;
-	margin:0 auto;
+    font-family: SourceSansProLight;
+    font-size:24px;
+    color:white;
+    text-align:center;	
+    font-weight:normal;
+    margin:0 auto;
+    width: 300px;
 }
 
 #vraagnummer{
-	padding-top:270px;	
+    padding-top:270px;	
 }
 
 #vraagnummer, #categorie{
-	margin:0 auto;
-	width:420px;
-	text-align:center;	
+    margin:0 auto;
+    width:420px;
+    text-align:center;	
 }
 
 #vraagnummer h1{
-	font-family: SourceSansProLight;
-	color:white;
-	font-size:100px;
-	font-weight:normal;	
-	margin:0;
+    font-family: SourceSansProLight;
+    color:white;
+    font-size:100px;
+    font-weight:normal;	
+    margin:0;
 }
 
 #categorie h2{
-	font-family: SourceSansProLight;
-	color:white;
-	font-size:32px;	
-	font-weight:normal;		
-	margin:0;
-	padding-bottom:60px;
+    font-family: SourceSansProLight;
+    color:white;
+    font-size:32px;	
+    font-weight:normal;		
+    margin:0;
+    padding-bottom:60px;
 }
