@@ -475,9 +475,6 @@ and open the template in the editor.
                     teller++;
                 }
             }
-
-
-
             function saveKlad() {
                 var canvas = document.getElementById("sketchpad");
                 var img = canvas.toDataURL("image/png");
