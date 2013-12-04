@@ -1,24 +1,27 @@
 $(function() {
 	$( ".nextButton" ).on( "click", function() {
-		$(".nextButton").hide();
-		$("#laden").show();
-		laden();
+		vraagDetails();
 	});
 	
 	$( ".nextButton" ).on( "touchend", function() {
-		$(".nextButton").hide();
-		$("#laden").show();
-		laden();
+		vraagDetails();
 	});
 	
 	$( ".nextButton" ).on( "touchmove", function() {
-		$(".nextButton").hide();
-		$("#laden").show();
-		laden();
+		vraagDetails();
 	});
 });
 
-
+function vraagDetails(){
+	$(".uitleg").hide();
+	$(".nextButton").hide();
+	$("#laden").show();
+	$("#vraagnummer").show();
+	$("#categorie").show();
+	$("#categorie").html(vak);
+	$("#vraagnummer h1 span").html(currentQ);
+	laden();	
+}
 
 function laden(){
 	$('#laden h3')

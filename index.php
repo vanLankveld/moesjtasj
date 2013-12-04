@@ -14,6 +14,7 @@ and open the template in the editor.
         <meta name="format-detection" content="telephone=no">
         <script src="js/jquery.js"></script>
         <script src="js/input.js"></script>
+        <script src="js/tussenscherm.js"></script>
         <!-- non-retina iPad pre iOS 7 -->
         <link rel="apple-touch-icon" href="images/apple-touch-icon-72x72.PNG" sizes="72x72">
         <!-- non-retina iPad iOS 7 -->
@@ -71,10 +72,12 @@ and open the template in the editor.
 
                 $("#nextButton").on("touchend", function() {
                     gotoNextQuestion();
+					vraagDetails();
                 });
 
                 $("#nextButton").on("touchmove", function() {
                     gotoNextQuestion();
+					vraagDetails();
                 });
             });
 
@@ -599,7 +602,16 @@ and open the template in the editor.
         </div>
         <div class="overlay">
             <p id="uitleg"></p>
-            <div id="nextButton" class="nextButton">Volgende vraag</div>
+            <div id="vraagnummer" style="display:none;">
+            	<h1>Vraag <span>1</span></h1>
+            </div>
+            <div id="categorie" style="display:none;">
+            	<h2>rekenen</h2>
+            </div>
+            <div id="nextButton" class="nextButton"></div>
+            <div id="laden" style="display:none;">
+            	<h3>Wachten op andere spelers</h3>
+            </div>
         </div>
     </body>
 </html>

@@ -2,7 +2,7 @@
 	background:#16aa9e;
 	background: -webkit-radial-gradient(center, ellipse cover, #5ec4bc 0%,#16aa9e 100%);
 	height:768px;	
-	position:relative;
+	position:absolute;
 }
 
 #logo{

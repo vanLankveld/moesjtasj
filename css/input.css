@@ -331,8 +331,12 @@ label .value{
     width: 100px;
 }
 
+
+
+/* ---- Overlay ----*/
 .overlay{
-    background-color: #16aa9e;
+    background:#16aa9e;
+	background: -webkit-radial-gradient(center, ellipse cover, #5ec4bc 0%,#16aa9e 100%);
     position: absolute;
     width: 1024px;
     height : 768px;
@@ -341,15 +345,55 @@ label .value{
 }
 
 .nextButton{
-    background-color: #5bc3bb;
     width:140px;
-    height:65px;	
-    margin-left: auto;
-    margin-right: auto;
-    margin-top:650px;
-    position:relative;
-    text-align: center;
-    padding-top: 20px;
-    box-sizing:border-box;
-    box-shadow: 0 0 15px 1px rgba(0 , 0 , 0 , 0.5);
+	height:64px;
+	position:absolute;
+	float:right;
+	bottom:64px;
+	right:76px;	
+	background:url(../images/icons/arrow_right_blue.png) white no-repeat center center;	
+}
+
+#laden{
+	margin:0 auto;
+	width:280px;
+	height:64px;
+	margin-top:220px;
+	text-align:center;		
+}
+
+#laden h3{
+	font-family: SourceSansProLight;
+	font-size:24px;
+	color:white;
+	text-align:center;	
+	font-weight:normal;
+	margin:0 auto;
+}
+
+#vraagnummer{
+	padding-top:270px;	
+}
+
+#vraagnummer, #categorie{
+	margin:0 auto;
+	width:420px;
+	text-align:center;	
+}
+
+#vraagnummer h1{
+	font-family: SourceSansProLight;
+	color:white;
+	font-size:100px;
+	font-weight:normal;	
+	margin:0;
+}
+
+#categorie h2{
+	font-family: SourceSansProLight;
+	color:white;
+	font-size:32px;	
+	font-weight:normal;		
+	margin:0;
+	padding-bottom:60px;
 }
