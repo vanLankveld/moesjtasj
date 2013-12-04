@@ -1,8 +1,11 @@
 $(function() {
-	laden();
+		laden();
 });
+
+
+
 function laden(){
-	$('#laden span')
+	$('#laden h3')
 	.delay(250)
 	.queue(function() {
 		laadwaarde = $(this).html();
