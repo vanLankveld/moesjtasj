@@ -1,4 +1,5 @@
 /* ----- Algemeen ----- */
+
 body{
 	margin:0;	
 	width:1024px;
@@ -16,6 +17,8 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
 	width:140px;
 	height:180px;	
 }
+
+
 
 /* ----- Positionering ----- */
 
@@ -120,6 +123,7 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
 
 
 /* ----- Icons ----- */
+
 .button{ background:#16aa9e url(../images/icons/arrow_right.png) no-repeat center center; }
 
 .bottom .statusbalk .icon span{ background:url(../images/icons/individu.png) no-repeat center center; }
@@ -130,19 +134,19 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
 
 input[type=radio]:checked + .radio { background: url(../images/vinkje.png) #16aa9e no-repeat center center; }
 
+
+
 /* ----- Typografie ----- */
 
-input[type="text"], input[type="email"], input[type="search"], input[type="password"] { /* Schaduw van inputvelden verwijderen */
-	-webkit-appearance: caret;
+@font-face{
+        font-family: SourceSansPro;
+        src: url(../font/SourceSansPro-Regular.ttf);
 }
 
-.button{
-	float:left;
-	width:140px;
-	height:180px;	
+@font-face{
+        font-family: SourceSansProLight;
+        src:url(../font/SourceSansPro-ExtraLight.ttf);
 }
-
-/* ----- Positionering ----- */
 
 body, .vraag, .antwoord, li span.active { /* Regelar font */
 	font-family: SourceSansPro;	
@@ -313,6 +317,7 @@ label .value{
 
 
 /* ---- Lobby ----- */
+
 .lobby{
     margin-top:150px;
     margin-left:auto;
@@ -334,6 +339,7 @@ label .value{
 
 
 /* ---- Overlay ----*/
+
 .overlay{
     background:#16aa9e;
 	background: -webkit-radial-gradient(center, ellipse cover, #5ec4bc 0%,#16aa9e 100%);
