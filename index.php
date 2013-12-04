@@ -81,18 +81,6 @@ and open the template in the editor.
                 });
             });
 
-            //=================================== touchevent voor de submit
-            $(".submitAnswer").on("touchend", function() {
-                timerToZero();
-            });
-
-            $(".submitAnswer").on("touchmove", function() {
-                timerToZero();
-            });
-
-
-
-
             //============================================= Websockets code =============================================
 
             //Openen van de websocket, het adres van de websocket is in dit geval ws://localhost:8080 
@@ -185,7 +173,6 @@ and open the template in the editor.
                 $("#vraag").html('');
                 $("#antwoord").val('');
             }
-
 
 
 
