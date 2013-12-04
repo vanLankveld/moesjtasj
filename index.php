@@ -150,7 +150,7 @@ and open the template in the editor.
                         showContainer();
                         clearQuestion();
                         showQuestion();
-                        $(".overlay").hide();
+                        $(".overlay").hide(300);
                         if (type === "enkel") {
                             hideMultiple();
                             showEnkel();
@@ -295,7 +295,7 @@ and open the template in the editor.
             }
 
 
-            //=================================== next button showen
+            //=================================== tussenscherm showen
 
             function showNext() {
                 $(".overlay").fadeIn(300);
@@ -339,7 +339,7 @@ and open the template in the editor.
             }
 
             function showRightAnswer() {
-                console.log('juiste antwoord: ' + correctAnswer + " weergeven");
+                console.log("juiste antwoord weergeven");
                 $("#uitleg").html("Het juiste antwoord is:<br/>" + correctAnswer);
                 uitlegWeergeven();
             }
@@ -356,7 +356,7 @@ and open the template in the editor.
                 imgUrl = obj['image'].replace('\/', '/');
                 maxQuestion = 10;
                 var correct = 0;
-                if (type == 'multiple') {
+                if (type === 'multiple') {
                     correct = parseInt(obj['correctAnswer']);
                     var antwoorden = obj['multipleChoiceAnswers'];
                     antwoord1 = antwoorden[0];
