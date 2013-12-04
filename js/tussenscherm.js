@@ -1,5 +1,21 @@
 $(function() {
+	$( ".nextButton" ).on( "click", function() {
+		$(".nextButton").hide();
+		$("#laden").show();
 		laden();
+	});
+	
+	$( ".nextButton" ).on( "touchend", function() {
+		$(".nextButton").hide();
+		$("#laden").show();
+		laden();
+	});
+	
+	$( ".nextButton" ).on( "touchmove", function() {
+		$(".nextButton").hide();
+		$("#laden").show();
+		laden();
+	});
 });
 
 
