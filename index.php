@@ -321,11 +321,12 @@ and open the template in the editor.
                 trueOrFalse = $.trim(trueOrFalse.toString());
                 if (trueOrFalse === "true" || vraagOpnieuw === true)
                 {
+                    saveKlad();
                     currentQuestion++;
                     questionCounter(currentQuestion);
                     canvasReset(); // sketchpad leegmaken
-					$("#icon").css('background','url(../images/icons/individu.png)');
-					console.log("nieuw vraag opvragen");
+                    $("#icon").css('background', 'url(../images/icons/individu.png)');
+                    console.log("nieuw vraag opvragen");
                     vraagOpnieuw = false;
                     if (trueOrFalse === "false") {
                         showRightAnswer();
@@ -333,7 +334,7 @@ and open the template in the editor.
                     showNext();
                 } else if (trueOrFalse === "false" && vraagOpnieuw === false)
                 {
-					$("#icon").css('background','url(../images/icons/groep.png)');
+                    $("#icon").css('background', 'url(../images/icons/groep.png)');
                     console.log("opnieuw proberen");
                     vraagOpnieuw = true;
                     websocket.send("tryagain_");
@@ -427,17 +428,17 @@ and open the template in the editor.
                 console.log('antwoord dat opgestuurd wordt = ' + antwoord);
                 websocket.send("answer_" + antwoord);
             }
-			
-			//=================================== touchevent voor de submit
-			$(document).ready(function(){
-				$( ".submitAnswer" ).on( "touchend", function() {
-					timerToZero();
-				});
-				
-				$( ".submitAnswer" ).on( "touchmove", function() {
-					timerToZero();
-				});
-			});
+
+            //=================================== touchevent voor de submit
+            $(document).ready(function() {
+                $(".submitAnswer").on("touchend", function() {
+                    timerToZero();
+                });
+
+                $(".submitAnswer").on("touchmove", function() {
+                    timerToZero();
+                });
+            });
 
             //=================================== touchevent voor de submit
             $(document).ready(function() {
@@ -466,9 +467,6 @@ and open the template in the editor.
 
 
             function questionCounter(currentQ) {
-                console.log('labels goedzetten');
-                //questionLabels = ['labelQ1'];
-
                 var teller = 1;
                 for (var i = -4; i <= 4; i++) {
                     if (currentQ + i > 0) {
@@ -476,17 +474,15 @@ and open the template in the editor.
                     }
                     teller++;
                 }
-                /*
-                 $("#labelQ1").text(currentQ - 4);
-                 $("#labelQ2").text(currentQ - 3);
-                 $("#labelQ3").text(currentQ - 2);
-                 $("#labelQ4").text(currentQ - 1);
-                 $("#labelQ5").text(currentQ);
-                 $("#labelQ6").text(currentQ + 1);
-                 $("#labelQ7").text(currentQ + 2);
-                 $("#labelQ8").text(currentQ + 3);
-                 $("#labelQ9").text(currentQ + 4);
-                 */
+            }
+
+
+
+            function saveKlad() {
+                var canvas = document.getElementById("sketchpad");
+                var img = canvas.toDataURL("image/png");
+                $.post("saveKlad.php", {imgUrl: img});
+                console.log('image url send');
             }
 
         </script>
@@ -560,7 +556,7 @@ and open the template in the editor.
 
                 <div class="button submitAnswer"></div>
                 <div class="statusbalk">
-                	<div class="icon">
+                    <div class="icon">
                         <span></span>
                     </div>
                     <ul>
