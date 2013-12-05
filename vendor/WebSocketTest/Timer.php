@@ -210,7 +210,7 @@ class Timer implements MessageComponentInterface
     private function getNewQuestion()
     {
         //$this->questions[0];
-        if (count($this->selectedQuestions) > $this->standardCount)
+        if (count($this->selectedQuestions) >= $this->standardCount)
         {
             return "stop";
         }
