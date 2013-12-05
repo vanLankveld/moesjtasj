@@ -66,6 +66,7 @@ class Timer implements MessageComponentInterface
                     $responseMsg = "start_" . $msgParts[1];
                     $this->startedClients[$from->resourceId] = true;
                     echo "client " . $from->resourceId . " started=" . $this->startedClients[$from->resourceId] . "\n";
+                    $this->selectedQuestions = new array();
                     $this->tryStart();
                     break;
                 case "answer":
