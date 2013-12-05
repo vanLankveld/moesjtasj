@@ -249,9 +249,9 @@ class Timer implements MessageComponentInterface
                 array_push($multipleChoiceAnswers, $waardes['antwoord4']);
             }
             $correctAnswer = $waardes['juisteAntwoord'];
-            array_push($this->selectedQuestions, $id);
             $this->currentQuestion = new Question($id, $questionText, $image, $subject, $type, $multipleChoiceAnswers, $correctAnswer);
         }
+        array_push($this->selectedQuestions, $this->currentQuestion->id);
         $this->sendCurrentQuestionToClients();
         $this->secondChance = false;
         return "";
