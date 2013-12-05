@@ -66,7 +66,7 @@ class Timer implements MessageComponentInterface
                     $responseMsg = "start_" . $msgParts[1];
                     $this->startedClients[$from->resourceId] = true;
                     echo "client " . $from->resourceId . " started=" . $this->startedClients[$from->resourceId] . "\n";
-                    $this->selectedQuestions = new array();
+                    $this->selectedQuestions = array();
                     $this->tryStart();
                     break;
                 case "answer":
@@ -210,7 +210,7 @@ class Timer implements MessageComponentInterface
     private function getNewQuestion()
     {
         //$this->questions[0];
-        if (count($this->selectedQuestions) >= $this->standardCount)
+        if (count($this->selectedQuestions) > $this->standardCount)
         {
             return "stop";
         }
