@@ -16,13 +16,13 @@ and open the template in the editor.
         <script src="js/input.js"></script>
         <script src="js/tussenscherm.js"></script>
         <!-- non-retina iPad pre iOS 7 -->
-        <link rel="apple-touch-icon" href="images/apple-touch-icon-72x72.PNG" sizes="72x72">
+        <link rel="apple-touch-icon" href="images/appicon/apple-touch-icon-72x72.PNG" sizes="72x72">
         <!-- non-retina iPad iOS 7 -->
-        <link rel="apple-touch-icon" href="images/apple-touch-icon-76x76.PNG" sizes="76x76">
+        <link rel="apple-touch-icon" href="images/appicon/apple-touch-icon-76x76.PNG" sizes="76x76">
         <!-- retina iPad pre iOS 7 -->
-        <link rel="apple-touch-icon" href="images/apple-touch-icon-144x144.PNG" sizes="144x144">
+        <link rel="apple-touch-icon" href="images/appicon/apple-touch-icon-144x144.PNG" sizes="144x144">
         <!-- retina iPad iOS 7 -->
-        <link rel="apple-touch-icon" href="images/apple-touch-icon-152x152.png" sizes="152x152">
+        <link rel="apple-touch-icon" href="images/appicon/apple-touch-icon-152x152.png" sizes="152x152">
         <?php
         $exec = exec("hostname"); //the "hostname" is a valid command in both windows and linux
         $hostname = trim($exec); //remove any spaces before and after
@@ -208,7 +208,7 @@ and open the template in the editor.
             //=================================== vraag laten zien
             function showQuestion() {
                 console.log("vraag: " + currentQuestion);
-                $(".button").show();
+                $("#container .button-container").show();
                 if (imgUrl !== "") {
                     $("#vraagPlaatje").attr("src", imgUrl);
                     $("#vraagPlaatje").show();
@@ -420,7 +420,7 @@ and open the template in the editor.
             //=================================== timer op 0 zetten om de vraag meteen op te sturen
 
             function timerToZero() {
-                $(".button").hide();
+                $("#container .button-container").hide();
                 if (time > 10) {
                     websocket.send("setBrightness_" + 10);
                 }
@@ -620,8 +620,11 @@ and open the template in the editor.
                         </label>
                     </form>
                 </div>
-
-                <div class="button submitAnswer"></div>
+				<div class="button-container">
+					<span class="button-text">Bevestigen</span>
+					<div class="button submitAnswer"></div>
+					<span class="button-shadow"></span>
+				</div> 
                 <div class="statusbalk">
                     <div class="icon">
                         <span></span>

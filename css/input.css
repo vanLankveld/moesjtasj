@@ -9,9 +9,12 @@ body{
 }
 
 .button{
-    float:left;
-    width:140px;
-    height:180px;	
+	float:left;
+    width: 140px;
+	height:64px;
+   	z-index:100;
+	bottom:4px;
+	position:absolute;
 }
 
 
@@ -220,7 +223,7 @@ label .value{
 }
 
 .reken .antwoord{
-    width:700px;
+    width:670px;
     height:155px;
     margin-left:70px;
     border:1px solid #16aa9e;	
@@ -239,13 +242,6 @@ label .value{
 
 .multi .top{
     height:448px !important; 
-}
-
-.multi .button{
-    height:64px !important;
-    position:absolute !important;
-    right:20px !important;
-    top:185px !important;
 }
 
 #multipleForm{
@@ -349,6 +345,10 @@ label .value{
 	margin:0 auto;
 	width:512px;
 	text-align:center;	
+}
+
+.lobby .loginform{
+	height:512px;
 }
 
 .lobby .title h1{

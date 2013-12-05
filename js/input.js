@@ -12,7 +12,6 @@ $(document).ready(function(){
 		$(".reken .bottom").css('height','125px');
 		$(".reken .antwoord").css('height','70px');
 		$(".reken .vraag").css('marginTop','40px');
-		$(".reken .button").css('height','95px');
 		$(".statusbalk").hide();
     });
 	
@@ -23,7 +22,6 @@ $(document).ready(function(){
         $(".reken .top").css('height','512px');
 		$(".reken .bottom").css('height','256px');
 		$(".reken .antwoord").css('height','155px');
-		$(".reken .button").css('height','180px');
 		$(".statusbalk").show();
 		tekstResize();
     });
@@ -42,7 +40,6 @@ $(document).ready(function(){
 			$(".reken .top").css('height','512px');
 			$(".reken .bottom").css('height','256px');
 			$(".reken .antwoord").css('height','155px');
-			$(".reken .button").css('height','180px');
 			$(".statusbalk").show();
 			e.preventDefault();
 			document.activeElement.blur();
