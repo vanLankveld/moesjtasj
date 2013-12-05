@@ -187,7 +187,7 @@ and open the template in the editor.
             //=================================== vraag laten zien
             function showQuestion() {
                 console.log("vraag: " + currentQuestion);
-                $(".button").show();
+                $("#container .button-container").show();
                 if (imgUrl !== "") {
                     $("#vraagPlaatje").attr("src", imgUrl);
                     $("#vraagPlaatje").show();
@@ -399,7 +399,7 @@ and open the template in the editor.
             //=================================== timer op 0 zetten om de vraag meteen op te sturen
 
             function timerToZero() {
-                $(".button").hide();
+                $("#container .button-container").hide();
                 if (time > 10) {
                     websocket.send("setBrightness_" + 10);
                 }
@@ -575,8 +575,11 @@ and open the template in the editor.
                         </label>
                     </form>
                 </div>
-
-                <div class="button submitAnswer"></div>
+				<div class="button-container">
+					<span class="button-text">Bevestigen</span>
+					<div class="button submitAnswer"></div>
+					<span class="button-shadow"></span>
+				</div> 
                 <div class="statusbalk">
                     <div class="icon">
                         <span></span>

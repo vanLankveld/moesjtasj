@@ -9,9 +9,12 @@ body{
 }
 
 .button{
-    float:left;
-    width:140px;
-    height:180px;	
+	float:left;
+    width: 140px;
+	height:64px;
+   	z-index:100;
+	bottom:4px;
+	position:absolute;
 }
 
 
@@ -239,13 +242,6 @@ label .value{
 
 .multi .top{
     height:448px !important; 
-}
-
-.multi .button{
-    height:64px !important;
-    position:absolute !important;
-    right:20px !important;
-    top:185px !important;
 }
 
 #multipleForm{
