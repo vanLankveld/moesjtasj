@@ -356,14 +356,13 @@ and open the template in the editor.
 
 
             //==================================== vraag / antwoord / type etc opslaan
-
             function setQuestion(json) {
                 var obj = JSON.parse(json);
                 vak = obj['subject'];
                 type = obj['type'];
                 vraag = obj['questionText'];
                 imgUrl = obj['image'].replace('\/', '/');
-                maxQuestion = 3;
+                maxQuestion = 10;
                 questionCounter(currentQuestion);
                 var correct = 0;
                 if (type === 'multiple') {
