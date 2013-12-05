@@ -16,13 +16,13 @@ and open the template in the editor.
         <script src="js/input.js"></script>
         <script src="js/tussenscherm.js"></script>
         <!-- non-retina iPad pre iOS 7 -->
-        <link rel="apple-touch-icon" href="images/apple-touch-icon-72x72.PNG" sizes="72x72">
+        <link rel="apple-touch-icon" href="images/appicon/apple-touch-icon-72x72.PNG" sizes="72x72">
         <!-- non-retina iPad iOS 7 -->
-        <link rel="apple-touch-icon" href="images/apple-touch-icon-76x76.PNG" sizes="76x76">
+        <link rel="apple-touch-icon" href="images/appicon/apple-touch-icon-76x76.PNG" sizes="76x76">
         <!-- retina iPad pre iOS 7 -->
-        <link rel="apple-touch-icon" href="images/apple-touch-icon-144x144.PNG" sizes="144x144">
+        <link rel="apple-touch-icon" href="images/appicon/apple-touch-icon-144x144.PNG" sizes="144x144">
         <!-- retina iPad iOS 7 -->
-        <link rel="apple-touch-icon" href="images/apple-touch-icon-152x152.png" sizes="152x152">
+        <link rel="apple-touch-icon" href="images/appicon/apple-touch-icon-152x152.png" sizes="152x152">
         <?php
         $exec = exec("hostname"); //the "hostname" is a valid command in both windows and linux
         $hostname = trim($exec); //remove any spaces before and after
