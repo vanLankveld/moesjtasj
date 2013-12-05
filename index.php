@@ -86,9 +86,7 @@ and open the template in the editor.
                     loginButtonPressed = true;
                     var user = $('#player').val();
                     var pass = $('#password').val();
-                    if (playerAllow(user, pass)) {
-                        playerJoin();
-                    } else {
+                    if (!playerAllow(user, pass)) {
                         loginButtonPressed = false;
                     }
                 }
@@ -511,8 +509,7 @@ and open the template in the editor.
                     $('#alertPass').css('visibility', 'hidden');
                 }
                 if (user !== "" && pass !== "") {
-                    //ajax
-                    return true;
+                    console.log('ajax ophalen');
                     $.ajax({
                         url: "login.php",
                         type: "POST",
@@ -522,21 +519,18 @@ and open the template in the editor.
                         },
                         success: function(response)
                         {
-                            if (response === 'true') {
-                                return true;
-                            }
-                            else {
-                                return false;
+                            response = response.trim();
+                            if (response !== 'notSet') {
+                                console.log("login true");
+                                playerJoin();
                             }
                         }
                     });
-
-
-                } else {
-                    return false;
                 }
-
+                console.log('login false');
+                return false;
             }
+
         </script>
     </head>
     <body>
@@ -571,7 +565,7 @@ and open the template in the editor.
                 <input type="text" id="player">
                 <span>Wachtwoord:</span>
                 <h5 id="alertPass">er is geen wachtwoord ingevuld!</h5>
-                <input type="password" id="password">
+                <input type="password" id="password" value="quora">
             </div>
             <div id="players" style="display:none;">
                 <h2>Wie spelen er mee?</h2>
