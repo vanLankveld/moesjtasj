@@ -458,6 +458,7 @@ and open the template in the editor.
             });
 
             function playerJoin() {
+				showLaadText()
                 lamp = $("#lampSelect").val();
                 naam = $("#player").val();
                 start(naam);
@@ -626,8 +627,12 @@ and open the template in the editor.
             <div id="categorie" style="display:none;">
                 <h2></h2>
             </div>
-            <div id="nextButton" class="nextButton"></div>
-            <div id="laden" style="display:none;">
+			<div class="button-container">
+            	<span class="button-text">Volgende</span>
+            	<div id="nextButton" class="nextButton"></div>
+                <span class="button-shadow"></span>
+            </div> 
+            <div id="laden" class="laden" style="display:none;">
                 <h3>Wachten op spelers</h3>
             </div>
         </div>
