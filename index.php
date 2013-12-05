@@ -79,8 +79,8 @@ and open the template in the editor.
                     gotoNextQuestion();
                     wachtenWeergeven();
                 });
-				
-				$("#button1").on("touchend", function() {
+
+                $("#button1").on("touchend", function() {
                     playerJoin();
                 });
 
@@ -281,16 +281,15 @@ and open the template in the editor.
 
             function playerJoined(player) {
                 console.log(player + " doet mee");
-				$("#players").show();
+                $("#players").show();
                 $("#players").append("<span>" + player + "</span>");
             }
 
             //=================================== je naam opsturen en naar de server sturen dat je wilt starten
 
             function start(naam) {
-                //$("#tekst").val();
                 websocket.send("start_" + naam);
-				$(".title h1").html('Welkom');
+                $(".title h1").html('Welkom');
                 $(".loginform").hide();
                 $(".button-container").hide();
             }
@@ -364,7 +363,8 @@ and open the template in the editor.
                 type = obj['type'];
                 vraag = obj['questionText'];
                 imgUrl = obj['image'].replace('\/', '/');
-                maxQuestion = 10;
+                maxQuestion = 3;
+                questionCounter(currentQuestion);
                 var correct = 0;
                 if (type === 'multiple') {
                     correct = parseInt(obj['correctAnswer']);
@@ -473,12 +473,18 @@ and open the template in the editor.
 
 
             function questionCounter(currentQ) {
-                var teller = 1;
-                for (var i = -4; i <= 4; i++) {
-                    if (currentQ + i > 0) {
-                        $("#labelQ" + teller).text(currentQ + i);
+                if (currentQ <= maxQuestion) {
+                    var teller = 1;
+                    for (var i = -4; i <= 4; i++) {
+                        if (currentQ + i > 0) {
+                            if (currentQ + i > maxQuestion) {
+                                $("#labelQ" + teller).empty();
+                            } else {
+                                $("#labelQ" + teller).text(currentQ + i);
+                            }
+                        }
+                        teller++;
                     }
-                    teller++;
                 }
             }
             function saveKlad() {
@@ -503,9 +509,9 @@ and open the template in the editor.
             <canvas id="sketchpad" width="1024" height="520"></canvas>
         </div>
         <div class="lobby">
-        	<div class="upperbar"></div>
-        	<div class="title">
-        		<h1>Inloggen</h1>
+            <div class="upperbar"></div>
+            <div class="title">
+                <h1>Inloggen</h1>
             </div>
             <div class="loginform">
                 <select id="lampSelect">
@@ -523,15 +529,15 @@ and open the template in the editor.
                 <input type="password" id="password">
             </div>
             <div id="players" style="display:none;">
-            	<h2>Wie spelen er mee?</h2>
+                <h2>Wie spelen er mee?</h2>
             </div>
             <div class="button-container">
-            	<span class="button-text">Bevestigen</span>
-            	<div id="button1"></div>
+                <span class="button-text">Bevestigen</span>
+                <div id="button1"></div>
                 <span class="button-shadow"></span>
             </div>
             <div class="bottom-bar">
-            	<div class="bottom-logo"></div>
+                <div class="bottom-logo"></div>
             </div>
         </div>
 
@@ -594,19 +600,19 @@ and open the template in the editor.
                             <span id="labelQ4"></span>
                         </li>
                         <li>
-                            <span id="labelQ5" class="active">1</span>
+                            <span id="labelQ5" class="active"></span>
                         </li>
                         <li>
-                            <span id="labelQ6">2</span>
+                            <span id="labelQ6"></span>
                         </li>
                         <li>
-                            <span id="labelQ7">3</span>
+                            <span id="labelQ7"></span>
                         </li>
                         <li>
-                            <span id="labelQ8">4</span>
+                            <span id="labelQ8"></span>
                         </li>
                         <li>
-                            <span id="labelQ9">5</span>
+                            <span id="labelQ9"></span>
                         </li>
                         <li>
                             <span></span>
