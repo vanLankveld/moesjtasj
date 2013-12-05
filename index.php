@@ -58,8 +58,6 @@ and open the template in the editor.
             var currentQuestion = 1;
             var maxQuestion = 0;
             var questionLabels = ['labelQ1', 'labelQ2', 'labelQ3', 'labelQ4', 'labelQ5', 'labelQ6', 'labelQ7', 'labelQ8', 'labelQ9'];
-
-
             //=================================== touchevent voor de submit
             $(document).ready(function() {
 
@@ -67,28 +65,22 @@ and open the template in the editor.
                 $(".submitAnswer").on("touchend", function() {
                     timerToZero();
                 });
-
                 $(".submitAnswer").on("touchmove", function() {
                     timerToZero();
                 });
-
                 $("#nextButton").on("touchend", function() {
                     nextTouch();
                 });
-
                 $("#nextButton").on("touchmove", function() {
                     nextTouch();
                 });
-
                 $("#button1").on("touchend", function() {
                     loginTouch();
                 });
-
                 $("#button1").on("touchmove", function() {
                     loginTouch();
                 });
             });
-
             function loginTouch() {
                 if (!loginButtonPressed) {
                     loginButtonPressed = true;
@@ -114,18 +106,15 @@ and open the template in the editor.
 
             //Openen van de websocket, het adres van de websocket is in dit geval ws://localhost:8080 
             var websocket = new WebSocket("ws://<?php echo $ip; ?>:8080");
-
             //In deze functie staat code die uitgevoerd wordt wanneer er een verbinding is met de websocket
             websocket.onopen = function(e) {
                 console.log("Connection established");
             };
-
             //In deze functie staat de code die uitgevoerd wordt wanneer er een bericht vanuit de websocket ontvangen wordt
             websocket.onmessage = function(e) {
                 console.log(e.data.toString());
                 //e is het bericht dat binnenkomt
                 var commandArr = e.data.toString().split("_");
-
                 if (commandArr[0] == "startTimer") {
                     timeForQ = parseInt(commandArr[1]);
                     startTimer(3);
@@ -138,7 +127,6 @@ and open the template in the editor.
                 }
                 //Meer dingen ......
             };
-
             //========================================= Einde Websockets code ===========================================
 
 
@@ -260,7 +248,6 @@ and open the template in the editor.
                 $("input:radio[name='antwoordMult']").each(function(i) {
                     this.checked = false;
                 });
-
                 $(".multipleValue").text("");
                 $("#multiple").attr('display', 'block');
                 $("#multiple").show();
@@ -461,23 +448,19 @@ and open the template in the editor.
                 $(".submitAnswer").on("touchend", function() {
                     timerToZero();
                 });
-
                 $(".submitAnswer").on("touchmove", function() {
                     timerToZero();
                 });
             });
-
             //=================================== touchevent voor de submit
             $(document).ready(function() {
                 $(".submitAnswer").on("touchend", function() {
                     timerToZero();
                 });
-
                 $(".submitAnswer").on("touchmove", function() {
                     timerToZero();
                 });
             });
-
             function playerJoin() {
                 showLaadText()
                 lamp = $("#lampSelect").val();
@@ -485,7 +468,6 @@ and open the template in the editor.
                 start(naam);
                 $("#player").attr("disabled", "disabled");
                 $("#lampSelect").attr("disabled", "disabled");
-
             }
 
             function gotoNextQuestion() {
@@ -528,9 +510,32 @@ and open the template in the editor.
                 } else {
                     $('#alertPass').css('visibility', 'hidden');
                 }
-                if(user !== "" && pass !== ""){
+                if (user !== "" && pass !== "") {
+                    //ajax
                     return true;
+                    $.ajax({
+                        url: "login.php",
+                        type: "POST",
+                        data: {
+                            username: user,
+                            password: pass
+                        },
+                        success: function(response)
+                        {
+                            if (response === 'true') {
+                                return true;
+                            }
+                            else {
+                                return false;
+                            }
+                        }
+                    });
+
+
+                } else {
+                    return false;
                 }
+
             }
         </script>
     </head>
@@ -620,11 +625,11 @@ and open the template in the editor.
                         </label>
                     </form>
                 </div>
-				<div class="button-container">
-					<span class="button-text">Bevestigen</span>
-					<div class="button submitAnswer"></div>
-					<span class="button-shadow"></span>
-				</div> 
+                <div class="button-container">
+                    <span class="button-text">Bevestigen</span>
+                    <div class="button submitAnswer"></div>
+                    <span class="button-shadow"></span>
+                </div> 
                 <div class="statusbalk">
                     <div class="icon">
                         <span></span>
