@@ -9,16 +9,13 @@ use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
 use WebSocketTest\HueLamp;
 use WebSocketTest\Question;
+use WebSocketTest\Player;
 
 class Timer implements MessageComponentInterface
 {
-
     protected $clients;
     protected $started = false;
-    protected $startedClients = array();
-    protected $clientAnswers = array();
-    protected $clientCalled10Seconds = array();
-    protected $clientCalledQuestionstart = array();
+    protected $players = array();
     protected $hueLamp;
     private $selectedQuestions = array();
     private $currentQuestion;
@@ -41,10 +38,7 @@ class Timer implements MessageComponentInterface
         // Store the new connection to send messages to later
         $this->clients->attach($conn);
 
-        $this->startedClients[$conn->resourceId] = false;
-        $this->clientAnswers[$conn->resourceId] = "";
-        $this->clientCalled10Seconds[$conn->resourceId] = false;
-        $this->clientCalledQuestionstart[$conn->resourceId] = false;
+        $this->player[$conn->resourceId] = new Player();
 
         echo "New connection! ({$conn->resourceId})\n";
         echo "Number of connections: " . $this->clients->count() . "\n";
@@ -63,14 +57,17 @@ class Timer implements MessageComponentInterface
             switch ($msgParts[0])
             {
                 case "start":
-                    $responseMsg = "start_" . $msgParts[1];
-                    $this->startedClients[$from->resourceId] = true;
-                    echo "client " . $from->resourceId . " started=" . $this->startedClients[$from->resourceId] . "\n";
+                    $this->players[$from->resourceId]->started = true;
+                    $this->players[$from->resourceId]->userName = $msgParts[1];
+                    $this->players[$from->resourceId]->displayName = getPlayerName($msgParts[1]);
+                    echo "client " . $from->resourceId . " started=" . $this->players[$from->resourceId]->started . "\n";
                     $this->selectedQuestions = array();
+                    $responseMsg = "start_" . $this->players[$from->resourceId]->displayName;
                     $this->tryStart();
                     break;
                 case "answer":
                     $this->clientAnswers[$from->resourceId] = $msgParts[1];
+                    $this->players[$from->resourceId]->currentAnswer = $msgParts[1];
                     echo $from->resourceId . " answered: '" . $msgParts[1] . "'.\n";
                     $responseMsg = $this->tryReview();
                     break;
@@ -80,12 +77,12 @@ class Timer implements MessageComponentInterface
                 case "tryagain":
                     echo $from->resourceId . " requests: '" . $msgParts[1] . "'.\n";
                     $this->secondChance = true;
-                    $this->startedClients[$from->resourceId] = true;
+                    $this->players[$from->resourceId]->started = true;
                     $this->tryStart();
                     break;
                 case "newquestion":
                     $this->secondChance = false;
-                    $this->startedClients[$from->resourceId] = true;
+                    $this->players[$from->resourceId]->started = true;
                     $responseMsg = $this->tryStart();
                     break;
                 case "questionStart":
@@ -125,10 +122,7 @@ class Timer implements MessageComponentInterface
         // The connection is closed, remove it, as we can no longer send it messages
         $this->clients->detach($conn);
 
-        unset($this->startedClients[$conn->resourceId]);
-        unset($this->clientAnswers[$conn->resourceId]);
-        unset($this->clientCalled10Seconds[$conn->resourceId]);
-        unset($this->clientCalledQuestionstart[$conn->resourceId]);
+        unset($this->players[$conn->resourceId]);
 
         echo "Connection {$conn->resourceId} has disconnected\n";
         echo "Number of connections: " . $this->clients->count() . "\n";
@@ -145,9 +139,9 @@ class Timer implements MessageComponentInterface
     {
         $stop = "";
         $length = $this->questionTimerLength;
-        foreach ($this->startedClients as $startedClient)
+        foreach ($this->players as $startedClient)
         {
-            if (!$startedClient)
+            if (!$startedClient->started)
             {
                 echo "false";
                 return;
@@ -173,8 +167,9 @@ class Timer implements MessageComponentInterface
 
     private function tryReview()
     {
-        foreach ($this->clientAnswers as $answer)
+        foreach ($this->players as $player)
         {
+            $answer = $player->currentAnswer;
             if ($answer === "")
             {
                 return "";
@@ -182,16 +177,23 @@ class Timer implements MessageComponentInterface
         }
         echo "All answers received\n";
         $returnMessage = $this->reviewAnswers();
-        $this->clientAnswers = array_fill_keys(array_keys($this->clientAnswers), "");
+        foreach ($this->players as $player)
+        {
+            $player->currentAnswer = "";
+        }
         return $returnMessage;
     }
 
     private function reviewAnswers()
     {
         $this->hueLamp->alert(false);
-        $this->startedClients = array_fill_keys(array_keys($this->startedClients), false);
-        foreach ($this->clientAnswers as $answer)
+        foreach ($this->players as $player)
         {
+            $player->started = false;
+        }
+        foreach ($this->players as $player)
+        {
+            $answer = $player->currentAnswer;
             if (!$this->currentQuestion->checkAnswer($answer))
             {
                 $this->hueLamp->setHueRGB(255, 0, 0);
@@ -251,6 +253,7 @@ class Timer implements MessageComponentInterface
             $correctAnswer = $waardes['juisteAntwoord'];
             $this->currentQuestion = new Question($id, $questionText, $image, $subject, $type, $multipleChoiceAnswers, $correctAnswer);
         }
+        
         array_push($this->selectedQuestions, $this->currentQuestion->id);
         $this->sendCurrentQuestionToClients();
         $this->secondChance = false;
@@ -266,23 +269,30 @@ class Timer implements MessageComponentInterface
 
     private function trySetTimerBrightness($clientId)
     {
-        $this->clientCalled10Seconds[$clientId] = true;
-        foreach ($this->clientCalled10Seconds as $set)
+        $this->players[$clientId]->finalSeconds = true;
+        foreach ($this->players as $player)
         {
+            $set = $player->finalSeconds;
             if (!$set)
             {
                 return;
             }
         }
-        $this->clientCalled10Seconds = array_fill_keys(array_keys($this->clientCalled10Seconds), false);
+        
+        foreach ($this->players as $player)
+        {
+            $player->finalSeconds = false;
+        }
         $this->setHueTimerAlert();
     }
 
     private function tryHueQuestionStart($clientId)
     {
-        $this->clientCalledQuestionstart[$clientId] = true;
-        foreach ($this->clientCalledQuestionstart as $set)
+        $this->players[$clientId]->questionStart = true;
+        
+        foreach ($this->players as $player)
         {
+            $set = $player->questionStart;
             if (!$set)
             {
                 return;
@@ -303,6 +313,26 @@ class Timer implements MessageComponentInterface
         echo "10 seconds left...";
 
         $this->hueLamp->alert(true);
+    }
+    
+    private function getPlayerName($userName)
+    {
+        $returnName = "";
+        
+        $query = "SELECT * FROM speler
+                WHERE login = $userName;";
+
+        $result = mysql_query($query) or die(mysql_error());
+
+        while ($waardes = mysql_fetch_array($result))
+        {
+            $voornaam = $waardes['naam'];
+            $tussenVoegsel = $waardes['achternaam'];
+            $achternaam = $waardes['tussenvoegsel'];
+            
+            $returnName = "$voornaam $tussenVoegsel $achternaam";
+        }
+        return $returnName;
     }
 
 }

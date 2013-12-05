@@ -16,7 +16,6 @@ namespace WebSocketTest;
 
 class Question
 {
-
     public $id;
     public $questionText;
     public $image;
