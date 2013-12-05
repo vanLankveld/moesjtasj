@@ -35,7 +35,8 @@ and open the template in the editor.
 
             //VARS =====================
 
-
+            var nextButtonPressed = false;
+            var loginButtonPressed = false;
             var time;
             var timerFunction;
             var timerStart = false;
@@ -61,6 +62,7 @@ and open the template in the editor.
 
             //=================================== touchevent voor de submit
             $(document).ready(function() {
+                
                 $(".overlay").hide();
                 $(".submitAnswer").on("touchend", function() {
                     timerToZero();
@@ -71,23 +73,36 @@ and open the template in the editor.
                 });
 
                 $("#nextButton").on("touchend", function() {
-                    gotoNextQuestion();
-                    wachtenWeergeven();
+                    nextTouch();
                 });
 
                 $("#nextButton").on("touchmove", function() {
-                    gotoNextQuestion();
-                    wachtenWeergeven();
+                    nextTouch();
                 });
 
                 $("#button1").on("touchend", function() {
-                    playerJoin();
+                    loginTouch();
                 });
 
                 $("#button1").on("touchmove", function() {
-                    playerJoin();
+                    loginTouch();
                 });
             });
+
+            function loginTouch() {
+                if (!loginButtonPressed) {
+                    loginButtonPressed = true;
+                    playerJoin();
+                }
+            }
+
+            function nextTouch() {
+                if (!nextButtonPressed) {
+                    nextButtonPressed = true;
+                    wachtenWeergeven();
+                    gotoNextQuestion();
+                }
+            }
 
             //============================================= Websockets code =============================================
 
@@ -307,6 +322,7 @@ and open the template in the editor.
             //=================================== tussenscherm showen
 
             function showNext() {
+                nextButtonPressed = false;
                 $(".overlay").fadeIn(300);
             }
 
@@ -633,7 +649,7 @@ and open the template in the editor.
             </div>
             <div id="nextButton" class="nextButton"></div>
             <div id="laden" style="display:none;">
-                <h3>Wachten op spelers</h3>
+                <h3></h3>
             </div>
         </div>
     </body>

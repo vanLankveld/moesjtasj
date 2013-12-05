@@ -31,7 +31,6 @@ function showUitleg() {
 }
 
 function hideUitleg() {
-    console.log("uitleg weghalen");
     $("#uitleg").hide();
 }
 
