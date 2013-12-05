@@ -13,7 +13,6 @@ use WebSocketTest\Player;
 
 class Timer implements MessageComponentInterface
 {
-
     protected $clients;
     protected $started = false;
     protected $players = array();
@@ -57,14 +56,13 @@ class Timer implements MessageComponentInterface
             $msgParts = explode('_', $msg);
             switch ($msgParts[0])
             {
-                case "setUser":
-                    $this->players[$from->resourceId]->userName = $msgParts[1];
-                    break;
                 case "start":
-                    $responseMsg = "start_" . $msgParts[1];
                     $this->players[$from->resourceId]->started = true;
+                    $this->players[$from->resourceId]->userName = $msgParts[1];
+                    $this->players[$from->resourceId]->displayName = getPlayerName($msgParts[1]);
                     echo "client " . $from->resourceId . " started=" . $this->players[$from->resourceId]->started . "\n";
                     $this->selectedQuestions = array();
+                    $responseMsg = "start_" . $this->players[$from->resourceId]->displayName;
                     $this->tryStart();
                     break;
                 case "answer":
@@ -315,6 +313,26 @@ class Timer implements MessageComponentInterface
         echo "10 seconds left...";
 
         $this->hueLamp->alert(true);
+    }
+    
+    private function getPlayerName($userName)
+    {
+        $returnName = "";
+        
+        $query = "SELECT * FROM speler
+                WHERE login = $userName;";
+
+        $result = mysql_query($query) or die(mysql_error());
+
+        while ($waardes = mysql_fetch_array($result))
+        {
+            $voornaam = $waardes['naam'];
+            $tussenVoegsel = $waardes['achternaam'];
+            $achternaam = $waardes['tussenvoegsel'];
+            
+            $returnName = "$voornaam $tussenVoegsel $achternaam";
+        }
+        return $returnName;
     }
 
 }

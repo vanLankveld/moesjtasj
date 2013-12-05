@@ -16,6 +16,7 @@ namespace WebSocketTest;
 class Player
 {
     public $userName;
+    public $displayName;
     public $started;
     public $questionStart;
     public $currentAnswer;
@@ -24,6 +25,7 @@ class Player
     function __construct()
     {
         $this->userName = "";
+        $this->displayName = "";
         $this->started = false;
         $this->questionStart = false;
         $this->currentAnswer = "";
