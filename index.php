@@ -62,7 +62,7 @@ and open the template in the editor.
 
             //=================================== touchevent voor de submit
             $(document).ready(function() {
-                
+
                 $(".overlay").hide();
                 $(".submitAnswer").on("touchend", function() {
                     timerToZero();
@@ -92,7 +92,13 @@ and open the template in the editor.
             function loginTouch() {
                 if (!loginButtonPressed) {
                     loginButtonPressed = true;
-                    playerJoin();
+                    var user = $('#player').val();
+                    var pass = $('#password').val();
+                    if (playerAllow(user, pass)) {
+                        playerJoin();
+                    } else {
+                        loginButtonPressed = false;
+                    }
                 }
             }
 
@@ -247,9 +253,9 @@ and open the template in the editor.
             //=================================== Multiple functies
 
             function showMultiple() {
-//                $('.multipleLabel').contents().filter(function() {
-//                    return this.nodeType === 3;
-//                }).remove();
+                //                $('.multipleLabel').contents().filter(function() {
+                //                    return this.nodeType === 3;
+                //                }).remove();
 
                 $("input:radio[name='antwoordMult']").each(function(i) {
                     this.checked = false;
@@ -473,7 +479,7 @@ and open the template in the editor.
             });
 
             function playerJoin() {
-				showLaadText()
+                showLaadText()
                 lamp = $("#lampSelect").val();
                 naam = $("#player").val();
                 start(naam);
@@ -510,6 +516,22 @@ and open the template in the editor.
                 console.log('image url send');
             }
 
+
+            function playerAllow(user, pass) {
+                if (user === "") {
+                    $('#alertName').css('visibility', 'visible');
+                } else {
+                    $('#alertName').css('visibility', 'hidden');
+                }
+                if (pass === "") {
+                    $('#alertPass').css('visibility', 'visible');
+                } else {
+                    $('#alertPass').css('visibility', 'hidden');
+                }
+                if(user !== "" && pass !== ""){
+                    return true;
+                }
+            }
         </script>
     </head>
     <body>
@@ -540,8 +562,10 @@ and open the template in the editor.
                     ?>
                 </select>
                 <span>Voer je naam in:</span>
+                <h5 id="alertName">er is geen naam ingevuld!</h5>
                 <input type="text" id="player">
                 <span>Wachtwoord:</span>
+                <h5 id="alertPass">er is geen wachtwoord ingevuld!</h5>
                 <input type="password" id="password">
             </div>
             <div id="players" style="display:none;">
@@ -648,13 +672,13 @@ and open the template in the editor.
             <div id="categorie" style="display:none;">
                 <h2></h2>
             </div>
-			<div class="button-container">
-            	<span class="button-text">Volgende</span>
-            	<div id="nextButton" class="nextButton"></div>
+            <div class="button-container">
+                <span class="button-text">Volgende</span>
+                <div id="nextButton" class="nextButton"></div>
                 <span class="button-shadow"></span>
             </div> 
             <div id="laden" class="laden" style="display:none;">
-                <h3>Wachten op spelers</h3>
+                <h3></h3>
             </div>
         </div>
     </body>

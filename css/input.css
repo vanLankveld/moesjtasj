@@ -512,3 +512,13 @@ label .value{
     margin:0;
     padding-bottom:60px;
 }
+
+#alertName{
+    color:red;
+    visibility:hidden;
+}
+
+#alertPass{
+    color:red;
+    visibility:hidden;
+}
