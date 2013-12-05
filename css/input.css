@@ -347,6 +347,10 @@ label .value{
 	text-align:center;	
 }
 
+.lobby .loginform{
+	height:512px;
+}
+
 .lobby .title h1{
 	margin:0;
 	padding-top:50px;	
