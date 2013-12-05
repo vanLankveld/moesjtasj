@@ -53,11 +53,11 @@ function hideCategorie() {
 }
 
 function showNextButton() {
-    $(".nextButton").show();
+    $(".button-container").show();
 }
 
 function hideNextButton() {
-    $(".nextButton").hide();
+    $(".button-container").hide();
 }
 
 function showLaadText() {

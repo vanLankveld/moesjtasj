@@ -382,6 +382,19 @@ label .value{
 	width:100%;	
 }
 
+.lobby #laden{
+	position: absolute;
+	margin: 0 auto;
+	text-align: center;
+	bottom: 64px;
+	left: 372px;
+	height: 32px;
+}
+
+.lobby #laden h3{
+	color:#333 !important;
+}
+
 #button1{
 	float:left;
     width: 140px;
@@ -437,13 +450,22 @@ label .value{
 }
 
 .nextButton{
-    width:140px;
-    height:64px;
-    position:absolute;
-    float:right;
-    bottom:64px;
-    right:76px;	
+    float:left;
+    width: 140px;
+	height:64px;
+   	z-index:100;
+	bottom:4px;
+	position:absolute;
     background:url(../images/icons/arrow_right_blue.png) white no-repeat center center;	
+}
+
+.overlay .button-container .button-text{
+	color:white;
+	text-align:center;
+}
+
+.overlay .button-shadow{
+	background:#11857c;
 }
 
 #laden{
