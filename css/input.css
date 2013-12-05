@@ -154,7 +154,7 @@ input[type=radio]:checked + .radio { background: url(../images/vinkje.png) #16aa
     src: url(../font/OpenSans-CondBold.ttf);
 }
 
-body, .vraag, .antwoord, li span.active, .lobby .loginform #player, .lobby .loginform #password, .lobby #players span { /* Regelar font */
+body, .vraag, .antwoord, li span.active, .lobby .loginform #player, .lobby .loginform #password, .lobby #players span, .overlay #uitleg { /* Regelar font */
     font-family: SourceSansPro;	
 }
 
@@ -201,6 +201,11 @@ label .value{
 
 .lobby{
     text-align:center;	
+}
+
+.overlay #uitleg{
+	font-size:24px;
+	text-align:center;	
 }
 
 .lobby h1{
@@ -466,6 +471,13 @@ label .value{
 
 .overlay .button-shadow{
 	background:#11857c;
+}
+
+.overlay #uitleg{
+	color:white;
+	margin:0 auto;
+	width:860px;	
+	margin-top:60px;
 }
 
 #laden{
