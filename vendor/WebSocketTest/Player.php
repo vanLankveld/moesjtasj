@@ -20,7 +20,8 @@ class Player
     public $started;
     public $questionStart;
     public $currentAnswer;
-    public $finalSeconds;        
+    public $finalSeconds;
+    public $currentLogEntry;
     
     function __construct()
     {
@@ -30,6 +31,7 @@ class Player
         $this->questionStart = false;
         $this->currentAnswer = "";
         $this->finalSeconds = false;
+        $this->currentLogEntry = null;
     }
 
 }

@@ -4,15 +4,19 @@ namespace WebSocketTest;
 
 include_once 'bestanden/config.php';
 include_once 'Utility.php';
+include_once 'LogEntry.php';
 
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
 use WebSocketTest\HueLamp;
 use WebSocketTest\Question;
 use WebSocketTest\Player;
+use WebsocketTest\LogEntry;
+use WebSocketTest\GameLogger;
 
 class Timer implements MessageComponentInterface
 {
+
     protected $clients;
     protected $started = false;
     protected $players = array();
@@ -25,6 +29,7 @@ class Timer implements MessageComponentInterface
     private $secondChanceTimerLength = 120;
     private $secondChance;
     protected $standardCount = 10;
+    private $gameLogger;
 
     public function __construct()
     {
@@ -57,6 +62,7 @@ class Timer implements MessageComponentInterface
             switch ($msgParts[0])
             {
                 case "start":
+                    $this->gameLogger = new GameLogger();
                     $this->players[$from->resourceId]->started = true;
                     $this->players[$from->resourceId]->userName = $msgParts[1];
                     $this->players[$from->resourceId]->displayName = $this->getPlayerName($msgParts[1]);
@@ -68,6 +74,14 @@ class Timer implements MessageComponentInterface
                 case "answer":
                     $this->clientAnswers[$from->resourceId] = $msgParts[1];
                     $this->players[$from->resourceId]->currentAnswer = $msgParts[1];
+                    $timeLeft = intval($msgParts[2]);
+                    if (!$this->secondChance)
+                    {
+                        $this->players[$from->resourceId]->currentLogEntry = new LogEntry($this->currentQuestion->id, $timeLeft);
+                    } else
+                    {
+                        $this->players[$from->resourceId]->currentLogEntry->tijdTweedePoging = $timeLeft;
+                    }
                     echo $from->resourceId . " answered: '" . $msgParts[1] . "'.\n";
                     $responseMsg = $this->tryReview();
                     break;
@@ -82,6 +96,7 @@ class Timer implements MessageComponentInterface
                     break;
                 case "newquestion":
                     $this->secondChance = false;
+                    $this->logPlayerData();
                     $this->players[$from->resourceId]->started = true;
                     $responseMsg = $this->tryStart();
                     break;
@@ -186,6 +201,8 @@ class Timer implements MessageComponentInterface
 
     private function reviewAnswers()
     {
+        $returnMessage = $this->messageGoodAnswer;
+        $answerCorrect = true;
         $this->hueLamp->alert(false);
         foreach ($this->players as $player)
         {
@@ -194,19 +211,38 @@ class Timer implements MessageComponentInterface
         foreach ($this->players as $player)
         {
             $answer = $player->currentAnswer;
-            if (!$this->currentQuestion->checkAnswer($answer))
+            $playerAnswerCorrect = $this->currentQuestion->checkAnswer($answer);
+            if ($answerCorrect)
             {
-                $this->hueLamp->setHueRGB(255, 0, 0);
-                $this->hueLamp->setOnOff(true);
+                $answerCorrect = $this->currentQuestion->checkAnswer($answer);
+            }
+            if (!$answerCorrect)
+            {
                 echo "Answered: $answer\n";
-                return $this->messageWrongAnswer;
+                $returnMessage = $this->messageWrongAnswer;
+            }
+
+            if (!$this->secondChance)
+            {
+                $player->currentLogEntry->eerstePogingGoed = $playerAnswerCorrect;
+            } else
+            {
+                $player->currentLogEntry->tweedePogingGoed = $playerAnswerCorrect;
             }
         }
 
         //0 , 186 , 62
-        $this->hueLamp->setHueRGB(0, 100, 35);
+        if (!$answerCorrect)
+        {
+            $this->hueLamp->setHueRGB(255, 0, 0);
+        }        
+        else
+        {
+            $this->hueLamp->setHueRGB(0, 100, 35);
+        }
+        
         $this->hueLamp->setOnOff(true);
-        return $this->messageGoodAnswer;
+        return $returnMessage;
     }
 
     private function getNewQuestion()
@@ -253,7 +289,7 @@ class Timer implements MessageComponentInterface
             $correctAnswer = $waardes['juisteAntwoord'];
             $this->currentQuestion = new Question($id, $questionText, $image, $subject, $type, $multipleChoiceAnswers, $correctAnswer);
         }
-        
+
         array_push($this->selectedQuestions, $this->currentQuestion->id);
         $this->sendCurrentQuestionToClients();
         $this->secondChance = false;
@@ -278,7 +314,7 @@ class Timer implements MessageComponentInterface
                 return;
             }
         }
-        
+
         foreach ($this->players as $player)
         {
             $player->finalSeconds = false;
@@ -289,7 +325,7 @@ class Timer implements MessageComponentInterface
     private function tryHueQuestionStart($clientId)
     {
         $this->players[$clientId]->questionStart = true;
-        
+
         foreach ($this->players as $player)
         {
             $set = $player->questionStart;
@@ -314,11 +350,11 @@ class Timer implements MessageComponentInterface
 
         $this->hueLamp->alert(true);
     }
-    
+
     private function getPlayerName($userName)
     {
         $returnName = "";
-        
+
         $query = "SELECT * FROM speler
                 WHERE login = '$userName';";
 
@@ -329,10 +365,21 @@ class Timer implements MessageComponentInterface
             $voornaam = $waardes['naam'];
             $tussenVoegsel = $waardes['tussenvoegsel'];
             $achternaam = $waardes['achternaam'];
-            
+
             $returnName = "$voornaam $tussenVoegsel $achternaam";
         }
         return $returnName;
+    }
+    
+    private function logPlayerData()
+    {
+        foreach ($this->players as $player)
+        {
+            if ($player->currentLogEntry != null)
+            {
+                $this->gameLogger->logQuestion($player);
+            }
+        }
     }
 
 }

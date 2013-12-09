@@ -33,6 +33,7 @@ and open the template in the editor.
             var nextButtonPressed = false;
             var loginButtonPressed = false;
             var time;
+            var timeLeft = 0;
             var timerFunction;
             var timerStart = false;
             var vraagGesteld = false;
@@ -109,6 +110,7 @@ and open the template in the editor.
                 {
                     timerStart = true;
                     time = length + 1;
+                    vraagTijd = length;
                     timerFunction = setInterval(function() {
                         updateTimer();
                     }, 1000);
@@ -274,6 +276,7 @@ and open the template in the editor.
             //=================================== timer op 0 zetten om de vraag meteen op te sturen
 
             function timerToZero() {
+                timeLeft = vraagTijd - time;
                 $("#container .button-container").hide();
                 if (time > 10) {
                     websocket.send("setBrightness_" + 10);
@@ -308,27 +311,10 @@ and open the template in the editor.
                 }
                 antwoord = $.trim(antwoord);
                 console.log('antwoord dat opgestuurd wordt = ' + antwoord);
-                websocket.send("answer_" + antwoord);
+                websocket.send("answer_" + antwoord + "_" + timeLeft);
             }
 
-            //=================================== touchevent voor de submit
-            $(document).ready(function() {
-                $(".submitAnswer").on("touchend", function() {
-                    timerToZero();
-                });
-                $(".submitAnswer").on("touchmove", function() {
-                    timerToZero();
-                });
-            });
-            //=================================== touchevent voor de submit
-            $(document).ready(function() {
-                $(".submitAnswer").on("touchend", function() {
-                    timerToZero();
-                });
-                $(".submitAnswer").on("touchmove", function() {
-                    timerToZero();
-                });
-            });
+            
             function playerJoin() {
                 showLaadText()
                 lamp = $("#lampSelect").val();
