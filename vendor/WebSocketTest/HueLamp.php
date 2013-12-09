@@ -111,7 +111,11 @@ class HueLamp
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         
+        echo "\n";
+        echo "\n-------------------------------\n";
         curl_exec($ch);
+        echo "\n-------------------------------\n";
+        echo "\n";
     }
     
 }

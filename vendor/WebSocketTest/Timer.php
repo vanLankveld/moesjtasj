@@ -38,7 +38,7 @@ class Timer implements MessageComponentInterface
         // Store the new connection to send messages to later
         $this->clients->attach($conn);
 
-        $this->player[$conn->resourceId] = new Player();
+        $this->players[$conn->resourceId] = new Player();
 
         echo "New connection! ({$conn->resourceId})\n";
         echo "Number of connections: " . $this->clients->count() . "\n";
@@ -59,7 +59,7 @@ class Timer implements MessageComponentInterface
                 case "start":
                     $this->players[$from->resourceId]->started = true;
                     $this->players[$from->resourceId]->userName = $msgParts[1];
-                    $this->players[$from->resourceId]->displayName = getPlayerName($msgParts[1]);
+                    $this->players[$from->resourceId]->displayName = $this->getPlayerName($msgParts[1]);
                     echo "client " . $from->resourceId . " started=" . $this->players[$from->resourceId]->started . "\n";
                     $this->selectedQuestions = array();
                     $responseMsg = "start_" . $this->players[$from->resourceId]->displayName;
@@ -232,7 +232,7 @@ class Timer implements MessageComponentInterface
                 ORDER BY RAND()
                 LIMIT 1";
 
-        echo "$query\n";
+        //echo "$query\n";
 
         $result = mysql_query($query) or die(mysql_error());
 
@@ -320,15 +320,15 @@ class Timer implements MessageComponentInterface
         $returnName = "";
         
         $query = "SELECT * FROM speler
-                WHERE login = $userName;";
+                WHERE login = '$userName';";
 
         $result = mysql_query($query) or die(mysql_error());
 
         while ($waardes = mysql_fetch_array($result))
         {
             $voornaam = $waardes['naam'];
-            $tussenVoegsel = $waardes['achternaam'];
-            $achternaam = $waardes['tussenvoegsel'];
+            $tussenVoegsel = $waardes['tussenvoegsel'];
+            $achternaam = $waardes['achternaam'];
             
             $returnName = "$voornaam $tussenVoegsel $achternaam";
         }

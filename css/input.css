@@ -133,7 +133,7 @@ body{
 #sketch #sketchbar #thrash span{ background:url(../images/icons/thrashcan.png) no-repeat center center; }
 #sketch #sketchbar #arrow_down span{ background:url(../images/icons/arrow_down.png) no-repeat center center; }
 
-input[type=radio]:checked + .radio { background: url(../images/vinkje.png) #16aa9e no-repeat center center; }
+input[type=radio]:checked + .radio { background: url(../images/icons/vinkje.png) #16aa9e no-repeat center center; }
 
 
 

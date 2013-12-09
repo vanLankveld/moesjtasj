@@ -1,0 +1,149 @@
+<div id="sketch">
+    <div id="sketchbar">
+        <div id="arrow_down">
+            <span></span>
+        </div>
+        <div id="thrash">
+            <span></span>
+        </div>
+    </div>
+    <canvas id="sketchpad" width="1024" height="520"></canvas>
+</div>
+<div class="lobby">
+    <div class="upperbar"></div>
+    <div class="title">
+        <h1>Inloggen</h1>
+    </div>
+    <div class="loginform">
+        <select id="lampSelect">
+            <?php
+            $query = "SELECT * FROM lamp WHERE free != 0 ;";
+            $result = mysql_query($query) or die(mysql_error());
+            while ($waardes = mysql_fetch_array($result)) {
+            echo "<option value='" . $waardes['id'] . "'>lamp " . $waardes['id'] . "</option>";
+            }
+            ?>
+        </select>
+        <span>Voer je naam in:</span>
+        <h5 id="alertName">er is geen naam ingevuld!</h5>
+        <input type="text" id="player">
+        <span>Wachtwoord:</span>
+        <h5 id="alertPass">er is geen wachtwoord ingevuld!</h5>
+        <input type="password" id="password" value="quora">
+    </div>
+    <div id="players" style="display:none;">
+        <h2>Wie spelen er mee?</h2>
+    </div>
+    <div class="button-container">
+        <span class="button-text">Bevestigen</span>
+        <div id="button1"></div>
+        <span class="button-shadow"></span>
+    </div>
+    <div class="bottom-bar">
+        <div class="bottom-logo"></div>
+    </div>
+</div>
+
+<div class="reken" id="container" style="display:none;">
+    <div class="top">
+        <div class="upperbar"></div>
+        <p class="vraag" id="vraag"> </p>
+        <div class="image">
+            <img id="vraagPlaatje" src="" alt="afbeelding"/>
+        </div>
+    </div>
+    <div class="bottom">
+        <input type="text" name="antwoord" class="antwoord number"  style="display:none;" id="antwoord" />
+        <!-- type="number"  -->
+        <div id="multiple"  style="display:none;">
+            <form id="multipleForm">
+                <!-- A -->
+                <label id="labelAntwoord0" class="multipleLabel">
+                    <input type="radio" class="radio" name="antwoordMult" value="0" id="antwoord1">
+                    <span class="radio"></span>
+                    <span id="antwoord0Value" class="value multipleValue"></span>
+                </label><br/>
+                <!-- B -->
+                <label id="labelAntwoord1" class="multipleLabel">
+                    <input type="radio" class="radio" name="antwoordMult" value="1" id="antwoord2">
+                    <span class="radio"></span>
+                    <span id="antwoord1Value" class="value multipleValue"></span>
+                </label><br/>
+                <!-- C -->
+                <label id="labelAntwoord2" class="multipleLabel">
+                    <input type="radio" class="radio" name="antwoordMult" value="2" id="antwoord3">
+                    <span class="radio"></span>
+                    <span id="antwoord2Value" class="value multipleValue"></span>
+                </label><br/>
+                <!-- D -->
+                <label id="labelAntwoord3" class="multipleLabel">
+                    <input type="radio" class="radio" name="antwoordMult" value="3" id="antwoord4">
+                    <span class="radio"></span>
+                    <span id="antwoord3Value" class="value multipleValue"></span>
+                </label>
+            </form>
+        </div>
+        <div class="button-container">
+            <span class="button-text">Bevestigen</span>
+            <div class="button submitAnswer"></div>
+            <span class="button-shadow"></span>
+        </div> 
+        <div class="statusbalk">
+            <div class="icon">
+                <span></span>
+            </div>
+            <ul>
+                <li>
+                    <span id="labelQ1"></span>
+                </li>
+                <li>
+                    <span id="labelQ2"></span>
+                </li>
+                <li>
+                    <span id="labelQ3"></span>
+                </li>
+                <li>
+                    <span id="labelQ4"></span>
+                </li>
+                <li>
+                    <span id="labelQ5" class="active"></span>
+                </li>
+                <li>
+                    <span id="labelQ6"></span>
+                </li>
+                <li>
+                    <span id="labelQ7"></span>
+                </li>
+                <li>
+                    <span id="labelQ8"></span>
+                </li>
+                <li>
+                    <span id="labelQ9"></span>
+                </li>
+                <li>
+                    <span></span>
+                </li>
+            </ul>
+            <div class="potlood">
+                <span></span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="overlay">
+    <p id="uitleg"></p>
+    <div id="vraagnummer" style="display:none;">
+        <h1>Vraag <span>1</span></h1>
+    </div>
+    <div id="categorie" style="display:none;">
+        <h2></h2>
+    </div>
+    <div class="button-container">
+        <span class="button-text">Volgende</span>
+        <div id="nextButton" class="nextButton"></div>
+        <span class="button-shadow"></span>
+    </div> 
+    <div id="laden" class="laden" style="display:none;">
+        <h3></h3>
+    </div>
+</div>

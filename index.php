@@ -5,36 +5,31 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html>
     <head>
+        <title>Quora</title>
+        <link href="css/input.css" rel="stylesheet" type="text/css" />
         <meta name="viewport" content="user-scalable=1.0,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <title>Quora</title>
-        <link href="css/input.css" rel="stylesheet" type="text/css" />
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="format-detection" content="telephone=no">
         <script src="js/jquery.js"></script>
         <script src="js/input.js"></script>
         <script src="js/tussenscherm.js"></script>
-        <!-- non-retina iPad pre iOS 7 -->
+        <script src="js/showHideElements.js"></script>
+        <script src="js/touchEvents.js"></script>
         <link rel="apple-touch-icon" href="images/appicon/apple-touch-icon-72x72.PNG" sizes="72x72">
-        <!-- non-retina iPad iOS 7 -->
         <link rel="apple-touch-icon" href="images/appicon/apple-touch-icon-76x76.PNG" sizes="76x76">
-        <!-- retina iPad pre iOS 7 -->
         <link rel="apple-touch-icon" href="images/appicon/apple-touch-icon-144x144.PNG" sizes="144x144">
-        <!-- retina iPad iOS 7 -->
         <link rel="apple-touch-icon" href="images/appicon/apple-touch-icon-152x152.png" sizes="152x152">
         <?php
-        $exec = exec("hostname"); //the "hostname" is a valid command in both windows and linux
-        $hostname = trim($exec); //remove any spaces before and after
-        $ip = gethostbyname($hostname); //resolves the hostname using local hosts resolver or DNS
-
+        $exec = exec("hostname");
+        $hostname = trim($exec);
+        $ip = gethostbyname($hostname);
         include "bestanden/config.php";
         ?>
-
         <script type="text/javascript">
-
             //VARS =====================
-
+            var vraagTijd;
             var nextButtonPressed = false;
             var loginButtonPressed = false;
             var time;
@@ -60,27 +55,9 @@ and open the template in the editor.
             var questionLabels = ['labelQ1', 'labelQ2', 'labelQ3', 'labelQ4', 'labelQ5', 'labelQ6', 'labelQ7', 'labelQ8', 'labelQ9'];
             //=================================== touchevent voor de submit
             $(document).ready(function() {
-
-                $(".overlay").hide();
-                $(".submitAnswer").on("touchend", function() {
-                    timerToZero();
-                });
-                $(".submitAnswer").on("touchmove", function() {
-                    timerToZero();
-                });
-                $("#nextButton").on("touchend", function() {
-                    nextTouch();
-                });
-                $("#nextButton").on("touchmove", function() {
-                    nextTouch();
-                });
-                $("#button1").on("touchend", function() {
-                    loginTouch();
-                });
-                $("#button1").on("touchmove", function() {
-                    loginTouch();
-                });
+                createTouchEvents();
             });
+
             function loginTouch() {
                 if (!loginButtonPressed) {
                     loginButtonPressed = true;
@@ -127,7 +104,6 @@ and open the template in the editor.
             };
             //========================================= Einde Websockets code ===========================================
 
-
             function startTimer(length) {
                 if (timerStart == false)
                 {
@@ -138,7 +114,6 @@ and open the template in the editor.
                     }, 1000);
                 }
             }
-
 
             function updateTimer() {
                 if (time === 10) {
@@ -181,16 +156,6 @@ and open the template in the editor.
                 }
             }
 
-
-            //=================================== clearQuestion
-
-            function clearQuestion() {
-                $("#vraag").html('');
-                $("#antwoord").val('');
-            }
-
-
-
             //=================================== vraag laten zien
             function showQuestion() {
                 console.log("vraag: " + currentQuestion);
@@ -210,79 +175,6 @@ and open the template in the editor.
                 $("#vraag").append(vraag);
                 tekstResize();
             }
-
-
-
-            //=================================== speler invoerveld functies
-            function showPlayers() {
-                $("#players").attr('display', 'block');
-                $("#players").show();
-            }
-
-            function hidePlayers() {
-                $("#players").attr('display', 'none');
-                $("#players").hide();
-                $(".lobby").hide();
-            }
-
-            //=================================== container functies
-            function showContainer() {
-                $("#container").attr('display', 'block');
-                $("#container").show();
-            }
-
-            function hideContainer() {
-                $("#container").attr('display', 'none');
-                $("#container").hide();
-            }
-
-            //=================================== Multiple functies
-
-            function showMultiple() {
-                //                $('.multipleLabel').contents().filter(function() {
-                //                    return this.nodeType === 3;
-                //                }).remove();
-
-                $("input:radio[name='antwoordMult']").each(function(i) {
-                    this.checked = false;
-                });
-                $(".multipleValue").text("");
-                $("#multiple").attr('display', 'block');
-                $("#multiple").show();
-                $("#antwoord0Value").append(antwoord1);
-                $("#antwoord1Value").append(antwoord2);
-                $("#antwoord2Value").append(antwoord3);
-                $("#antwoord3Value").append(antwoord4);
-                $(".radio").removeAttr('disabled');
-            }
-
-            function disableMultiple() {
-                $(".radio").attr('disabled', 'disabled');
-            }
-
-            function hideMultiple() {
-                $(".multipleLabel").attr('display', 'none');
-                $("#multiple").hide();
-            }
-
-            //=================================== enkele vraag functies
-
-            function showEnkel() {
-
-                $("#antwoord").removeAttr('disabled');
-                $("#antwoord").attr('display', 'block');
-                $("#antwoord").show();
-            }
-
-            function disableEnkel() {
-                $("#antwoord").attr('disabled', 'disabled');
-            }
-
-            function hideEnkel() {
-                $("#antwoord").attr('display', 'none');
-                $("#antwoord").hide();
-            }
-
             //=================================== speler is joined de lobby
 
             function playerJoined(player) {
@@ -308,16 +200,6 @@ and open the template in the editor.
                 $('#vraag').text(vraag);
                 startTimer(timeForQ);
             }
-
-
-            //=================================== tussenscherm showen
-
-            function showNext() {
-                nextButtonPressed = false;
-                $(".overlay").fadeIn(300);
-            }
-
-
 
             //=================================== kijken of alles goed is of dat er iets fout was
 
@@ -348,19 +230,6 @@ and open the template in the editor.
                     websocket.send("tryagain_");
                 }
             }
-
-            function emptyRightAnswer() {
-                $("#uitleg").empty();
-                wachtOpVerder();
-            }
-
-            function showRightAnswer() {
-                console.log("juiste antwoord weergeven");
-                $("#uitleg").html("Het juiste antwoord is:<br/>" + correctAnswer);
-                uitlegWeergeven();
-            }
-
-
 
             //==================================== vraag / antwoord / type etc opslaan
             function setQuestion(json) {
@@ -424,7 +293,7 @@ and open the template in the editor.
                 else if (type === "multiple") {
                     disableMultiple();
                     var labelNmmr = ($('input[name=antwoordMult]:checked', '#multipleForm').val());
-                    antwoord = ($("#labelAnwoord" + (labelNmmr)).text());
+                    antwoord = ($("#labelAntwoord" + (labelNmmr)).text());
                 }
                 sendAnswer();
             }
@@ -433,6 +302,7 @@ and open the template in the editor.
 
             function sendAnswer() {
                 //antwoord opsturen
+                var time = 0;
                 if (antwoord === "") {
                     antwoord = "$$$$@@@@$$$$";
                 }
@@ -472,8 +342,6 @@ and open the template in the editor.
                 websocket.send("newquestion_");
             }
 
-
-
             function questionCounter(currentQ) {
                 if (currentQ <= maxQuestion) {
                     var teller = 1;
@@ -489,6 +357,7 @@ and open the template in the editor.
                     }
                 }
             }
+
             function saveKlad() {
                 var canvas = document.getElementById("sketchpad");
                 var img = canvas.toDataURL("image/png");
@@ -510,22 +379,16 @@ and open the template in the editor.
                 }
                 if (user !== "" && pass !== "") {
                     console.log('ajax ophalen');
-                    $.ajax({
-                        url: "login.php",
-                        type: "POST",
-                        data: {
-                            username: user,
-                            password: pass
-                        },
-                        success: function(response)
-                        {
-                            response = response.trim();
-                            if (response !== 'notSet') {
-                                console.log("login true");
-                                playerJoin();
-                            }
+                    $.post("login.php", {username: user, password: pass}
+                    , function(response)
+                    {
+                        response = response.trim();
+                        if (response !== 'notSet') {
+                            console.log("login true");
+                            playerJoin();
                         }
-                    });
+                    }
+                    );
                 }
                 console.log('login false');
                 return false;
@@ -534,154 +397,6 @@ and open the template in the editor.
         </script>
     </head>
     <body>
-        <div id="sketch">
-            <div id="sketchbar">
-                <div id="arrow_down">
-                    <span></span>
-                </div>
-                <div id="thrash">
-                    <span></span>
-                </div>
-            </div>
-            <canvas id="sketchpad" width="1024" height="520"></canvas>
-        </div>
-        <div class="lobby">
-            <div class="upperbar"></div>
-            <div class="title">
-                <h1>Inloggen</h1>
-            </div>
-            <div class="loginform">
-                <select id="lampSelect">
-                    <?php
-                    $query = "SELECT * FROM lamp WHERE free != 0 ;";
-                    $result = mysql_query($query) or die(mysql_error());
-                    while ($waardes = mysql_fetch_array($result)) {
-                        echo "<option value='" . $waardes['id'] . "'>lamp " . $waardes['id'] . "</option>";
-                    }
-                    ?>
-                </select>
-                <span>Voer je naam in:</span>
-                <h5 id="alertName">er is geen naam ingevuld!</h5>
-                <input type="text" id="player">
-                <span>Wachtwoord:</span>
-                <h5 id="alertPass">er is geen wachtwoord ingevuld!</h5>
-                <input type="password" id="password" value="quora">
-            </div>
-            <div id="players" style="display:none;">
-                <h2>Wie spelen er mee?</h2>
-            </div>
-            <div class="button-container">
-                <span class="button-text">Bevestigen</span>
-                <div id="button1"></div>
-                <span class="button-shadow"></span>
-            </div>
-            <div class="bottom-bar">
-                <div class="bottom-logo"></div>
-            </div>
-        </div>
-
-        <div class="reken" id="container" style="display:none;">
-            <div class="top">
-                <div class="upperbar"></div>
-                <p class="vraag" id="vraag"> </p>
-                <div class="image">
-                    <img id="vraagPlaatje" src="" alt="afbeelding"/>
-                </div>
-            </div>
-            <div class="bottom">
-                <input type="text" name="antwoord" class="antwoord number"  style="display:none;" id="antwoord" />
-                <!-- type="number"  -->
-                <div id="multiple"  style="display:none;">
-                    <form id="multipleForm">
-                        <!-- A -->
-                        <label id="labelAnwoord0" class="multipleLabel">
-                            <input type="radio" class="radio" name="antwoordMult" value="0" id="antwoord1">
-                            <span class="radio"></span>
-                            <span id="antwoord0Value" class="value multipleValue"></span>
-                        </label><br/>
-                        <!-- B -->
-                        <label id="labelAnwoord1" class="multipleLabel">
-                            <input type="radio" class="radio" name="antwoordMult" value="1" id="antwoord2">
-                            <span class="radio"></span>
-                            <span id="antwoord1Value" class="value multipleValue"></span>
-                        </label><br/>
-                        <!-- C -->
-                        <label id="labelAnwoord2" class="multipleLabel">
-                            <input type="radio" class="radio" name="antwoordMult" value="2" id="antwoord3">
-                            <span class="radio"></span>
-                            <span id="antwoord2Value" class="value multipleValue"></span>
-                        </label><br/>
-                        <!-- D -->
-                        <label id="labelAnwoord3" class="multipleLabel">
-                            <input type="radio" class="radio" name="antwoordMult" value="3" id="antwoord4">
-                            <span class="radio"></span>
-                            <span id="antwoord3Value" class="value multipleValue"></span>
-                        </label>
-                    </form>
-                </div>
-                <div class="button-container">
-                    <span class="button-text">Bevestigen</span>
-                    <div class="button submitAnswer"></div>
-                    <span class="button-shadow"></span>
-                </div> 
-                <div class="statusbalk">
-                    <div class="icon">
-                        <span></span>
-                    </div>
-                    <ul>
-                        <li>
-                            <span id="labelQ1"></span>
-                        </li>
-                        <li>
-                            <span id="labelQ2"></span>
-                        </li>
-                        <li>
-                            <span id="labelQ3"></span>
-                        </li>
-                        <li>
-                            <span id="labelQ4"></span>
-                        </li>
-                        <li>
-                            <span id="labelQ5" class="active"></span>
-                        </li>
-                        <li>
-                            <span id="labelQ6"></span>
-                        </li>
-                        <li>
-                            <span id="labelQ7"></span>
-                        </li>
-                        <li>
-                            <span id="labelQ8"></span>
-                        </li>
-                        <li>
-                            <span id="labelQ9"></span>
-                        </li>
-                        <li>
-                            <span></span>
-                        </li>
-                    </ul>
-                    <div class="potlood">
-                        <span></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="overlay">
-            <p id="uitleg"></p>
-            <div id="vraagnummer" style="display:none;">
-                <h1>Vraag <span>1</span></h1>
-            </div>
-            <div id="categorie" style="display:none;">
-                <h2></h2>
-            </div>
-            <div class="button-container">
-                <span class="button-text">Volgende</span>
-                <div id="nextButton" class="nextButton"></div>
-                <span class="button-shadow"></span>
-            </div> 
-            <div id="laden" class="laden" style="display:none;">
-                <h3></h3>
-            </div>
-        </div>
+        <?php include 'userInterface.html'; ?>
     </body>
 </html>
