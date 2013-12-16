@@ -188,7 +188,8 @@ and open the template in the editor.
             //=================================== je naam opsturen en naar de server sturen dat je wilt starten
 
             function start(naam) {
-                websocket.send("start_" + naam);
+                var lampId =  $("#lampSelect").val();
+                websocket.send("start_" + naam + "_" + lampId);
                 $(".title h1").html('Welkom');
                 $(".loginform").hide();
                 $(".button-container").hide();
