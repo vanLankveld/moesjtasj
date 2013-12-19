@@ -35,11 +35,15 @@ class Game
     public function __construct($hueLamp)
     {
         $this->hueLamp = $hueLamp;
+        $this->gameLogger = new GameLogger();
     }
 
-    public function addPlayer($clientId, $player)
+    public function addPlayer($clientId, $username)
     {
-        $this->players[$clientId] = $player;
+        $this->players[$clientId] = new Player($clientId);
+        $this->players[$clientId]->started = true;
+        $this->players[$clientId]->userName = $username;
+        $this->players[$clientId]->displayName = $this->getPlayerName($username);
     }
 
     public function removePlayer($clientId)
@@ -63,7 +67,7 @@ class Game
         if ($this->secondChance)
         {
             $length = $this->secondChanceTimerLength;
-            $this->sendCurrentQuestionToClients();
+            return "sendQuestion";
         } else
         {
             $stop = $this->getNewQuestion();

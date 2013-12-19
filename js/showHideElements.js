@@ -1,4 +1,18 @@
+//=================================== Startscherm vor beginnen spel
+
+function showConfirmScreen() {
+    $(".startBevestigSherm").attr('display', 'block');
+    $(".startBevestigSherm").show();
+}
+
+function hideConfirmScreen() {
+    $(".startBevestigSherm").attr('display', 'none');
+    $(".startBevestigSherm").hide();
+}
+
+
 //=================================== speler invoerveld functies
+
 function showPlayers() {
     $("#players").attr('display', 'block');
     $("#players").show();
@@ -10,7 +24,9 @@ function hidePlayers() {
     $(".lobby").hide();
 }
 
+
 //=================================== container functies
+
 function showContainer() {
     $("#container").attr('display', 'block');
     $("#container").show();
@@ -20,6 +36,7 @@ function hideContainer() {
     $("#container").attr('display', 'none');
     $("#container").hide();
 }
+
 
 //=================================== Multiple functies
 
@@ -45,6 +62,7 @@ function hideMultiple() {
     $(".multipleLabel").attr('display', 'none');
     $("#multiple").hide();
 }
+
 
 //=================================== enkele vraag functies
 
