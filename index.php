@@ -28,7 +28,7 @@ and open the template in the editor.
         include "bestanden/config.php";
         ?>
         <script type="text/javascript">
-            //VARS =====================
+            //VARS ====================
             var vraagTijd;
             var nextButtonPressed = false;
             var loginButtonPressed = false;
