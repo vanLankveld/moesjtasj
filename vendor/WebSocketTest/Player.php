@@ -15,7 +15,6 @@ namespace WebSocketTest;
 
 class Player
 {
-    public $clientId;
     public $userName;
     public $displayName;
     public $started;
@@ -24,9 +23,8 @@ class Player
     public $finalSeconds;
     public $currentLogEntry;
     
-    function __construct($clientId)
+    function __construct()
     {
-        $this->clientId = $clientId;
         $this->userName = "";
         $this->displayName = "";
         $this->started = false;
