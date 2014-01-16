@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <link rel="stylesheet" href="css/chartDemo.css" type="text/css"/>
+        <link class="include" rel="stylesheet" type="text/css" href="./js/graph/jquery.jqplot.min.css" />
+        <script src="./js/jquery.js"></script>
+        <script src="./js/graph/jquery.jqplot.min.js"></script>
+        <script class="include" type="text/javascript" src="./js/graph/plugins/jqplot.canvasTextRenderer.min.js"></script>
+        <script class="include" type="text/javascript" src="./js/graph/plugins/jqplot.canvasAxisLabelRenderer.min.js"></script>
+        <script class="include" type="text/javascript" src="./js/graph/plugins/jqplot.categoryAxisRenderer.js"></script>
+        <script class="include" type="text/javascript" src="./js/graph/plugins/jqplot.canvasAxisTickRenderer.js"></script>
+        <script class="include" type="text/javascript" src="./js/graph/plugins/jqplot.barRenderer.min.js"></script>
+
+        <title>Grafieken - voorbeelden</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                setUpGameGraph();
+                setUpGroupGameGraph();
+                setUpPlayerCategoryGraph();
+                setUpPlayerTimeGraph()
+            });
+
+            function setUpGameGraph()
+            {
+                var mikeGraph = [[1, 0], [2, 1], [3, 2], [4, 3], [5, 1],
+                    [6, 4], [7, 0], [8, 2], [9, 1], [10, 4]];
+                var ericGraph = [[1, 2], [2, 0], [3, 3], [4, 3], [5, 2],
+                    [6, 3], [7, 1], [8, 2], [9, 3], [10, 2]];
+                var lexGraph = [[1, 0], [2, 0], [3, 1], [4, 2], [5, 0],
+                    [6, 3], [7, 4], [8, 1], [9, 2], [10, 3]];
+
+                var yAs = [[0, "Beide fout"], [1, "1e Goed, 2e Fout"], [2, "1e Fout, 2e Goed"], [3, "1e Goed, 2e Goed"], [4, "1e Goed"]];
+
+                var plot1 = $.jqplot('gameGraph', [mikeGraph, ericGraph, lexGraph], {
+                    title: 'Spel 1 - 12-12-2013',
+                    series: [
+                        {label: 'Mike'},
+                        {label: 'Eric'},
+                        {label: 'Lex'}
+                    ],
+                    legend: {
+                        show: true,
+                        placement: 'outsideGrid'
+                    },
+                    axesDefaults: {
+                        tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+                        tickOptions: {
+                            fontSize: '10pt'
+                        }
+                    },
+                    axes: {
+                        xaxis: {
+                            renderer: $.jqplot.CategoryAxisRenderer,
+                            min: 1,
+                            max: 10,
+                            label: 'Vraag'
+                        },
+                        yaxis: {
+                            min: 0,
+                            max: 4,
+                            autoscale: true,
+                            tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+                            labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
+                            tickOptions: {
+                                labelPosition: 'start'
+                            },
+                            label: 'Resultaat',
+                            ticks: yAs
+                        }
+                    }
+                });
+            }
+
+            function setUpGroupGameGraph()
+            {
+                var groupGraph = [[1, 0], [2, 1], [3, 2], [4, 0], [5, 1],
+                    [6, 2], [7, 1], [8, 1], [9, 1], [10, 2]];
+
+                var yAs = [[0, "Beide fout"], [1, "1e Fout, 2e Goed"], [2, "1e Goed"]];
+
+                var plot1 = $.jqplot('gameGroupGraph', [groupGraph], {
+                    title: 'Spel 1 - Gehele groep - 12-12-2013',
+                    series: [
+                        {label: 'Groep'},
+                    ],
+                    legend: {
+                        show: true,
+                        placement: 'outsideGrid'
+                    },
+                    axesDefaults: {
+                        tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+                        tickOptions: {
+                            fontSize: '10pt'
+                        }
+                    },
+                    axes: {
+                        xaxis: {
+                            renderer: $.jqplot.CategoryAxisRenderer,
+                            min: 1,
+                            max: 10,
+                            label: 'Vraag'
+                        },
+                        yaxis: {
+                            min: 0,
+                            max: 2,
+                            autoscale: true,
+                            tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+                            labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
+                            tickOptions: {
+                                labelPosition: 'start'
+                            },
+                            label: 'Resultaat',
+                            ticks: yAs
+                        }
+                    }
+                });
+            }
+            
+            function setUpPlayerCategoryGraph()
+            {
+                var categoryGraph = [["Rekenen", 73], ["Taal", 61], ["Geschiedenis", 43], 
+                    ["Aardrijkskunde", 77], ["Wereldorientatie", 69]];
+
+                var plot1 = $.jqplot('playerCategoryGraph', [categoryGraph], {
+                    title: 'Percentage goede antwoorden per categorie',
+                    series: [
+                        {label: 'Guus', renderer:$.jqplot.BarRenderer},
+                    ],
+                    legend: {
+                        show: true,
+                        placement: 'outsideGrid'
+                    },
+                    axesDefaults: {
+                        tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+                        tickOptions: {
+                            fontSize: '10pt'
+                        }
+                    },
+                    axes: {
+                        xaxis: {
+                            renderer: $.jqplot.CategoryAxisRenderer,
+                            label: 'Categorie'
+                        },
+                        yaxis: {
+                            min: 0,
+                            max: 100,
+                            autoscale: true,
+                            tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+                            labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
+                            tickOptions: {
+                                labelPosition: 'start'
+                            },
+                            label: 'Procent goed',
+                        }
+                    }
+                });
+            }
+            
+            function setUpPlayerTimeGraph()
+            {
+                var firstQuestionGraph = [[1, 30], [2, 50], [3, 33], [4, 15], [5, 40],
+                    [6, 60], [7, 34], [8, 23], [9, 19], [10, 9]];
+                var secondQuestionGraph = [[1, 78], [2, 0], [3, 45], [4, 9], [5, 0],
+                    [6, 59], [7, 120], [8, 47], [9, 0], [10, 11]];
+
+                var plot1 = $.jqplot('playerTimeGraph', [firstQuestionGraph, secondQuestionGraph], {
+                    title: 'Tijd per vraag - Mike',
+                    series: [
+                        {label: 'Eerste poging', renderer:$.jqplot.BarRenderer},
+                        {label: 'Tweede poging', renderer:$.jqplot.BarRenderer}
+                    ],
+                    legend: {
+                        show: true,
+                        placement: 'outsideGrid'
+                    },
+                    axesDefaults: {
+                        tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+                        tickOptions: {
+                            fontSize: '10pt'
+                        }
+                    },
+                    axes: {
+                        xaxis: {
+                            renderer: $.jqplot.CategoryAxisRenderer,
+                            label: 'Vraag'
+                        },
+                        yaxis: {
+                            min: 0,
+                            max: 120,
+                            autoscale: true,
+                            tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+                            labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
+                            tickOptions: {
+                                labelPosition: 'start'
+                            },
+                            label: 'Tijd',
+                        }
+                    }
+                });
+            }
+
+        </script>
+
+    </head>
+    <body>
+        <div id="gameGraph" class="chart"></div>
+        <div id="gameGroupGraph" class="chart"></div>
+        <div id="playerCategoryGraph" class="chart"></div>
+        <div id="playerTimeGraph" class="chart"></div>
+    </body>
+</html>

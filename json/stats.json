@@ -1,0 +1,141 @@
+[
+    {
+        "naam": "Lex",
+        "tussenvoegsel": "van",
+        "achternaam": "Dommelen",
+        "groep": 6,
+        "geboorteDatum": "2000-05-30",
+        "geslacht": "m",
+        "games": [
+            {
+                "id": 13,
+                "datum": "2013-12-09",
+                "vragen": [
+                    {
+                        "id": 25,
+                        "tijdEerstePoging": 43,
+                        "eerstePogingGoed": false,
+                        "tijdTweedePoging": 67,
+                        "tweedePogingGoed": true
+                    },
+                    {
+                        "id": 26,
+                        "tijdEerstePoging": 13,
+                        "eerstePogingGoed": true,
+                        "tijdTweedePoging": 0,
+                        "tweedePogingGoed": null
+                    },
+                    {
+                        "id": 27,
+                        "tijdEerstePoging": 27,
+                        "eerstePogingGoed": true,
+                        "tijdTweedePoging": 118,
+                        "tweedePogingGoed": true
+                    }
+                ]
+            },
+            {
+                "id": 111,
+                "datum": "2013-12-09",
+                "vragen": [
+                    {
+                        "id": 113,
+                        "tijdEerstePoging": 43,
+                        "eerstePogingGoed": false,
+                        "tijdTweedePoging": 67,
+                        "tweedePogingGoed": true
+                    },
+                    {
+                        "id": 114,
+                        "tijdEerstePoging": 13,
+                        "eerstePogingGoed": true,
+                        "tijdTweedePoging": 0,
+                        "tweedePogingGoed": null
+                    },
+                    {
+                        "id": 115,
+                        "tijdEerstePoging": 27,
+                        "eerstePogingGoed": true,
+                        "tijdTweedePoging": 118,
+                        "tweedePogingGoed": true
+                    }
+                ]
+            }
+        ]
+
+    },
+    {
+        "naam": "Guus",
+        "tussenvoegsel": "van",
+        "achternaam": "Lankveld",
+        "groep": 6,
+        "geboorteDatum": "2000-05-30",
+        "geslacht": "m",
+        "games": [
+            {
+                "id": 13,
+                "datum": "2013-12-09",
+                "vragen": [
+                    {
+                        "id": 25,
+                        "tijdEerstePoging": 43,
+                        "eerstePogingGoed": false,
+                        "tijdTweedePoging": 67,
+                        "tweedePogingGoed": true
+                    },
+                    {
+                        "id": 26,
+                        "tijdEerstePoging": 13,
+                        "eerstePogingGoed": true,
+                        "tijdTweedePoging": 0,
+                        "tweedePogingGoed": null
+                    },
+                    {
+                        "id": 27,
+                        "tijdEerstePoging": 27,
+                        "eerstePogingGoed": true,
+                        "tijdTweedePoging": 118,
+                        "tweedePogingGoed": true
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "naam": "Mike",
+        "tussenvoegsel": "",
+        "achternaam": "Consemulder",
+        "groep": 6,
+        "geboorteDatum": "2000-05-30",
+        "geslacht": "m",
+        "games": [
+            {
+                "id": 13,
+                "datum": "2013-12-09",
+                "vragen": [
+                    {
+                        "id": 25,
+                        "tijdEerstePoging": 43,
+                        "eerstePogingGoed": false,
+                        "tijdTweedePoging": 67,
+                        "tweedePogingGoed": true
+                    },
+                    {
+                        "id": 26,
+                        "tijdEerstePoging": 13,
+                        "eerstePogingGoed": true,
+                        "tijdTweedePoging": 0,
+                        "tweedePogingGoed": null
+                    },
+                    {
+                        "id": 27,
+                        "tijdEerstePoging": 27,
+                        "eerstePogingGoed": true,
+                        "tijdTweedePoging": 118,
+                        "tweedePogingGoed": true
+                    }
+                ]
+            }
+        ]
+    }
+]
