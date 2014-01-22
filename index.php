@@ -29,6 +29,7 @@ and open the template in the editor.
         ?>
         <script type="text/javascript">
             //VARS ====================
+            
             var vraagTijd;
             var nextButtonPressed = false;
             var loginButtonPressed = false;
@@ -41,6 +42,7 @@ and open the template in the editor.
             var vraag;
             var vak;
             var type;
+            var soort;
             var imgUrl;
             var antwoord1;
             var antwoord2;
@@ -54,7 +56,10 @@ and open the template in the editor.
             var currentQuestion = 1;
             var maxQuestion = 0;
             var questionLabels = ['labelQ1', 'labelQ2', 'labelQ3', 'labelQ4', 'labelQ5', 'labelQ6', 'labelQ7', 'labelQ8', 'labelQ9'];
+            
+            
             //=================================== touchevent voor de submit
+            
             $(document).ready(function() {
                 createTouchEvents();
             });
@@ -62,6 +67,7 @@ and open the template in the editor.
             function loginTouch() {
                 if (!loginButtonPressed) {
                     loginButtonPressed = true;
+                    console.log("Login button pressed.");
                     var user = $('#player').val();
                     var pass = $('#password').val();
                     if (!playerAllow(user, pass)) {
@@ -77,6 +83,7 @@ and open the template in the editor.
                     gotoNextQuestion();
                 }
             }
+            
 
             //============================================= Websockets code =============================================
 
@@ -103,6 +110,8 @@ and open the template in the editor.
                 }
                 //Meer dingen ......
             };
+            
+            
             //========================================= Einde Websockets code ===========================================
 
             function startTimer(length) {
@@ -158,6 +167,7 @@ and open the template in the editor.
                 }
             }
 
+
             //=================================== vraag laten zien
             function showQuestion() {
                 console.log("vraag: " + currentQuestion);
@@ -175,8 +185,17 @@ and open the template in the editor.
                     $("#container").attr("class", "multi");
                 }
                 $("#vraag").append(vraag);
+                var openQuestionFieldType = "text";
+                if (soort.toLowerCase() === "rekenen") {
+                    openQuestionFieldType = "number";
+                }
+                
+                $("#antwoord").attr("type", openQuestionFieldType);
+                
                 tekstResize();
             }
+            
+            
             //=================================== speler is joined de lobby
 
             function playerJoined(player) {
@@ -184,6 +203,7 @@ and open the template in the editor.
                 $("#players").show();
                 $("#players").append("<span>" + player + "</span>");
             }
+
 
             //=================================== je naam opsturen en naar de server sturen dat je wilt starten
 
@@ -195,6 +215,7 @@ and open the template in the editor.
                 $(".button-container").hide();
             }
 
+
             //=================================== vraag laten zien op het scherm
 
             function stelVraag(vraag)
@@ -203,6 +224,7 @@ and open the template in the editor.
                 $('#vraag').text(vraag);
                 startTimer(timeForQ);
             }
+
 
             //=================================== kijken of alles goed is of dat er iets fout was
 
@@ -234,6 +256,7 @@ and open the template in the editor.
                 }
             }
 
+
             //==================================== vraag / antwoord / type etc opslaan
             function setQuestion(json) {
                 var obj = JSON.parse(json);
@@ -242,6 +265,7 @@ and open the template in the editor.
                 vraag = obj['questionText'];
                 imgUrl = obj['image'].replace('\/', '/');
                 maxQuestion = 10;
+                soort = obj['subject'];
                 questionCounter(currentQuestion);
                 var correct = 0;
                 if (type === 'multiple') {
@@ -274,6 +298,7 @@ and open the template in the editor.
                 }
             }
 
+
             //=================================== timer op 0 zetten om de vraag meteen op te sturen
 
             function timerToZero() {
@@ -284,6 +309,7 @@ and open the template in the editor.
                 }
                 time = 0;
             }
+
 
             //=================================== antwoord opslaan
 
@@ -301,6 +327,7 @@ and open the template in the editor.
                 }
                 sendAnswer();
             }
+
 
             //=================================== antwoord versturen
 
