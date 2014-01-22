@@ -134,7 +134,7 @@ class Timer implements MessageComponentInterface
 
     public function onClose(ConnectionInterface $conn)
     {
-        // The connection is closed, remove it, as we can no longer send it messages
+        // The connection is closed, remove it, we can no longer send it messages
         $this->clients->detach($conn);
 
         unset($this->players[$conn->resourceId]);
