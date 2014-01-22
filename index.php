@@ -337,6 +337,9 @@ and open the template in the editor.
                 if (antwoord === "") {
                     antwoord = "$$$$@@@@$$$$";
                 }
+                if(vak === "rekenen"){
+                    antwoord.replace('.', ',');
+                }
                 antwoord = $.trim(antwoord);
                 console.log('antwoord dat opgestuurd wordt = ' + antwoord);
                 websocket.send("answer_" + antwoord + "_" + timeLeft);
